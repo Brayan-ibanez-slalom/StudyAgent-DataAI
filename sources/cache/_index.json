@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 201,
+  "count": 205,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1609,6 +1609,38 @@
       "title": "GRANT | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "7e57bf6041996ab532dd4f9dd2e363bd2b874360e22499f9f81c90896ad146a4",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/from_json",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/from_json.txt",
+      "title": "from_json function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "5be82d27ef67171e8cd107eaffd254a21a25d5ac60c794abde8fa1f03e269633",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-streaming-table",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-streaming-table.txt",
+      "title": "CREATE STREAMING TABLE | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "d30cf7a8bd108dc053edaffd9452cf44962a169783487d8cc36937adf110f69f",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/pyspark/basics",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/pyspark/basics.txt",
+      "title": "PySpark basics | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "29791bc6ef322a18342f9dca58e73d02a733860cbd56a14ecdc08dfd33f55872",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker.txt",
+      "title": "Parameter markers | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "3984db3d592c79d9d2004e66b0e9e249ccea6ef44c2018d4bf6dfdbb64173bbe",
       "source": "mcp-cache_fetch"
     }
   ]

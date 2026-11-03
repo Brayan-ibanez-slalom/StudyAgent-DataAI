@@ -17924,8 +17924,308 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-101",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "An analyst team wants one reusable product filtering query that takes a category supplied at run time. A reviewer objects to assembling the statement by pasting the supplied text into the string, and asks for the safe construction instead.",
+      "option_texts": {
+        "A": "Use a parameter marker, which separates provided values from the structure of the statement",
+        "B": "Build the statement with string concatenation but escape every quote in the supplied text",
+        "C": "Wrap the statement in a view, because a view cannot be subverted by a supplied value",
+        "D": "Validate the supplied text against a list of categories before pasting it into the string"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Parameter markers protect against SQL injection by separating provided values from statement structure",
+      "drill_rationale": "Using parameter markers protects your code from SQL injection attacks since it clearly separates provided values from the structure of the SQL statements.",
+      "decision_hinge": "Using parameter markers protects your code from SQL injection attacks since it clearly separates provided values from the structure of the SQL statements.",
+      "plausible_options": {
+        "D": "A reviewer objects to assembling the statement by pasting the supplied text into the string"
+      },
+      "eliminated_by": {
+        "B": "asks for the safe construction instead",
+        "C": "one reusable product filtering query that takes a category supplied at run time"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - escaping by hand is the fragile practice the reviewer is objecting to",
+        "C": "T2: scope error - a view fixes the query text and cannot accept a run time value",
+        "D": "T3: confusable sibling - an allow list narrows the risk but still builds the statement by pasting"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-102",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "A statement already carries one marker referenced by name, and an engineer adds a second value positionally to save typing. The statement now fails to run, and the team wants the rule that explains it.",
+      "option_texts": {
+        "A": "Markers are allowed only once per statement, so the second one is rejected",
+        "B": "Markers referenced by name and markers referenced by position cannot be mixed in one statement",
+        "C": "Markers cannot be referenced from a WHERE clause, which is where the second sits",
+        "D": "Markers must be declared in the order they appear, and the second broke the order"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "You cannot mix named and unnamed parameter markers in the same SQL statement",
+      "drill_rationale": "You cannot mix named and unnamed parameter markers in the same SQL statement.",
+      "decision_hinge": "You cannot mix named and unnamed parameter markers in the same SQL statement.",
+      "plausible_options": {
+        "D": "an engineer adds a second value positionally to save typing"
+      },
+      "eliminated_by": {
+        "A": "A statement already carries one marker referenced by name",
+        "C": "the team wants the rule that explains it"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - a statement may carry many markers of one kind",
+        "C": "T1: fabricated - a marker is perfectly legal in a WHERE clause",
+        "D": "T3: confusable sibling - ordering matters for unnamed markers, but the failure is the mixing"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-103",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "A bronze table keeps a payload column as a STRING holding a JSON document, and the silver model needs its fields addressable as real columns. The team already knows the shape the document takes.",
+      "option_texts": {
+        "A": "Cast the column to a struct type, which reads the document and types its fields",
+        "B": "Apply to_json to the column, which converts the text into addressable fields",
+        "C": "Apply from_json with the known schema, which returns a struct value to address",
+        "D": "Apply explode to the column, which turns each document key into its own row"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.3",
+      "blueprint_task_title": "Manipulate columns, rows, and table structures by adding, dropping, splitting, renaming column names, applying filters, and exploding arrays",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "from_json(jsonStr, schema) returns a struct value whose fields can then be selected",
+      "drill_rationale": "The from_json function returns a struct value with the given jsonStr and schema.",
+      "decision_hinge": "The from_json function returns a struct value with the given jsonStr and schema.",
+      "plausible_options": {
+        "A": "the silver model needs its fields addressable as real columns"
+      },
+      "eliminated_by": {
+        "B": "keeps a payload column as a STRING holding a JSON document",
+        "D": "The team already knows the shape the document takes"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - a plain cast does not parse a JSON document into a struct",
+        "B": "T3: confusable sibling - to_json runs the other way, rendering a value as JSON text",
+        "D": "T2: scope error - explode expands an array into rows, it does not parse a document"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/functions/from_json"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-104",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "A pipeline declares an incrementally loaded object and the team wants one statement that both defines it and brings it up to date on later runs. They would rather not pair a create with a separate refresh step.",
+      "option_texts": {
+        "A": "CREATE STREAMING TABLE IF NOT EXISTS, paired with a refresh command on later runs",
+        "B": "CREATE MATERIALIZED VIEW, which is the only object that refreshes from a declaration",
+        "C": "CREATE OR REPLACE STREAMING TABLE, which defines the object afresh on every run",
+        "D": "CREATE OR REFRESH STREAMING TABLE, which both defines the object and refreshes it"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "CREATE OR REFRESH STREAMING TABLE defines the streaming table and refreshes it on subsequent runs",
+      "drill_rationale": "The statement form is CREATE OR REFRESH STREAMING TABLE or CREATE STREAMING TABLE IF NOT EXISTS followed by the table name and table specification.",
+      "decision_hinge": "The statement form is CREATE OR REFRESH STREAMING TABLE or CREATE STREAMING TABLE IF NOT EXISTS followed by the table name and table specification.",
+      "plausible_options": {
+        "A": "the team wants one statement that both defines it and brings it up to date on later runs"
+      },
+      "eliminated_by": {
+        "B": "They would rather not pair a create with a separate refresh step",
+        "C": "A pipeline declares an incrementally loaded object"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - that form does exist, but it needs the separate refresh the team is avoiding",
+        "B": "T2: scope error - a materialized view recomputes rather than loading incrementally",
+        "C": "T1: fabricated - rebuilding from scratch is not what the streaming form does"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-streaming-table"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-105",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "A bundle has been deployed and declares a job under the resource key sales_job. The engineer wants to start exactly that job in the target workspace from the command line, without clicking through the jobs list.",
+      "option_texts": {
+        "A": "A bundle run naming the key, which runs the job declared under that key",
+        "B": "A bundle deploy naming the key, since deploying a single resource also starts it",
+        "C": "A bundle validate naming the key, which executes the resource it checks",
+        "D": "A jobs submit call naming the key, since the CLI resolves keys to job ids"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.4",
+      "blueprint_task_title": "Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles (formerly Databricks Asset Bundles) and other workspace assets in automated CI/CD workflows",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "databricks bundle run [KEY] runs the job, pipeline or app declared under that key",
+      "drill_rationale": "The bundle run command runs a job, pipeline, app, or script, and you specify the job, pipeline, or app key declared within the bundle configuration files.",
+      "decision_hinge": "The bundle run command runs a job, pipeline, app, or script, and you specify the job, pipeline, or app key declared within the bundle configuration files.",
+      "plausible_options": {
+        "D": "wants to start exactly that job in the target workspace from the command line"
+      },
+      "eliminated_by": {
+        "B": "A bundle has been deployed and declares a job under the resource key sales_job",
+        "C": "without clicking through the jobs list"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - deploying publishes the definition and does not trigger a run",
+        "C": "T1: fabricated - validate checks configuration and never executes a resource",
+        "D": "T3: confusable sibling - a jobs API call needs the job id, not the bundle resource key"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-106",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch07.json",
+      "stem": "A team is writing its contribution guide and has to state which steps happen inside the workspace folder and which belong to the hosting provider. Reviewers must know where to go once a feature branch has been pushed.",
+      "option_texts": {
+        "A": "Branch creation happens in the provider, while review and merge happen in the folder",
+        "B": "Branch creation happens in the folder, while the review and merge happen in the provider",
+        "C": "Both branch creation and review happen in the folder, which mirrors them upstream",
+        "D": "Both branch creation and review happen in the provider, with the folder read-only"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.1",
+      "blueprint_task_title": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders (formerly Databricks Repos), committing and pushing changes, and creating pull requests using Databricks Git integration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Branches are created and pushed from the Git folder, but pull requests are raised in the Git provider's interface",
+      "drill_rationale": "You create a branch and commit and push from the Git folder, and you use your Git provider's interface to create a pull request and merge it into the default branch.",
+      "decision_hinge": "You create a branch and commit and push from the Git folder, and you use your Git provider's interface to create a pull request and merge it into the default branch.",
+      "plausible_options": {
+        "A": "which steps happen inside the workspace folder and which belong to the hosting provider"
+      },
+      "eliminated_by": {
+        "C": "Reviewers must know where to go once a feature branch has been pushed",
+        "D": "A team is writing its contribution guide"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the two halves are the right pair but swapped round",
+        "C": "T1: fabricated - no review surface exists inside the workspace folder",
+        "D": "T5: common misconception - the folder is fully writable and is where branches are cut"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/repos/git-operations-with-repos"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 349,
+  "total": 355,
   "last_updated_at": "2026-11-03"
 }
