@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 186,
+  "count": 191,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1489,6 +1489,46 @@
       "title": "Structured Streaming concepts | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "f4d7bd03c69899212a35a567581934636e7c4850eee40797ec6b98296eaf8c44",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/sql-warehouse/warehouse-behavior.txt",
+      "title": "SQL warehouse sizing, scaling, and queuing behavior | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "6a662dcf66542c457ef4ac754b114afd22470658959dccc301188c4fa111cc13",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage.txt",
+      "title": "Lineage in Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "6c3107adda101be3b620b923968630bc5206d5e3300713de362f1bd1cf7b4792",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-undrop-table",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-undrop-table.txt",
+      "title": "UNDROP | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ef3c828de100f05b285b643c3f403838efb71f36526e088fa35e7878b14c063d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/optimizations/predictive-optimization",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/optimizations/predictive-optimization.txt",
+      "title": "Predictive optimization for Unity Catalog managed tables | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "c3b85bc5a7b14422d1d4699ac25755110b6c6bbce5a46370aa1b79476561ae7f",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/optimize",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta/optimize.txt",
+      "title": "Optimize data file layout | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b13e061313d1d2439946a5478e2c54622e713dddb57bfee983786fa2d872866d",
       "source": "mcp-cache_fetch"
     }
   ]

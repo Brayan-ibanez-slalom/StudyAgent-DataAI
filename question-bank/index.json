@@ -16974,8 +16974,408 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-082",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "A team plans a storage clean-up and needs to know how far back the housekeeping command leaves files alone when nobody has tuned the setting. The table carries no custom property for this, and the workspace is on delivered defaults.",
+      "option_texts": {
+        "A": "Seven days, which is the default retention threshold for data files",
+        "B": "Zero days, so every unreferenced file goes as soon as the command runs",
+        "C": "Thirty days, matching the period the log files are kept for",
+        "D": "Three hundred and sixty five days, so a full year stays recoverable"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "The default retention threshold for data files after running VACUUM is 7 days",
+      "drill_rationale": "The default retention threshold for data files after running VACUUM is 7 days, and setting a higher threshold gives access to a greater history while increasing storage costs.",
+      "decision_hinge": "The default retention threshold for data files after running VACUUM is 7 days, and setting a higher threshold gives access to a greater history while increasing storage costs.",
+      "plausible_options": {
+        "C": "how far back the housekeeping command leaves files alone"
+      },
+      "eliminated_by": {
+        "B": "The table carries no custom property for this",
+        "D": "the workspace is on delivered defaults"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - an immediate purge would break readers and time travel",
+        "C": "T3: confusable sibling - 30 days is the log file retention, not the data file threshold",
+        "D": "T1: fabricated - a year is not any default on the platform"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/vacuum"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-083",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "A streaming sink has produced an enormous number of tiny files and read latency has climbed. The table defines partitions, and the team wants to know how the compaction command treats that boundary when it rewrites the layout.",
+      "option_texts": {
+        "A": "Compaction ignores partitions and merges files freely across the whole table",
+        "B": "Compaction runs within partitions, grouping the small files inside each one",
+        "C": "Compaction removes the partitions first and then rewrites one flat layout",
+        "D": "Compaction refuses to run until the partitions are dropped from the table"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "For tables with partitions defined, file compaction and data layout are performed within partitions",
+      "drill_rationale": "For tables with partitions defined, file compaction and data layout are performed within partitions.",
+      "decision_hinge": "For tables with partitions defined, file compaction and data layout are performed within partitions.",
+      "plausible_options": {
+        "A": "an enormous number of tiny files and read latency has climbed"
+      },
+      "eliminated_by": {
+        "C": "The table defines partitions",
+        "D": "how the compaction command treats that boundary when it rewrites the layout"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - merging across the table would break the partition boundary that still defines the layout",
+        "C": "T1: fabricated - compaction never drops the partitioning of a table",
+        "D": "T1: fabricated - the command runs happily on a partitioned table"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/optimize"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-084",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "A platform team is tired of scheduling its own maintenance notebooks for managed tables in Unity Catalog. They want the platform to decide when layout and statistics work should happen, instead of a fixed weekly window.",
+      "option_texts": {
+        "A": "Liquid clustering, which removes the need for any maintenance operation at all",
+        "B": "Predictive optimization, which automatically rewrites queries to avoid maintenance",
+        "C": "Predictive optimization, which automatically runs OPTIMIZE, VACUUM and ANALYZE",
+        "D": "Auto Loader, which keeps file counts low as it ingests and needs no maintenance"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Predictive optimization automatically runs OPTIMIZE, VACUUM and ANALYZE on managed tables",
+      "drill_rationale": "Predictive optimization automatically runs OPTIMIZE, VACUUM, and ANALYZE on Unity Catalog managed tables.",
+      "decision_hinge": "Predictive optimization automatically runs OPTIMIZE, VACUUM, and ANALYZE on Unity Catalog managed tables.",
+      "plausible_options": {
+        "A": "want the platform to decide when layout and statistics work should happen"
+      },
+      "eliminated_by": {
+        "B": "tired of scheduling its own maintenance notebooks for managed tables",
+        "D": "instead of a fixed weekly window"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - clustering shapes the layout but still relies on maintenance running",
+        "B": "T1: fabricated - the feature schedules maintenance operations, it does not rewrite queries",
+        "D": "T2: scope error - an ingestion mechanism does not maintain the table it writes into"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/predictive-optimization"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-085",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "Someone removed a managed table from a production schema this morning and the team wants it back without restoring from a backup. Nobody has changed the catalog or schema settings that govern this situation.",
+      "option_texts": {
+        "A": "Recreate the table from its definition and reload it from the upstream source",
+        "B": "Raise a support request, since a removal of a managed table is final",
+        "C": "Run a time travel query against the table, which still resolves after removal",
+        "D": "Run UNDROP, which recovers the most recently dropped relation of that name"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "UNDROP recovers the most recently dropped relation of that name, within a 7 day recovery period by default",
+      "drill_rationale": "By default this command undrops or recovers the most recently dropped relation owned by the user of the given relation name, and by default the feature supports recovering dropped relations within a 7 day recovery period.",
+      "decision_hinge": "By default this command undrops or recovers the most recently dropped relation owned by the user of the given relation name, and by default the feature supports recovering dropped relations within a 7 day recovery period.",
+      "plausible_options": {
+        "A": "the team wants it back without restoring from a backup"
+      },
+      "eliminated_by": {
+        "B": "Nobody has changed the catalog or schema settings that govern this situation",
+        "C": "Someone removed a managed table from a production schema this morning"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - a rebuild does return the data but throws away the recovery path the platform offers",
+        "B": "T1: fabricated - a dropped relation is recoverable for a defined window",
+        "C": "T5: common misconception - time travel needs the relation to still exist to be addressed"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-undrop-table"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-086",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "An engineer is starting a brand new bundle project on a laptop and would rather scaffold it from a template than hand-write the first configuration. The CLI is already installed and authenticated against the workspace.",
+      "option_texts": {
+        "A": "Run a bundle init command, which initializes a new bundle using a template",
+        "B": "Run a bundle new command, which creates an empty project in the directory",
+        "C": "Run a bundle create command, which registers the project with the workspace",
+        "D": "Run a bundle deploy command, which writes a starter project from a template on first use"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.4",
+      "blueprint_task_title": "Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles (formerly Databricks Asset Bundles) and other workspace assets in automated CI/CD workflows",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "databricks bundle init initializes a new bundle using a bundle template",
+      "drill_rationale": "The bundle init command initializes a new bundle using a bundle template, and templates can be configured to prompt the user for values.",
+      "decision_hinge": "The bundle init command initializes a new bundle using a bundle template, and templates can be configured to prompt the user for values.",
+      "plausible_options": {
+        "D": "would rather scaffold it from a template than hand-write the first configuration"
+      },
+      "eliminated_by": {
+        "B": "starting a brand new bundle project on a laptop",
+        "C": "The CLI is already installed and authenticated against the workspace"
+      },
+      "distractor_traps": {
+        "B": "T1: fabricated - there is no bundle new command in the CLI",
+        "C": "T1: fabricated - there is no bundle create command in the CLI",
+        "D": "T2: scope error - deploy pushes an existing project and never scaffolds one"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-087",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "An engineer has pushed a feature branch from a Databricks Git folder and now has to get that work onto the default branch. Branch protection means the engineer cannot commit to the default branch directly.",
+      "option_texts": {
+        "A": "Use the Git dialog's merge control, the only place a protected branch can be merged",
+        "B": "Open the Git provider's interface and raise a pull request against the default branch",
+        "C": "Ask an administrator to disable branch protection for the length of the merge",
+        "D": "Deploy the bundle to production, which promotes the branch into the default one"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.1",
+      "blueprint_task_title": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders (formerly Databricks Repos), committing and pushing changes, and creating pull requests using Databricks Git integration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "When you cannot commit to the default branch, raise a pull request in the Git provider's interface",
+      "drill_rationale": "If you don't have permission to commit to the default branch, create a new branch and use your Git provider's interface to create a pull request and merge it into the default branch.",
+      "decision_hinge": "If you don't have permission to commit to the default branch, create a new branch and use your Git provider's interface to create a pull request and merge it into the default branch.",
+      "plausible_options": {
+        "A": "now has to get that work onto the default branch"
+      },
+      "eliminated_by": {
+        "C": "Branch protection means the engineer cannot commit to the default branch directly",
+        "D": "has pushed a feature branch from a Databricks Git folder"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the Git dialog does merge branches, but a protected branch is merged through the provider",
+        "C": "T4: breaks a stated requirement - removing the protection defeats the control it exists to apply",
+        "D": "T2: scope error - deploying a bundle moves resources to a workspace, not commits between branches"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/repos/git-operations-with-repos"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-088",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "An auditor is tracing which upstream tables feed a reporting table. One transformation step calls a user defined function, and several tables are only ever referenced inside that function's body. The auditor must know whether the graph can be trusted as complete.",
+      "option_texts": {
+        "A": "The graph is complete, because every reference inside a function body is captured",
+        "B": "The graph is incomplete, because functions and the tables they use are excluded altogether",
+        "C": "The graph is incomplete, because lineage is not captured for tables referenced inside a function body",
+        "D": "The graph is complete, because referenced tables are resolved before being recorded"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.3",
+      "blueprint_task_title": "Understand column-level masking and row-level security to restrict data visibility based on user groups",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "UDFs appear in the lineage graph, but lineage is not captured for tables referenced inside a UDF body",
+      "drill_rationale": "UDFs used to transform data between tables or views are captured in the lineage graph, but lineage is not captured for tables or functions referenced inside a UDF body.",
+      "decision_hinge": "UDFs used to transform data between tables or views are captured in the lineage graph, but lineage is not captured for tables or functions referenced inside a UDF body.",
+      "plausible_options": {
+        "A": "several tables are only ever referenced inside that function's body"
+      },
+      "eliminated_by": {
+        "B": "One transformation step calls a user defined function",
+        "D": "The auditor must know whether the graph can be trusted as complete"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - the graph records the function, not what it reads inside itself",
+        "B": "T3: confusable sibling - functions do appear, it is their internal references that are missing",
+        "D": "T1: fabricated - no resolution step expands a function body for lineage"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/data-lineage"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-089",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src2-batch04.json",
+      "stem": "A team is reviewing a new project and has to say what shape the bundle's top level configuration file takes before they can lint it in their pipeline. They have the repository in front of them but nobody has opened the file yet.",
+      "option_texts": {
+        "A": "A JSON document whose bundle schema ships alongside the CLI release",
+        "B": "A Python module that builds the configuration when the CLI imports it",
+        "C": "A TOML file whose sections name each workspace the project deploys to",
+        "D": "A YAML file that carries mappings such as bundle, resources and targets"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.2",
+      "blueprint_task_title": "Understand environment-specific configuration using Declarative Automation Bundle (formerly Databricks Asset Bundles) variables and overrides while promoting the same codebase across dev, test, and prod targets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "A bundle's databricks.yml is YAML, holding mappings such as bundle, resources and targets",
+      "drill_rationale": "The bundle configuration file is written in YAML and contains mappings including the bundle mapping, the resources mapping, and the targets top-level mapping.",
+      "decision_hinge": "The bundle configuration file is written in YAML and contains mappings including the bundle mapping, the resources mapping, and the targets top-level mapping.",
+      "plausible_options": {
+        "A": "has to say what shape the bundle's top level configuration file takes"
+      },
+      "eliminated_by": {
+        "B": "nobody has opened the file yet",
+        "C": "before they can lint it in their pipeline"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - a JSON schema does back the format, but the file itself is YAML",
+        "B": "T1: fabricated - the configuration is declarative, not generated by importing code",
+        "C": "T1: fabricated - no part of the bundle format uses TOML"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/bundles/settings"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 330,
+  "total": 338,
   "last_updated_at": "2026-11-03"
 }
