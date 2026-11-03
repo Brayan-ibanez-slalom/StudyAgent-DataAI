@@ -18224,8 +18224,258 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-107",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch08.json",
+      "stem": "A job runs several notebook tasks that all need the same processing_region value, and the operator wants to set it once when starting a run rather than editing each step. The value should reach every step that takes key-value input.",
+      "option_texts": {
+        "A": "Define it as a job parameter, a key-value pair set at job level and pushed down to tasks",
+        "B": "Define it as a task parameter on each step, a key-value pair supplied per task",
+        "C": "Define it as a cluster environment variable, which every notebook on that cluster reads",
+        "D": "Define it in a shared notebook that each step imports before it does any work"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Job parameters are key-value pairs defined at job level and pushed down to tasks",
+      "drill_rationale": "A job parameter is a key-value pair defined at the job level and pushed down to tasks, while a task parameter is a key-value pair or JSON array defined at the task level.",
+      "decision_hinge": "A job parameter is a key-value pair defined at the job level and pushed down to tasks, while a task parameter is a key-value pair or JSON array defined at the task level.",
+      "plausible_options": {
+        "B": "the operator wants to set it once when starting a run rather than editing each step"
+      },
+      "eliminated_by": {
+        "C": "several notebook tasks that all need the same processing_region value",
+        "D": "The value should reach every step that takes key-value input"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - task parameters are real, but they are set per task, which is the editing being avoided",
+        "C": "T2: scope error - an environment variable is a compute setting and is not part of the run request",
+        "D": "T2: scope error - a shared notebook carries code, not a per-run value"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/parameters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-108",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch08.json",
+      "stem": "An analyst needs to read every table in one schema, including the tables that colleagues will create there next quarter. The owner does not want to revisit the grant each time a table appears.",
+      "option_texts": {
+        "A": "Grant the read privilege on each table, repeating the grant whenever one is created",
+        "B": "Grant the read privilege on the schema, which applies to its current and future objects",
+        "C": "Grant the read privilege on the metastore, the only level that reaches later objects",
+        "D": "Add the analyst as owner of the schema, so new tables arrive already readable"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Privileges granted at the schema level apply to current and future objects within that schema",
+      "drill_rationale": "You can grant these privileges at the schema level to apply them to current and future objects within the schema.",
+      "decision_hinge": "You can grant these privileges at the schema level to apply them to current and future objects within the schema.",
+      "plausible_options": {
+        "A": "needs to read every table in one schema"
+      },
+      "eliminated_by": {
+        "C": "including the tables that colleagues will create there next quarter",
+        "D": "The owner does not want to revisit the grant each time a table appears"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - per-table grants do work today but leave next quarter tables unreadable",
+        "C": "T3: confusable sibling - inheritance does run from the metastore, but that grant is far wider than asked",
+        "D": "T2: scope error - ownership confers control of the schema rather than a read grant"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-109",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch08.json",
+      "stem": "A team creates a schema whose managed tables must land in a storage path of its own rather than wherever the catalog would otherwise place them. They are writing the create statement now.",
+      "option_texts": {
+        "A": "Create the schema plainly, then move the files afterwards and repoint the tables",
+        "B": "Add a LOCATION clause, which is how a schema declares a path for its managed tables",
+        "C": "Add a MANAGED LOCATION clause, which sets where the schema's managed tables land",
+        "D": "Create an external location object instead, because a schema cannot carry a path"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "A schema can declare MANAGED LOCATION so its managed tables are stored at that path",
+      "drill_rationale": "You can specify a MANAGED LOCATION for a schema so that managed tables created in the schema are stored in that location rather than the parent catalog's managed location.",
+      "decision_hinge": "You can specify a MANAGED LOCATION for a schema so that managed tables created in the schema are stored in that location rather than the parent catalog's managed location.",
+      "plausible_options": {
+        "B": "whose managed tables must land in a storage path of its own"
+      },
+      "eliminated_by": {
+        "A": "They are writing the create statement now",
+        "D": "rather than wherever the catalog would otherwise place them"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - the path has to be chosen in the statement being written",
+        "B": "T3: confusable sibling - LOCATION belongs to external objects, the schema clause names a managed location",
+        "D": "T1: fabricated - a schema may carry its own managed location"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/schemas/create-schema"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-110",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch08.json",
+      "stem": "A nightly ingest has to drain a very large backlog of files in one run, and the team wants the work split into several smaller micro-batches so no single batch overwhelms the cluster. The run must still end on its own once the backlog is clear.",
+      "option_texts": {
+        "A": "Use a continuous trigger with a file cap, since a run that ends cannot be paced",
+        "B": "Use a one-off batch read, because a backlog of files is not a streaming concern",
+        "C": "Use a fixed interval trigger, because only a timed trigger can bound a micro-batch",
+        "D": "Use the available-now trigger with a per-trigger file cap, which paces the backlog"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Trigger.AvailableNow processes the backlog and ends, with maxFilesPerTrigger and maxBytesPerTrigger pacing each micro-batch",
+      "drill_rationale": "With Trigger.AvailableNow, file discovery happens asynchronously with data processing and data can be processed across multiple micro-batches with rate limiting, using cloudFiles.maxFilesPerTrigger and cloudFiles.maxBytesPerTrigger.",
+      "decision_hinge": "With Trigger.AvailableNow, file discovery happens asynchronously with data processing and data can be processed across multiple micro-batches with rate limiting, using cloudFiles.maxFilesPerTrigger and cloudFiles.maxBytesPerTrigger.",
+      "plausible_options": {
+        "C": "the team wants the work split into several smaller micro-batches"
+      },
+      "eliminated_by": {
+        "A": "The run must still end on its own once the backlog is clear",
+        "B": "has to drain a very large backlog of files in one run"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - a continuous trigger never finishes on its own",
+        "B": "T5: common misconception - the streaming reader is what tracks which files were already taken",
+        "C": "T3: confusable sibling - an interval trigger paces by clock, not by the backlog it is draining"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-111",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch08.json",
+      "stem": "A managed ingestion pipeline is scheduled every six hours against a business system, and the team is forecasting how much data each run will move. They want to know what the second and later runs do differently from the very first one.",
+      "option_texts": {
+        "A": "The first run reads everything and later runs use change tracking to take only changes",
+        "B": "Every run reads the whole source, so each one moves the same volume as the first",
+        "C": "The first run reads nothing and only establishes the change tracking for later runs",
+        "D": "Later runs read the whole source but discard rows that match what was already stored"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.1",
+      "blueprint_task_title": "Enable and detail data ingestion patterns, including batch, streaming, and incremental loading, and import data from sources such as local files, Lakeflow Connect standard connectors, and Lakeflow Connect managed connectors",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "The first run ingests all selected data while tracking changes; later runs ingest only what changed",
+      "drill_rationale": "On the first run of your pipeline it ingests all of the selected data from the source, and in parallel it tracks changes to the source data, so on each subsequent run it uses that change tracking to ingest only the data that has changed from the prior run.",
+      "decision_hinge": "On the first run of your pipeline it ingests all of the selected data from the source, and in parallel it tracks changes to the source data, so on each subsequent run it uses that change tracking to ingest only the data that has changed from the prior run.",
+      "plausible_options": {
+        "D": "forecasting how much data each run will move"
+      },
+      "eliminated_by": {
+        "B": "what the second and later runs do differently from the very first one",
+        "C": "A managed ingestion pipeline is scheduled every six hours against a business system"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - that is a full reload, which incremental ingestion exists to avoid",
+        "C": "T1: fabricated - the first run does ingest the selected data, not merely set up tracking",
+        "D": "T3: confusable sibling - that describes deduplicating a full read rather than reading only changes"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 355,
+  "total": 360,
   "last_updated_at": "2026-11-03"
 }

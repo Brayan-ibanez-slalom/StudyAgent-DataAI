@@ -1,0 +1,177 @@
+[
+  {
+    "id": "draft-dbde04-job-parameter-pushdown",
+    "domain": "dbde-04",
+    "blueprint_task": "4.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A job runs several notebook tasks that all need the same processing_region value, and the operator wants to set it once when starting a run rather than editing each step. The value should reach every step that takes key-value input.",
+    "option_texts": {
+      "A": "Define it as a job parameter, a key-value pair set at job level and pushed down to tasks",
+      "B": "Define it as a task parameter on each step, a key-value pair supplied per task",
+      "C": "Define it as a cluster environment variable, which every notebook on that cluster reads",
+      "D": "Define it in a shared notebook that each step imports before it does any work"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Job parameters are key-value pairs defined at job level and pushed down to tasks",
+    "decision_hinge": "A job parameter is a key-value pair defined at the job level and pushed down to tasks, while a task parameter is a key-value pair or JSON array defined at the task level.",
+    "plausible_options": {
+      "B": "the operator wants to set it once when starting a run rather than editing each step"
+    },
+    "eliminated_by": {
+      "C": "several notebook tasks that all need the same processing_region value",
+      "D": "The value should reach every step that takes key-value input"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - task parameters are real, but they are set per task, which is the editing being avoided",
+      "C": "T2: scope error - an environment variable is a compute setting and is not part of the run request",
+      "D": "T2: scope error - a shared notebook carries code, not a per-run value"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/jobs/parameters"
+    ],
+    "topics": [
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers"
+    ]
+  },
+  {
+    "id": "draft-dbde07-schema-grant-future-objects",
+    "domain": "dbde-07",
+    "blueprint_task": "7.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "An analyst needs to read every table in one schema, including the tables that colleagues will create there next quarter. The owner does not want to revisit the grant each time a table appears.",
+    "option_texts": {
+      "A": "Grant the read privilege on each table, repeating the grant whenever one is created",
+      "B": "Grant the read privilege on the schema, which applies to its current and future objects",
+      "C": "Grant the read privilege on the metastore, the only level that reaches later objects",
+      "D": "Add the analyst as owner of the schema, so new tables arrive already readable"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "Privileges granted at the schema level apply to current and future objects within that schema",
+    "decision_hinge": "You can grant these privileges at the schema level to apply them to current and future objects within the schema.",
+    "plausible_options": {
+      "A": "needs to read every table in one schema"
+    },
+    "eliminated_by": {
+      "C": "including the tables that colleagues will create there next quarter",
+      "D": "The owner does not want to revisit the grant each time a table appears"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - per-table grants do work today but leave next quarter tables unreadable",
+      "C": "T3: confusable sibling - inheritance does run from the metastore, but that grant is far wider than asked",
+      "D": "T2: scope error - ownership confers control of the schema rather than a read grant"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges"
+    ],
+    "topics": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ]
+  },
+  {
+    "id": "draft-dbde07-schema-managed-location",
+    "domain": "dbde-07",
+    "blueprint_task": "7.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A team creates a schema whose managed tables must land in a storage path of its own rather than wherever the catalog would otherwise place them. They are writing the create statement now.",
+    "option_texts": {
+      "A": "Create the schema plainly, then move the files afterwards and repoint the tables",
+      "B": "Add a LOCATION clause, which is how a schema declares a path for its managed tables",
+      "C": "Add a MANAGED LOCATION clause, which sets where the schema's managed tables land",
+      "D": "Create an external location object instead, because a schema cannot carry a path"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "A schema can declare MANAGED LOCATION so its managed tables are stored at that path",
+    "decision_hinge": "You can specify a MANAGED LOCATION for a schema so that managed tables created in the schema are stored in that location rather than the parent catalog's managed location.",
+    "plausible_options": {
+      "B": "whose managed tables must land in a storage path of its own"
+    },
+    "eliminated_by": {
+      "A": "They are writing the create statement now",
+      "D": "rather than wherever the catalog would otherwise place them"
+    },
+    "distractor_traps": {
+      "A": "T4: breaks a stated requirement - the path has to be chosen in the statement being written",
+      "B": "T3: confusable sibling - LOCATION belongs to external objects, the schema clause names a managed location",
+      "D": "T1: fabricated - a schema may carry its own managed location"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/schemas/create-schema"
+    ],
+    "topics": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ]
+  },
+  {
+    "id": "draft-dbde02-rate-limit-available-now",
+    "domain": "dbde-02",
+    "blueprint_task": "2.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A nightly ingest has to drain a very large backlog of files in one run, and the team wants the work split into several smaller micro-batches so no single batch overwhelms the cluster. The run must still end on its own once the backlog is clear.",
+    "option_texts": {
+      "A": "Use a continuous trigger with a file cap, since a run that ends cannot be paced",
+      "B": "Use a one-off batch read, because a backlog of files is not a streaming concern",
+      "C": "Use a fixed interval trigger, because only a timed trigger can bound a micro-batch",
+      "D": "Use the available-now trigger with a per-trigger file cap, which paces the backlog"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "Trigger.AvailableNow processes the backlog and ends, with maxFilesPerTrigger and maxBytesPerTrigger pacing each micro-batch",
+    "decision_hinge": "With Trigger.AvailableNow, file discovery happens asynchronously with data processing and data can be processed across multiple micro-batches with rate limiting, using cloudFiles.maxFilesPerTrigger and cloudFiles.maxBytesPerTrigger.",
+    "plausible_options": {
+      "C": "the team wants the work split into several smaller micro-batches"
+    },
+    "eliminated_by": {
+      "A": "The run must still end on its own once the backlog is clear",
+      "B": "has to drain a very large backlog of files in one run"
+    },
+    "distractor_traps": {
+      "A": "T4: breaks a stated requirement - a continuous trigger never finishes on its own",
+      "B": "T5: common misconception - the streaming reader is what tracks which files were already taken",
+      "C": "T3: confusable sibling - an interval trigger paces by clock, not by the backlog it is draining"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-incremental-after-first-run",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A managed ingestion pipeline is scheduled every six hours against a business system, and the team is forecasting how much data each run will move. They want to know what the second and later runs do differently from the very first one.",
+    "option_texts": {
+      "A": "The first run reads everything and later runs use change tracking to take only changes",
+      "B": "Every run reads the whole source, so each one moves the same volume as the first",
+      "C": "The first run reads nothing and only establishes the change tracking for later runs",
+      "D": "Later runs read the whole source but discard rows that match what was already stored"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "The first run ingests all selected data while tracking changes; later runs ingest only what changed",
+    "decision_hinge": "On the first run of your pipeline it ingests all of the selected data from the source, and in parallel it tracks changes to the source data, so on each subsequent run it uses that change tracking to ingest only the data that has changed from the prior run.",
+    "plausible_options": {
+      "D": "forecasting how much data each run will move"
+    },
+    "eliminated_by": {
+      "B": "what the second and later runs do differently from the very first one",
+      "C": "A managed ingestion pipeline is scheduled every six hours against a business system"
+    },
+    "distractor_traps": {
+      "B": "T5: common misconception - that is a full reload, which incremental ingestion exists to avoid",
+      "C": "T1: fabricated - the first run does ingest the selected data, not merely set up tracking",
+      "D": "T3: confusable sibling - that describes deduplicating a full read rather than reading only changes"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  }
+]

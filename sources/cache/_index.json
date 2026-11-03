@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 205,
+  "count": 206,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1641,6 +1641,14 @@
       "title": "Parameter markers | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "3984db3d592c79d9d2004e66b0e9e249ccea6ef44c2018d4bf6dfdbb64173bbe",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/schemas/create-schema",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/schemas/create-schema.txt",
+      "title": "Create schemas | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "605b4ad5aba6bad96d849dd7076fb77d0490f96d554aaddad2aa1148efd56bee",
       "source": "mcp-cache_fetch"
     }
   ]
