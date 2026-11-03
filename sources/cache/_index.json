@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 140,
+  "count": 147,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1121,6 +1121,62 @@
       "title": "Work with files in Unity Catalog volumes | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "b076f323e217903f9a2878651d7468869867fcdfa29b45003ea5adb839a46971",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/data-governance/unity-catalog/abac.txt",
+      "title": "Attribute-based access control in Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "694b95e2220330e1659311a80063529d6c4e73b42628f6517490dbdf41e389a8",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/managed",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables/managed.txt",
+      "title": "Unity Catalog managed tables for Delta Lake and Apache Iceberg | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "74045b3fc03cf9f6f4e291aad0a69cd7b49f96ec735eef33655fbd917a3fc0d4",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/external",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables/external.txt",
+      "title": "Work with external tables | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "26e0563dd62e5582c9cfb6219bc6220f34c18dd5ca0dd914f402b24922dfd641",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges.txt",
+      "title": "Manage privileges in Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "5c748080c322de55378d03d91ca5279eb231379747e086f368d237e02cdbbc09",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges.txt",
+      "title": "Unity Catalog privileges reference | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "fdd2c7bb7b988976cbf3431da867cd2e7efa8d2f7c78947853b2ce6cc76110fb",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/row-and-column-filters",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables/row-and-column-filters.txt",
+      "title": "Row filters and column masks | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "cb8d62046b924e02a4d20eca7c8fc13eec917f8c5431e9d621acc4510c05a3da",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables.txt",
+      "title": "Databricks tables | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "f495baa4741531ecf7c324400a5a2f7d1885b48f863bbecf99b2b8c1f562d6f5",
       "source": "mcp-cache_fetch"
     }
   ]

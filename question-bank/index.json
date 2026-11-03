@@ -14390,8 +14390,538 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-031",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "An engineer drops a Unity Catalog managed table by mistake and immediately asks whether the underlying files are already gone for good. The team needs an accurate answer about what happens to data files in cloud storage, because their recovery plan depends on whether any window exists at all.",
+      "option_texts": {
+        "A": "The data files are deleted after a recovery period expires, defaulting to seven days",
+        "B": "The data files are deleted the instant the command commits, leaving no window",
+        "C": "The data files are left in cloud storage permanently and must be removed by hand",
+        "D": "The data files are deleted only once VACUUM runs, with no recovery window at all"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Managed table files are deleted after the recovery period expires, seven days by default",
+      "drill_rationale": "When you drop a managed table, Databricks deletes the data files in cloud storage after the recovery period expires, which defaults to seven days.",
+      "decision_hinge": "When you drop a managed table, Databricks deletes the data files in cloud storage after the recovery period expires, which defaults to seven days.",
+      "plausible_options": {
+        "B": "asks whether the underlying files are already gone for good"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "what happens to data files in cloud storage",
+          "requires_fact": "Dropping a managed table causes Databricks to delete the data files in cloud storage, reducing storage costs."
+        },
+        "D": "their recovery plan depends on whether any window exists at all"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling — deletion really does follow the drop, but not instantly, which is the whole point for recovery",
+        "C": "T3: confusable sibling — that is external table behaviour applied to a managed table",
+        "D": "T2: wrong layer — VACUUM removes unreferenced files from a live table rather than cleaning up a dropped one"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/managed"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-032",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A table was registered over files that another team's pipeline writes and continues to own. After the table is dropped from the catalog, that other pipeline keeps reading the same files without interruption, and nobody restored anything to make that work.",
+      "option_texts": {
+        "A": "The table was managed, so dropping it removed metadata but kept the data files",
+        "B": "The table was external, so dropping it removed metadata but kept the data files",
+        "C": "The table was shallow cloned, so dropping it never touched the original files",
+        "D": "The table was protected by a retention threshold that blocked the file deletion"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Dropping an external table removes the metadata but leaves the underlying files",
+      "drill_rationale": "When you drop an external table, Unity Catalog removes the table metadata but does not delete the underlying data files.",
+      "decision_hinge": "When you drop an external table, Unity Catalog removes the table metadata but does not delete the underlying data files.",
+      "plausible_options": {
+        "C": "that other pipeline keeps reading the same files without interruption"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "After the table is dropped from the catalog",
+          "requires_fact": "When you drop a managed table, Databricks deletes the data files in cloud storage after the recovery period expires."
+        },
+        "D": "nobody restored anything to make that work"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — the right description of drop behaviour, attached to the wrong table type",
+        "C": "T3: confusable sibling — a clone also leaves the source untouched, but nothing here suggests one existed",
+        "D": "T5: right diagnosis, wrong symptom — a retention window delays deletion rather than preserving files indefinitely"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/external",
+        "https://docs.databricks.com/aws/en/tables/managed"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-033",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A service principal needs read-only access to exactly one table in a governed catalog, and the security review insists on the smallest set of grants that makes the query work. Nothing beyond reading that single table should become possible. Select the TWO grants that must accompany SELECT on the table.",
+      "option_texts": {
+        "A": "USE CATALOG on the catalog that contains the table",
+        "B": "USE SCHEMA on the schema that contains the table",
+        "C": "MODIFY on the table so the reader can open a session",
+        "D": "SELECT on the schema so every table inside is readable",
+        "E": "ALL PRIVILEGES on the catalog, narrowed later by review"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_response",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A,B",
+      "drill_answer_short": "Reading a table also needs USE CATALOG on its catalog and USE SCHEMA on its schema",
+      "drill_rationale": "Unity Catalog privileges follow the object hierarchy, so a principal needs USE CATALOG on the parent catalog and USE SCHEMA on the parent schema in addition to SELECT on the table.",
+      "decision_hinge": "Unity Catalog privileges follow the object hierarchy, so a principal needs USE CATALOG on the parent catalog and USE SCHEMA on the parent schema in addition to SELECT on the table.",
+      "plausible_options": {
+        "D": "the security review insists on the smallest set of grants that makes the query work"
+      },
+      "eliminated_by": {
+        "C": "Nothing beyond reading that single table should become possible",
+        "E": {
+          "signal": "needs read-only access to exactly one table in a governed catalog",
+          "requires_fact": "Privileges in Unity Catalog are granted on securable objects and inherited down the hierarchy from catalog to schema to table."
+        }
+      },
+      "distractor_traps": {
+        "C": "T4: breaks a stated requirement — MODIFY grants write access the review explicitly forbids",
+        "D": "T8: scope error — a schema-level SELECT opens every table in the schema, not just the one",
+        "E": "T4: breaks a stated requirement — the broadest possible grant is the opposite of least privilege"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-034",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "An administrator granted a group SELECT on a specific table and the statement returned success. Members of that group still hit an insufficient permissions error the moment they query it, and no row filter or column mask has been defined anywhere on the table.",
+      "option_texts": {
+        "A": "The grant statement silently failed because the administrator did not own it",
+        "B": "The group is missing a second SELECT grant issued at the parent catalog level",
+        "C": "The group is missing traversal grants on the parent catalog and parent schema",
+        "D": "The grant needs a cluster restart before Unity Catalog begins enforcing it"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "SELECT alone is not enough — USE CATALOG and USE SCHEMA are needed to traverse to the table",
+      "drill_rationale": "Unity Catalog privileges follow the object hierarchy, so a principal also needs USE CATALOG on the parent catalog and USE SCHEMA on the parent schema before a table-level SELECT can be exercised.",
+      "decision_hinge": "Unity Catalog privileges follow the object hierarchy, so a principal also needs USE CATALOG on the parent catalog and USE SCHEMA on the parent schema before a table-level SELECT can be exercised.",
+      "plausible_options": {
+        "B": "Members of that group still hit an insufficient permissions error"
+      },
+      "eliminated_by": {
+        "A": "the statement returned success",
+        "D": "no row filter or column mask has been defined anywhere on the table"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement — the stem says the statement succeeded",
+        "B": "T3: confusable sibling — a catalog-level grant is involved, but it is USE CATALOG rather than another SELECT",
+        "D": "T1: fabricated — no restart is required for a grant to take effect"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-035",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "Before assigning a group a new, deliberately narrow set of permissions on a schema, a team has to be certain the group retains nothing it was granted previously. Nobody has an inventory of what was handed out over the years, and the team wants one statement that clears the slate without blocking future grants.",
+      "option_texts": {
+        "A": "Transfer ownership of the schema to the group so older grants stop applying",
+        "B": "DENY ALL PRIVILEGES on the schema to the group, overriding the prior grants",
+        "C": "SHOW GRANTS on the schema for the group, listing whatever was granted before",
+        "D": "REVOKE ALL PRIVILEGES on the schema from the group, clearing prior grants"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "REVOKE ALL PRIVILEGES removes existing grants and still allows new ones afterwards",
+      "drill_rationale": "REVOKE removes previously granted privileges on a securable object from a principal, while leaving the principal eligible to receive new grants.",
+      "decision_hinge": "REVOKE removes previously granted privileges on a securable object from a principal, while leaving the principal eligible to receive new grants.",
+      "plausible_options": {
+        "B": "has to be certain the group retains nothing it was granted previously"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "assigning a group a new, deliberately narrow set of permissions",
+          "requires_fact": "Privileges on a Unity Catalog securable are granted and revoked from principals, and ownership is a separate concept from the granted privilege set."
+        },
+        "C": "the team wants one statement that clears the slate"
+      },
+      "distractor_traps": {
+        "A": "T8: scope error — ownership confers broad control rather than clearing a privilege list",
+        "B": "T3: confusable sibling — an explicit denial also stops prior access, but it keeps blocking the narrow grants the team intends to add next",
+        "C": "T2: wrong layer — listing grants reports the state without changing it"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-036",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A masking function is already registered and the team now has to attach it to one sensitive column on a single existing table, so that unauthorised readers see a redacted value at query time. They want the statement that binds the function to that column specifically.",
+      "option_texts": {
+        "A": "ALTER TABLE accounts ALTER COLUMN card SET MASK mask_card",
+        "B": "ALTER TABLE accounts SET MASK mask_card ON COLUMN card",
+        "C": "ALTER TABLE accounts SET ROW FILTER mask_card ON (card)",
+        "D": "GRANT MASK mask_card ON COLUMN accounts.card TO analysts"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.3",
+      "blueprint_task_title": "Understand column-level masking and row-level security to restrict data visibility based on user groups",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "A column mask is bound with ALTER TABLE ... ALTER COLUMN ... SET MASK",
+      "drill_rationale": "Row filters and column masks are Unity Catalog access controls that restrict the rows and column values a user can see at query time, and a table-level control is bound to a single table using ALTER TABLE.",
+      "decision_hinge": "Row filters and column masks are Unity Catalog access controls that restrict the rows and column values a user can see at query time, and a table-level control is bound to a single table using ALTER TABLE.",
+      "plausible_options": {
+        "B": "attach it to one sensitive column on a single existing table"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "so that unauthorised readers see a redacted value at query time",
+          "requires_fact": "Row filters restrict which rows a user can see in a table, whereas column masks restrict the column values a user can see."
+        },
+        "D": "They want the statement that binds the function to that column specifically"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling — the right clause names in the wrong grammatical order for a column mask",
+        "C": "T3: confusable sibling — the row filter statement, which limits rows rather than redacting a value",
+        "D": "T2: wrong layer — masking is attached to the column, not granted as a privilege to a group"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/row-and-column-filters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-037",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A registered function decides which regions a caller may see, and the team must now bind it to one existing table so that unauthorised readers get fewer rows rather than redacted values. The function takes the region column as its argument and the binding has to name that argument.",
+      "option_texts": {
+        "A": "ALTER TABLE sales ALTER COLUMN region SET ROW FILTER region_filter",
+        "B": "ALTER TABLE sales SET ROW FILTER region_filter ON (region)",
+        "C": "ALTER TABLE sales ALTER COLUMN region SET MASK region_filter",
+        "D": "SET ROW FILTER region_filter ON TABLE sales TO COLUMN region"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.3",
+      "blueprint_task_title": "Understand column-level masking and row-level security to restrict data visibility based on user groups",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "A row filter is bound with ALTER TABLE ... SET ROW FILTER ... ON (column)",
+      "drill_rationale": "Table-level row filters are bound to a single table using ALTER TABLE SET ROW FILTER and managed by the table owner.",
+      "decision_hinge": "Table-level row filters are bound to a single table using ALTER TABLE SET ROW FILTER and managed by the table owner.",
+      "plausible_options": {
+        "A": "The function takes the region column as its argument and the binding has to name that argument"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "unauthorised readers get fewer rows rather than redacted values",
+          "requires_fact": "Row filters restrict which rows a user can see in a table, while column masks restrict the column values returned."
+        },
+        "D": "the team must now bind it to one existing table"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — a filter applies to the table while naming a column argument, not to the column itself",
+        "C": "T3: confusable sibling — the column mask statement, which redacts values instead of removing rows",
+        "D": "T1: fabricated — this statement shape does not exist"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/row-and-column-filters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-038",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A function must return the real diagnosis value to members of the doctors group and the literal CONFIDENTIAL to everyone else. A reviewer is checking the branch order, because an inverted condition would quietly expose the sensitive value to the wrong audience while still looking plausible in review.",
+      "option_texts": {
+        "A": "RETURN CASE WHEN is_account_group_member('diagnosis') THEN doctors ELSE 'CONFIDENTIAL' END",
+        "B": "RETURN CASE WHEN is_account_group_member('doctors') THEN 'CONFIDENTIAL' ELSE diagnosis END",
+        "C": "RETURN CASE WHEN is_account_group_member('doctors') THEN diagnosis ELSE 'CONFIDENTIAL' END",
+        "D": "RETURN CASE WHEN diagnosis IS NOT NULL THEN diagnosis ELSE 'CONFIDENTIAL' END"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.3",
+      "blueprint_task_title": "Understand column-level masking and row-level security to restrict data visibility based on user groups",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Group members get the real value; the ELSE branch returns the redacted literal",
+      "drill_rationale": "A column mask is a function whose condition decides, at query time, which callers receive the real column value and which receive a redacted value instead.",
+      "decision_hinge": "A column mask is a function whose condition decides, at query time, which callers receive the real column value and which receive a redacted value instead.",
+      "plausible_options": {
+        "D": "A reviewer is checking the branch order"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "the literal CONFIDENTIAL to everyone else",
+          "requires_fact": "The group membership check takes the group name as its argument and the masking function returns the column value for permitted callers."
+        },
+        "B": "must return the real diagnosis value to members of the doctors group"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated — the column name and the group name are swapped into each other's positions",
+        "B": "T4: breaks a stated requirement — this is the inverted branch the reviewer is looking for, redacting precisely the audience that should see the value",
+        "D": "T5: right diagnosis, wrong symptom — it branches on whether a value exists rather than on who is asking"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/row-and-column-filters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-039",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "Hundreds of tables across one catalog carry columns holding the same category of sensitive data, and new tables appear every week. The team wants consistent masking applied everywhere without editing each table as it is created, and without maintaining a separate object per table.",
+      "option_texts": {
+        "A": "Grant the sensitive columns to nobody, so only table owners can read them at all",
+        "B": "Run ALTER TABLE to set a column mask on each table as part of its creation script",
+        "C": "Build a dynamic view over every table and point all consumers at the views instead",
+        "D": "Define an ABAC policy whose conditions match the governed tags on those columns"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.4",
+      "blueprint_task_title": "Understand Unity Catalog ABAC policies to centrally control row-level filtering and column masking for sensitive data",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "ABAC policies apply by governed tag, so new matching tables are covered automatically",
+      "drill_rationale": "Databricks recommends ABAC policies when you need consistent row filtering and column masking across many tables, and when a securable object has the attributes targeted by a policy that policy takes effect automatically.",
+      "decision_hinge": "Databricks recommends ABAC policies when you need consistent row filtering and column masking across many tables, and when a securable object has the attributes targeted by a policy that policy takes effect automatically.",
+      "plausible_options": {
+        "B": "Hundreds of tables across one catalog carry columns holding the same category of sensitive data"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "new tables appear every week",
+          "requires_fact": "A single ABAC policy can enforce consistent access rules across an entire metastore, catalog, or schema."
+        },
+        "C": "without maintaining a separate object per table"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement — blocking access entirely is not masking",
+        "B": "T8: scope error — per-table statements do work, but they must be repeated for every table forever",
+        "C": "T7: over-engineering — a view per table is the separate object the team is trying to avoid"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/",
+        "https://docs.databricks.com/aws/en/tables/row-and-column-filters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-040",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde07-governance-batch01.json",
+      "stem": "A governance lead is explaining how an ABAC policy knows which columns it should protect, given that the policy text never lists any table or column by name. An auditor wants to understand the mechanism that connects a single written policy to the specific data it ends up covering.",
+      "option_texts": {
+        "A": "Governed tags on the objects, which policy conditions match to select what is protected",
+        "B": "An explicit allowlist of table names, compiled into the policy when it is first created",
+        "C": "Column name pattern matching, which protects any column whose name looks sensitive",
+        "D": "The ownership chain, which protects whatever the policy author happens to own already"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.4",
+      "blueprint_task_title": "Understand Unity Catalog ABAC policies to centrally control row-level filtering and column masking for sensitive data",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Governed tags are the attributes ABAC policy conditions match on",
+      "drill_rationale": "Attributes represented through governed tags are used in policy conditions to identify which data a policy should protect.",
+      "decision_hinge": "Attributes represented through governed tags are used in policy conditions to identify which data a policy should protect.",
+      "plausible_options": {
+        "C": "the policy text never lists any table or column by name"
+      },
+      "eliminated_by": {
+        "B": "the policy text never lists any table or column by name",
+        "D": {
+          "signal": "the mechanism that connects a single written policy to the specific data it ends up covering",
+          "requires_fact": "When a securable object has the attributes targeted by a policy, that policy takes effect automatically across the metastore, catalog, or schema."
+        }
+      },
+      "distractor_traps": {
+        "C": "T3: confusable sibling — matching on an attribute is right, but the attribute is an assigned tag rather than the column's name",
+        "B": "T4: breaks a stated requirement — an allowlist is exactly the naming the stem says is absent",
+        "D": "T2: wrong layer — ownership governs who may administer an object, not which objects a policy covers"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 279,
+  "total": 289,
   "last_updated_at": "2026-11-03"
 }
