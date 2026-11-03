@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 191,
+  "count": 196,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1529,6 +1529,46 @@
       "title": "Optimize data file layout | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "b13e061313d1d2439946a5478e2c54622e713dddb57bfee983786fa2d872866d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/sql-warehouse/create",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/sql-warehouse/create.txt",
+      "title": "Create a SQL warehouse | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "28e7cd8f4bddb74ac5b4192275240a4b497f33ad941f0ba896722eead032f3d3",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-setops",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-setops.txt",
+      "title": "Set operators | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "6b9d56de3195e5f5a51c2a76333dfce04629ef69132967e0fd8d0a418f120319",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/to_date",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/to_date.txt",
+      "title": "to_date function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "5d303f5935fabb6684309f1a017cc8350f843ab8b15db2b6dd2217be1a1d64ee",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/lakehouse/medallion",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/lakehouse/medallion.txt",
+      "title": "What is the medallion lakehouse architecture? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "13b02a1fa2dd946cdb33cc1a906f1678d04457b4af6a2b0acc4f9967ca34c41d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-sql-function",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-sql-function.txt",
+      "title": "CREATE FUNCTION (SQL, Python, Scala, and Java) | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b3ad0c2ebe2b77e545b7d5b957e8cb8f10d5dad26887f123d94657b554fd4206",
       "source": "mcp-cache_fetch"
     }
   ]

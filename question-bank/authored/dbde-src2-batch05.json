@@ -1,0 +1,212 @@
+[
+  {
+    "id": "draft-dbde03-intersect-rows-in-both",
+    "domain": "dbde-03",
+    "blueprint_task": "3.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A reconciliation job compares two result sets of identical shape and has to return only the records present on both sides. Duplicate records must not survive into the output, and the team would rather not write a join for this.",
+    "option_texts": {
+      "A": "INTERSECT, which returns the set of rows which are in both subqueries",
+      "B": "UNION, which combines both sides and keeps each record once",
+      "C": "EXCEPT, which keeps the records of the first side that the second lacks",
+      "D": "UNION ALL, which stacks both sides and leaves every record in place"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "INTERSECT returns the rows present in both subqueries, and DISTINCT is its default",
+    "decision_hinge": "INTERSECT returns the set of rows which are in both subqueries, and if DISTINCT is specified the result does not contain any duplicate rows, which is the default.",
+    "plausible_options": {
+      "B": "return only the records present on both sides"
+    },
+    "eliminated_by": {
+      "C": "compares two result sets of identical shape",
+      "D": "Duplicate records must not survive into the output"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - UNION merges both sides rather than keeping only the overlap",
+      "C": "T3: confusable sibling - EXCEPT is the complement, returning what the second side lacks",
+      "D": "T5: common misconception - ALL preserves duplicate rows, which the team ruled out"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-setops"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-to-date-with-format",
+    "domain": "dbde-03",
+    "blueprint_task": "3.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A bronze column holds values such as 2026-01 as plain strings, and the silver model needs a real date column built from them. The pattern is not one the engine will guess, so the conversion has to be told the layout explicitly.",
+    "option_texts": {
+      "A": "to_date on the column alone, since the engine infers any layout it meets",
+      "B": "to_date on the column with a format argument describing the layout",
+      "C": "date_format on the column, which turns a string into a date by pattern",
+      "D": "cast the column to date, which reads any layout the string happens to use"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "to_date(expr, fmt) casts the expression to a date using the supplied formatting",
+    "decision_hinge": "The to_date function returns expr cast to a date using an optional formatting given by the fmt argument.",
+    "plausible_options": {
+      "A": "the silver model needs a real date column built from them"
+    },
+    "eliminated_by": {
+      "C": "The pattern is not one the engine will guess",
+      "D": "the conversion has to be told the layout explicitly"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - the bare call works for recognised layouts, which the stem rules out",
+      "C": "T2: scope error - date_format renders a date as a string, the opposite direction",
+      "D": "T5: common misconception - a plain cast handles standard layouts only"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/functions/to_date"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-create-function-udf",
+    "domain": "dbde-03",
+    "blueprint_task": "3.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "An engineer wants one piece of reusable logic that analysts can call straight from SQL across several notebooks, registered in Unity Catalog so permissions apply to it. Nobody should have to import a helper module to use it.",
+    "option_texts": {
+      "A": "CREATE VIEW in the catalog wrapping the logic, which analysts select from instead",
+      "B": "A Python helper in a workspace file that each notebook imports before use",
+      "C": "CREATE FUNCTION, which registers a callable routine in the catalog",
+      "D": "A notebook of shared logic that other notebooks invoke with a run command"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "CREATE FUNCTION registers a SQL or Python user defined function as a catalog object",
+    "decision_hinge": "The CREATE FUNCTION statement creates a SQL scalar or table function, or a Python scalar function, that takes a set of arguments and returns a value, and the function is registered in the schema where it is created.",
+    "plausible_options": {
+      "A": "reusable logic that analysts can call straight from SQL across several notebooks"
+    },
+    "eliminated_by": {
+      "B": "Nobody should have to import a helper module to use it",
+      "D": "registered in Unity Catalog so permissions apply to it"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - a view returns a fixed result set and cannot take arguments",
+      "B": "T4: breaks a stated requirement - an imported module is exactly what the team ruled out",
+      "D": "T2: scope error - a shared notebook is not a governed catalog object"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-sql-function"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde01-auto-stop-idle-charges",
+    "domain": "dbde-01",
+    "blueprint_task": "1.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A finance review flags a SQL warehouse that costs money overnight although no analyst queries it after six in the evening. The warehouse is left running so the first morning query does not wait, and the team must explain what the idle hours actually cost.",
+    "option_texts": {
+      "A": "An idle warehouse is billed only for the queries it serves, so the hours are free",
+      "B": "An idle warehouse drops to a reduced rate that Auto Stop cannot influence",
+      "C": "An idle warehouse is suspended by the platform automatically after one hour",
+      "D": "An idle warehouse keeps accruing charges until it stops, which Auto Stop controls"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "Idle SQL warehouses continue to accumulate DBU and cloud charges until they stop; Auto Stop sets the idle cut-off",
+    "decision_hinge": "Auto Stop determines whether the warehouse stops if it is idle for the specified number of minutes, and idle SQL warehouses continue to accumulate DBU and cloud instance charges until they are stopped.",
+    "plausible_options": {
+      "C": "The warehouse is left running so the first morning query does not wait"
+    },
+    "eliminated_by": {
+      "A": "costs money overnight although no analyst queries it",
+      "B": "the team must explain what the idle hours actually cost"
+    },
+    "distractor_traps": {
+      "A": "T5: common misconception - billing follows the running resource, not the query count",
+      "B": "T1: fabricated - there is no reduced idle rate for a running warehouse",
+      "C": "T3: confusable sibling - stopping is governed by the configured Auto Stop value, not a fixed hour"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/compute/sql-warehouse/create"
+    ],
+    "topics": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ]
+  },
+  {
+    "id": "draft-dbde03-silver-layer-refined",
+    "domain": "dbde-03",
+    "blueprint_task": "3.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A team is agreeing what belongs in the middle tier of its medallion design. Analysts want detail preserved for in-depth work, while the aggregated reporting tables are being built separately above it.",
+    "option_texts": {
+      "A": "A refined dataset that still retains detailed information for in-depth analysis",
+      "B": "Raw records exactly as they landed, so nothing is lost before processing begins",
+      "C": "Business level aggregates shaped for dashboards rather than in-depth analysis",
+      "D": "A copy of the source system schema kept purely for disaster recovery purposes"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "The Silver layer holds a more refined dataset that still retains the detail needed for in-depth analysis",
+    "decision_hinge": "Data analysts use the Silver layer for a more refined dataset that still retains detailed information necessary for in-depth analysis.",
+    "plausible_options": {
+      "C": "agreeing what belongs in the middle tier of its medallion design"
+    },
+    "eliminated_by": {
+      "B": "Analysts want detail preserved for in-depth work",
+      "D": "the aggregated reporting tables are being built separately above it"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - untouched landing records are the Bronze tier, one level below",
+      "C": "T3: confusable sibling - business aggregates are the Gold tier, which the stem places above",
+      "D": "T1: fabricated - no medallion tier exists for disaster recovery copies"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/lakehouse/medallion"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-except-complement",
+    "domain": "dbde-03",
+    "blueprint_task": "3.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A data quality check has to list the identifiers that appear in an expected set but are absent from the loaded set, using two queries of identical shape. The output must not repeat an identifier even when the expected set holds it twice.",
+    "option_texts": {
+      "A": "INTERSECT, which keeps only identifiers found on both of the two sides",
+      "B": "EXCEPT, whose default form returns the first side's rows without duplicates",
+      "C": "EXCEPT ALL, which returns the first side's surplus rows and keeps repeats",
+      "D": "UNION, which brings the two sides together and removes repeated rows"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "EXCEPT returns rows of the first subquery absent from the second, and DISTINCT is the default",
+    "decision_hinge": "With the set operators, if ALL is specified duplicate rows are preserved, and if DISTINCT is specified the result does not contain any duplicate rows, which is the default.",
+    "plausible_options": {
+      "C": "identifiers that appear in an expected set but are absent from the loaded set"
+    },
+    "eliminated_by": {
+      "A": "using two queries of identical shape",
+      "D": "The output must not repeat an identifier"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - INTERSECT returns the overlap, the opposite of what is wanted",
+      "C": "T3: confusable sibling - ALL preserves the repeats the stem forbids",
+      "D": "T5: common misconception - UNION merges the sides instead of subtracting one"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-setops"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  }
+]
