@@ -19624,8 +19624,258 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-135",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch14.json",
+      "stem": "A stream was first started against a folder that already held a year of history, and the backfill came through as expected. Months later the team sets the option that governs pre-existing files to false, restarts, and sees no change at all.",
+      "option_texts": {
+        "A": "The option is evaluated only on the very first start, so a restart cannot change it",
+        "B": "The option needs the checkpoint cleared as well, after which the restart would apply",
+        "C": "The option applies only in notification mode, and this stream lists the directory",
+        "D": "The option was overridden, because a change to the folder contents outranks it"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "cloudFiles.includeExistingFiles is evaluated only when the stream starts for the first time; later changes have no effect",
+      "drill_rationale": "The cloudFiles.includeExistingFiles option is evaluated only when you start a stream for the first time, and changing this option after restarting the stream has no effect.",
+      "decision_hinge": "The cloudFiles.includeExistingFiles option is evaluated only when you start a stream for the first time, and changing this option after restarting the stream has no effect.",
+      "plausible_options": {
+        "B": "restarts, and sees no change at all"
+      },
+      "eliminated_by": {
+        "C": "A stream was first started against a folder that already held a year of history",
+        "D": "the team sets the option that governs pre-existing files to false"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - a fresh checkpoint is a new first start, but the option itself still never re-applies to this stream",
+        "C": "T1: fabricated - the option is not limited to one discovery mode",
+        "D": "T5: common misconception - file age does not override a stream option"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/options"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-136",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch14.json",
+      "stem": "A stream infers its shape from JSON files that hold obvious numbers and dates, yet every field lands in the silver table as text. Nothing downstream is casting anything, and the team wants the reason before they add casts everywhere.",
+      "option_texts": {
+        "A": "Inference is off entirely, so the reader falls back to one text column per field",
+        "B": "Exact column types are not inferred by default, so JSON fields come through as strings",
+        "C": "Inference reads only the first file, which happened to quote all of its values",
+        "D": "The target table was created with text columns, so the values were cast on write"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "cloudFiles.inferColumnTypes defaults to false, so columns are inferred as strings for JSON and CSV",
+      "drill_rationale": "The cloudFiles.inferColumnTypes option defaults to false, and by default columns are inferred as strings when inferring JSON and CSV datasets.",
+      "decision_hinge": "The cloudFiles.inferColumnTypes option defaults to false, and by default columns are inferred as strings when inferring JSON and CSV datasets.",
+      "plausible_options": {
+        "D": "every field lands in the silver table as text"
+      },
+      "eliminated_by": {
+        "A": "A stream infers its shape from JSON files that hold obvious numbers and dates",
+        "C": "the team wants the reason before they add casts everywhere"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - inference is running, it simply does not resolve exact types by default",
+        "C": "T5: common misconception - sampling breadth is not what makes the columns text",
+        "D": "T2: scope error - the question is how the source was read, not how the target was declared"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/options"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-137",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch14.json",
+      "stem": "A producer rewrites yesterday's file in place with corrected rows, keeping the same name and path. The stream is on delivered settings and the correction never reaches the target, so the team must say why.",
+      "option_texts": {
+        "A": "Rewrites arrive one batch late, because a changed file is held back for a cycle",
+        "B": "Rewrites are always ignored, because a processed name can never be revisited",
+        "C": "Rewrites are ignored by default, because changes to an input file are not picked up",
+        "D": "Rewrites need the target truncating first, because the reader compares row counts"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "cloudFiles.allowOverwrites defaults to false, so input directory file changes do not overwrite existing data",
+      "drill_rationale": "The cloudFiles.allowOverwrites option defaults to false and controls whether to allow input directory file changes to overwrite existing data.",
+      "decision_hinge": "The cloudFiles.allowOverwrites option defaults to false and controls whether to allow input directory file changes to overwrite existing data.",
+      "plausible_options": {
+        "B": "the correction never reaches the target"
+      },
+      "eliminated_by": {
+        "A": "The stream is on delivered settings",
+        "D": "keeping the same name and path"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - there is no one-cycle delay for a changed file",
+        "B": "T3: confusable sibling - it is the default rather than a permanent rule, and an option changes it",
+        "D": "T1: fabricated - nothing compares row counts between source and target"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/options"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-138",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch14.json",
+      "stem": "A governance lead is explaining how the platform reaches a bucket it does not own. They have to separate the object that names where the data sits from the object that holds the right to read it.",
+      "option_texts": {
+        "A": "An external location names the path and holds its own embedded key material",
+        "B": "A single catalog property carries both the path and the access key together",
+        "C": "A storage credential defines the path and references an external location",
+        "D": "An external location defines the path and references a storage credential"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "An external location defines a path plus the credentials to reach it, and those credentials live in a storage credential",
+      "drill_rationale": "An external location defines a path to a cloud storage location and the credentials required to access that location, and those credentials are in turn defined in a storage credential.",
+      "decision_hinge": "An external location defines a path to a cloud storage location and the credentials required to access that location, and those credentials are in turn defined in a storage credential.",
+      "plausible_options": {
+        "A": "separate the object that names where the data sits from the object that holds the right to read it"
+      },
+      "eliminated_by": {
+        "B": "the object that holds the right to read it",
+        "C": "explaining how the platform reaches a bucket it does not own"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the path object is right but the credential lives in its own securable",
+        "B": "T1: fabricated - no single property carries both",
+        "C": "T3: confusable sibling - the two roles are correct but assigned to the wrong objects"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/external-locations"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-139",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch14.json",
+      "stem": "A team has a pile of PDFs and images that must sit under the same permission model as the rest of the estate. They are picking the securable that exists for content which is not rows and columns.",
+      "option_texts": {
+        "A": "A volume, the securable that governs non-tabular data of any format",
+        "B": "An external location, which is the securable for content of any format",
+        "C": "A table, since any content can be held as rows once it is encoded",
+        "D": "A schema property, because file content is governed at the schema level"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Volumes govern non-tabular data of any format, where tables govern tabular data",
+      "drill_rationale": "While tables govern tabular data, volumes govern non-tabular data of any format, including structured, semi-structured, or unstructured content.",
+      "decision_hinge": "While tables govern tabular data, volumes govern non-tabular data of any format, including structured, semi-structured, or unstructured content.",
+      "plausible_options": {
+        "B": "must sit under the same permission model as the rest of the estate"
+      },
+      "eliminated_by": {
+        "C": "a pile of PDFs and images",
+        "D": "the securable that exists for content which is not rows and columns"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - an external location grants access to a path rather than governing the files as a dataset",
+        "C": "T5: common misconception - encoding files into rows abandons the purpose-built securable",
+        "D": "T1: fabricated - no schema property governs file content"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/volumes/index"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 383,
+  "total": 388,
   "last_updated_at": "2026-11-03"
 }

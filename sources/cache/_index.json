@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 219,
+  "count": 222,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1753,6 +1753,30 @@
       "title": "Expectation recommendations and advanced patterns | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "b373454b2cb3e251e8692389439402d2b79adb8a8d29e1b02d561f9e093f8a9f",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/volumes/index",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/volumes/index.txt",
+      "title": "What are Unity Catalog volumes? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "492656f451f2d64358c7b5e5ee76741a64f5d5ceb3a14b4cba48ba09d281a425",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/external-locations",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/external-locations.txt",
+      "title": "Connect to cloud object storage using Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "925f39e06b3b105e261d5cf95f5f402acb81f388bb154eeec2aba72d466db703",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/storage-credentials",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/connect/unity-catalog/cloud-storage/storage-credentials.txt",
+      "title": "Connect to cloud object storage using Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "925f39e06b3b105e261d5cf95f5f402acb81f388bb154eeec2aba72d466db703",
       "source": "mcp-cache_fetch"
     }
   ]
