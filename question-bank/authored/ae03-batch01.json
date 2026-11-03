@@ -8,11 +8,11 @@
     "stem": "A CI step must validate that every Jinja reference and YAML property in the project is readable, and it runs on a runner that has no warehouse credentials at all. The step should fail the build when the project code is invalid. Which command fits?",
     "option_texts": {
       "A": "Run `dbt compile`, which renders the SQL for every node",
-      "B": "Run `dbt debug`, which checks the project file and environment",
-      "C": "Run `dbt parse`, which reads and validates the project code",
+      "B": "Run `dbt parse`, which reads and validates the project code",
+      "C": "Run `dbt debug`, which checks the project file and environment",
       "D": "Run `dbt build --empty`, which reads inputs as zero rows"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "dbt parse — the only one that validates project code without a warehouse connection",
     "decision_hinge": "If you just want dbt to read and validate your project code, without connecting to the data warehouse, use dbt parse instead.",
     "sources": [
@@ -21,7 +21,7 @@
       "https://docs.getdbt.com/reference/commands/run"
     ],
     "plausible_options": {
-      "B": "validate that every Jinja reference and YAML property in the project is readable"
+      "C": "validate that every Jinja reference and YAML property in the project is readable"
     },
     "eliminated_by": {
       "A": {
@@ -35,7 +35,7 @@
     },
     "distractor_traps": {
       "A": "T4: compile requires a data platform connection, which the stem rules out",
-      "B": "T3: dbt debug checks the connection, project file, and environment — it is a setup check, not a code validation",
+      "C": "T3: dbt debug checks the connection, project file, and environment — it is a setup check, not a code validation",
       "D": "T5: --empty removes the input rows, not the warehouse connection"
     },
     "topics": [
@@ -51,11 +51,11 @@
     "stem": "A scheduled job is defined as `dbt deps`, then `dbt compile`, then `dbt build`. The job owner must reduce total runtime without losing any validation the job currently performs. Which step can be removed?",
     "option_texts": {
       "A": "`dbt deps`, since packages are cached between runs anyway",
-      "B": "`dbt compile`, since building commands handle compilation themselves",
-      "C": "`dbt build`, since `dbt compile` already writes the objects",
+      "B": "`dbt build`, since `dbt compile` already writes the objects",
+      "C": "`dbt compile`, since building commands handle compilation themselves",
       "D": "None of them, since each step validates something the next relies on"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "dbt compile is not a prerequisite of dbt run or other building commands",
     "decision_hinge": "dbt compile is not a pre-requisite of dbt run, or other building commands. Those commands will handle compilation themselves.",
     "sources": [
@@ -71,14 +71,14 @@
         "signal": "A scheduled job is defined as `dbt deps`, then `dbt compile`, then `dbt build`",
         "requires_fact": "deps downloads dependencies for a project."
       },
-      "C": {
+      "B": {
         "signal": "without losing any validation the job currently performs",
         "requires_fact": "The dbt build command will run models, test tests, snapshot snapshots, and seed seeds in DAG order, for selected resources or an entire project."
       }
     },
     "distractor_traps": {
       "A": "T1: dbt does not cache installed packages across scheduled runs in the way this claims",
-      "C": "T3: compile renders SQL but never materializes it; build is what creates the objects",
+      "B": "T3: compile renders SQL but never materializes it; build is what creates the objects",
       "D": "T7: over-engineering — it defends a step the docs explicitly call unnecessary"
     },
     "topics": [
@@ -199,11 +199,11 @@
     "stem": "A team wants to run every resource whose `materialized` value is `incremental`, and separately to run every resource whose `description` mentions finance. They must use dbt's built-in selection rather than scripting. Which of these is possible?",
     "option_texts": {
       "A": "Both, because every YAML key is exposed to the selection syntax",
-      "B": "Only the `description` one, because selection reads properties and not configs",
-      "C": "Only the `materialized` one, because selection reads configs and not properties",
+      "B": "Only the `materialized` one, because selection reads configs and not properties",
+      "C": "Only the `description` one, because selection reads properties and not configs",
       "D": "Neither, because `materialized` and `description` are both plain properties"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "The config: selection method reads config values, not non-config properties",
     "decision_hinge": "You can select resources based on their config values using the config: selection method, but not the values of non-config properties.",
     "sources": [
@@ -214,7 +214,7 @@
       "A": "They must use dbt's built-in selection rather than scripting"
     },
     "eliminated_by": {
-      "B": {
+      "C": {
         "signal": "run every resource whose `materialized` value is `incremental`",
         "requires_fact": "Configs are a special kind of property, set in properties.yml under a config property, via a config() macro in .sql files, or for many resources at once in dbt_project.yml."
       },
@@ -225,7 +225,7 @@
     },
     "distractor_traps": {
       "A": "T5: right instinct that YAML drives selection, wrong about which YAML keys are exposed",
-      "B": "T3: inverted — properties describe resources, configs are what selection can read",
+      "C": "T3: inverted — properties describe resources, configs are what selection can read",
       "D": "T8: scope error — it treats a config as though it were an ordinary property"
     },
     "topics": [

@@ -50,18 +50,18 @@
     "stem": "A team is about to refactor a complex revenue calculation. They must prove the new SQL produces the expected output for a handful of hand-written edge-case rows, and the check must run before the model is materialized anywhere. Which kind of test fits?",
     "option_texts": {
       "A": "A singular data test, which returns the rows that should not exist",
-      "B": "A unit test, which validates modelling logic against static inputs",
-      "C": "A custom generic data test, reusable across every revenue model",
+      "B": "A custom generic data test, reusable across every revenue model",
+      "C": "A unit test, which validates modelling logic against static inputs",
       "D": "An `accepted_values` generic test on the calculated revenue column"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Unit tests validate logic on static inputs before the model is materialized",
     "decision_hinge": "Unit tests allow you to validate your SQL modeling logic on a small set of static inputs before you materialize your full model in production.",
     "sources": [
       "https://docs.getdbt.com/docs/build/unit-tests"
     ],
     "plausible_options": {
-      "C": "They must prove the new SQL produces the expected output for a handful of hand-written edge-case rows"
+      "B": "They must prove the new SQL produces the expected output for a handful of hand-written edge-case rows"
     },
     "eliminated_by": {
       "A": {
@@ -75,7 +75,7 @@
     },
     "distractor_traps": {
       "A": "T3: a singular data test is still a data test and runs only after the model is built",
-      "C": "T3: reusability is the wrong axis — a custom generic test is still a data test",
+      "B": "T3: reusability is the wrong axis — a custom generic test is still a data test",
       "D": "T8: scope error — accepted_values checks a finite value set, not a calculation's logic"
     },
     "topics": [
@@ -153,11 +153,11 @@
     "stem": "One noisy test sets `store_failures: false` in its config. A scheduled job runs `dbt test --store-failures` so that every other test persists its failing rows. The team must know whether that one test writes a failures table. What happens?",
     "option_texts": {
       "A": "It writes the table, because a command-line flag wins over the config",
-      "B": "It writes the table, because the flag applies to every selected test",
-      "C": "It writes nothing, because the config takes precedence over the flag",
+      "B": "It writes nothing, because the config takes precedence over the flag",
+      "C": "It writes the table, because the flag applies to every selected test",
       "D": "It writes nothing, because `--store-failures` needs `store_failures_as`"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "An explicit true/false store_failures config beats the --store-failures flag",
     "decision_hinge": "If specified as true or false, the store_failures config will take precedence over the presence or absence of the --store-failures flag. If the store_failures config is none or omitted, the resource will use the value of the --store-failures flag.",
     "sources": [
@@ -168,7 +168,7 @@
       "A": "A scheduled job runs `dbt test --store-failures` so that every other test persists its failing rows"
     },
     "eliminated_by": {
-      "B": {
+      "C": {
         "signal": "One noisy test sets `store_failures: false` in its config",
         "requires_fact": "The configured tests will store their failures when dbt test --store-failures is invoked."
       },
@@ -179,7 +179,7 @@
     },
     "distractor_traps": {
       "A": "T6: CLI-beats-config is the normal flag precedence rule, which store_failures deliberately inverts",
-      "B": "T4: it ignores the explicit per-test config named in the stem",
+      "C": "T4: it ignores the explicit per-test config named in the stem",
       "D": "T1: --store-failures has no dependency on store_failures_as being set"
     },
     "topics": [

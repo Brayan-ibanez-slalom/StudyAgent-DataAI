@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 155,
+  "count": 162,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1241,6 +1241,62 @@
       "title": "What are Declarative Automation Bundles? | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "94ae639a4dbd6bf706473c1f6bbad481b3230fc920a5d756f142f4926450bf47",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/optimizations/aqe",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/optimizations/aqe.txt",
+      "title": "Adaptive query execution | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "48074356b1665620552736b8872662b70bb2fcd5216885d2b51c8e6f56e7826d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/explode",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/explode.txt",
+      "title": "explode table-valued generator function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "a300bbaefb15a3693a1cb19d5b20c0d8ae9030a543bbf4679d99e6b06ff757d0",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/streaming",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables/streaming.txt",
+      "title": "Use standalone streaming tables | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "35abf5094b33f996db753ed36b244e28acfa58ca370f731de2b2ba3133150705",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/expectations",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/expectations.txt",
+      "title": "Manage data quality with pipeline expectations | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "91dd411b7b4a195b5c11e0c29df156e5454e382b4f54af8064c814f7cb1e7dd2",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/views/materialized",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/views/materialized.txt",
+      "title": "Use standalone materialized views | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "e60ff78c32b70c3b6e906a65ea21d9cbd990ff0c9fd5a6465478068861d1c789",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/coalesce",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/coalesce.txt",
+      "title": "coalesce function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "29da13b56b461c126a4838924091fffd9137458e93da581cb1dba1218b378f95",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/transform/join",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/transform/join.txt",
+      "title": "Work with joins on Databricks | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "95a039fc1cac4de2c18d787d762315bdb59c31e08de6cdeb5034e527e4b85469",
       "source": "mcp-cache_fetch"
     }
   ]

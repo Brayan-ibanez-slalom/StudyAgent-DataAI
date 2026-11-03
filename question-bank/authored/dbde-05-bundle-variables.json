@@ -7,21 +7,21 @@
     "difficulty_estimate": "L3",
     "stem": "Your team uses a Declarative Automation Bundle to deploy a job that queries a warehouse. The job must use different warehouse IDs in dev, test, and prod environments without editing the databricks.yml file between deployments. Which approach correctly configures warehouse-specific settings in the bundle?",
     "option_texts": {
-      "A": "Define a warehouse_id variable in the variables block with target-specific overrides in each target configuration",
-      "B": "Hard-code the warehouse IDs directly in the job resource definition and add a deployment script to swap them",
+      "A": "Hard-code the warehouse IDs directly in the job resource definition and add a deployment script to swap them",
+      "B": "Define a warehouse_id variable in the variables block with target-specific overrides in each target configuration",
       "C": "Create separate databricks.yml files for each environment and switch between them during CI/CD",
       "D": "Store the warehouse ID in a Databricks secret scope and retrieve it with a spark.conf.set() call in each notebook"
     },
-    "drill_answer": "A",
+    "drill_answer": "B",
     "drill_answer_short": "Bundle variables with target overrides allow the same databricks.yml to deploy to multiple environments. Targets override variable values per environment without modifying source files.",
     "decision_hinge": "The exam guide Task 5.2 explicitly states: Understand environment-specific configuration using Declarative Automation Bundle variables and overrides while promoting the same codebase across dev, test, and prod targets. Targets override variables; the file stays unchanged.",
     "plausible_options": {
-      "B": "Deployment scripts could work, but they require modifying source or adding deployment-time logic rather than using the built-in bundle variables feature.",
+      "A": "Deployment scripts could work, but they require modifying source or adding deployment-time logic rather than using the built-in bundle variables feature.",
       "C": "Multiple databricks.yml files could technically work, but violates the stated requirement: the same codebase must promote without being edited.",
       "D": "Secrets work for sensitive values, but warehouse IDs are not secrets and belong in variables. Also, spark.conf.set() in notebooks puts infrastructure config in application code."
     },
     "distractor_traps": {
-      "B": {
+      "A": {
         "code": "T2",
         "description": "Misplaced: swapping values via deployment script is manual and errorprone; the bundle feature exists to avoid this."
       },
@@ -35,7 +35,7 @@
       }
     },
     "eliminated_by": {
-      "B": {
+      "A": {
         "signal": "without editing the databricks.yml file between deployments",
         "requires_fact": "Databricks Asset Bundles support target-specific variable overrides so the same file deploys to multiple environments without modification."
       },
@@ -64,20 +64,24 @@
     "difficulty_estimate": "L3",
     "stem": "You are working in a Databricks Git folder and need to make changes to a job definition before it is deployed to production. Your team uses a branching strategy where feature development happens on branches. Which action correctly creates and switches to a new branch for your changes?",
     "option_texts": {
-      "A": "Click the branch dropdown in the workspace UI Git panel and select Create Branch, enter the branch name, and confirm",
+      "A": "Use the Lakeflow Jobs UI to create a job-specific branch that applies only to that job",
       "B": "Run databricks bundle deploy --branch feature-name from the CLI to automatically create and switch branches",
       "C": "Edit the databricks.yml file to add a new branch field and then re-open the workspace",
-      "D": "Use the Lakeflow Jobs UI to create a job-specific branch that applies only to that job"
+      "D": "Click the branch dropdown in the workspace UI Git panel and select Create Branch, enter the branch name, and confirm"
     },
-    "drill_answer": "A",
+    "drill_answer": "D",
     "drill_answer_short": "Databricks Git folders integrate branch management into the workspace UI. The branch dropdown provides create and switch operations without using the CLI.",
     "decision_hinge": "Task 5.1 explicitly requires: Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders. The UI Git panel is the tool for this task.",
     "plausible_options": {
+      "A": "Lakeflow Jobs do not have job-specific branches; branching is a repository-level Git concept that affects all files in the folder.",
       "B": "The Databricks CLI is used for bundle validation and deployment, but branch creation is a Git operation handled by Git folders in the workspace UI, not the bundle deploy command.",
-      "C": "databricks.yml defines bundle resources and environments, not Git branches. Branch control is part of Git, not the bundle configuration.",
-      "D": "Lakeflow Jobs do not have job-specific branches; branching is a repository-level Git concept that affects all files in the folder."
+      "C": "databricks.yml defines bundle resources and environments, not Git branches. Branch control is part of Git, not the bundle configuration."
     },
     "distractor_traps": {
+      "A": {
+        "code": "T3",
+        "description": "Confusable sibling: Lakeflow Jobs and Git folders are separate concepts. Git branches apply to the entire repository, not individual jobs."
+      },
       "B": {
         "code": "T2",
         "description": "Misplaced: the CLI is for bundle operations, not Git branch management. Git folders expose branching through the workspace UI."
@@ -85,13 +89,13 @@
       "C": {
         "code": "T1",
         "description": "Fabricated: databricks.yml has no branch field. Branches are managed by Git, not by bundle configuration."
-      },
-      "D": {
-        "code": "T3",
-        "description": "Confusable sibling: Lakeflow Jobs and Git folders are separate concepts. Git branches apply to the entire repository, not individual jobs."
       }
     },
     "eliminated_by": {
+      "A": {
+        "signal": "creating and switching between branches in Databricks Git folders",
+        "requires_fact": "Git folders manage branches at the repository level, not per-job. All files in a branch are affected, not just one job."
+      },
       "B": {
         "signal": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches",
         "requires_fact": "Branch creation is a Git operation available in the workspace UI Git folders panel, not a bundle CLI command."
@@ -99,10 +103,6 @@
       "C": {
         "signal": "creating and switching between branches in Databricks Git folders",
         "requires_fact": "Branches are created and managed through Git, not through bundle configuration files like databricks.yml."
-      },
-      "D": {
-        "signal": "creating and switching between branches in Databricks Git folders",
-        "requires_fact": "Git folders manage branches at the repository level, not per-job. All files in a branch are affected, not just one job."
       }
     },
     "sources": [

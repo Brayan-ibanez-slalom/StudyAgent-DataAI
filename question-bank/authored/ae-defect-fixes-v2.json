@@ -131,11 +131,11 @@
     "stem": "A pull request edits only the `tags` value on one model and a column-level `meta` value on another. A Slim CI job selects `state:modified` against the production manifest and builds nothing. The team must explain the empty run. Why was nothing built?",
     "option_texts": {
       "A": "The comparison manifest was stale, so both edits look unchanged",
-      "B": "Column-level YAML edits never participate in state comparison of any kind",
-      "C": "dbt treats `tags` and `meta` as metadata only, so neither counts",
+      "B": "dbt treats `tags` and `meta` as metadata only, so neither counts",
+      "C": "Column-level YAML edits never participate in state comparison of any kind",
       "D": "`persist_docs` is disabled, so YAML-only edits are all ignored"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "tags and meta are metadata-only and deliberately do not trigger state:modified",
     "decision_hinge": "dbt treats tags and meta as metadata-only fields, not modifications, at both the resource and column level. Changing a tags or meta value doesn't trigger state:modified, because these fields don't affect how dbt materializes the resource.",
     "sources": [
@@ -150,14 +150,14 @@
         "signal": "A pull request edits only the `tags` value on one model",
         "requires_fact": "state:new means there is no node with the same unique_id in the comparison manifest."
       },
-      "B": {
+      "C": {
         "signal": "a column-level `meta` value on another",
         "requires_fact": "description is treated as a modification, but only when persist_docs is enabled, at relation or column level."
       }
     },
     "distractor_traps": {
       "A": "T5: a stale manifest is a real failure mode, but it would also hide genuine code changes",
-      "B": "T1: column-level edits do participate — a column description counts when persist_docs is on",
+      "C": "T1: column-level edits do participate — a column description counts when persist_docs is on",
       "D": "T3: persist_docs governs descriptions specifically, not every YAML-only edit"
     },
     "topics": [

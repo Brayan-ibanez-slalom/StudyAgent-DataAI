@@ -14920,8 +14920,258 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-041",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde03-transformation-batch01.json",
+      "stem": "A pipeline declares a streaming table with one expectation named valid_customer_age. A downstream report still shows ages above 120, so invalid records are clearly reaching the target. The pipeline must keep running while invalid records stop reaching the target, and the team needs to know why the current declaration retains them.",
+      "option_texts": {
+        "A": "Rewrite the clause as EXPECT ... ON VIOLATION FAIL UPDATE so an invalid record stops the update",
+        "B": "Rewrite the query to filter the rows in SQL, because expectations cannot remove records from the target",
+        "C": "Rewrite the clause as EXPECT ... ON VIOLATION DROP ROW, because a bare EXPECT writes invalid records to the target",
+        "D": "Rewrite the expectation with a second constraint name, because one name per dataset only warns"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.7",
+      "blueprint_task_title": "Apply data quality checks and validation rules to ensure reliable Silver and Gold datasets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "warn is the default action, so a bare EXPECT still writes invalid records to the target; ON VIOLATION DROP ROW drops them",
+      "drill_rationale": "warn is the default action and invalid records are written to the target; EXPECT ... ON VIOLATION DROP ROW means invalid records are dropped before data is written to the target.",
+      "decision_hinge": "warn is the default action and invalid records are written to the target; EXPECT ... ON VIOLATION DROP ROW means invalid records are dropped before data is written to the target.",
+      "plausible_options": {
+        "A": "invalid records stop reaching the target"
+      },
+      "eliminated_by": {
+        "B": "the team needs to know why the current declaration retains them",
+        "D": "A downstream report still shows ages above 120"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - FAIL UPDATE stops the update instead of letting the pipeline keep running",
+        "B": "T2: scope error - expectations can drop invalid records, so a hand-written SQL filter is not the fix",
+        "D": "T1: fabricated - the expectation name is an identifier and never controls the action on invalid records"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dlt/expectations"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-042",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde03-transformation-batch01.json",
+      "stem": "A silver transformation calls explode on a tags column so each array element becomes its own row. Some source records carry a NULL tags value, and the audit shows those records vanish from the silver table entirely. The transformation must preserve one row per source record even when the collection is NULL.",
+      "option_texts": {
+        "A": "Call explode_outer, which returns a single row with NULLs when the collection is NULL",
+        "B": "Call posexplode, which returns the element position next to each exploded value",
+        "C": "Call inline, which expands a collection of structs into separate output columns",
+        "D": "Call flatten first, which merges the nested arrays before the generator runs"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.3",
+      "blueprint_task_title": "Manipulate columns, rows, and table structures by adding, dropping, splitting, renaming column names, applying filters, and exploding arrays",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "explode produces no rows for a NULL collection; explode_outer returns a single row with NULLs instead",
+      "drill_rationale": "If collection is NULL no rows are produced by explode; to return a single row with NULLs for the array or map values use the explode_outer function.",
+      "decision_hinge": "If collection is NULL no rows are produced by explode; to return a single row with NULLs for the array or map values use the explode_outer function.",
+      "plausible_options": {
+        "B": "each array element becomes its own row"
+      },
+      "eliminated_by": {
+        "C": "Some source records carry a NULL tags value",
+        "D": "the audit shows those records vanish from the silver table entirely"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - posexplode adds the position but still produces no rows for a NULL collection",
+        "C": "T3: confusable sibling - inline is another generator function and drops a NULL collection just as explode does",
+        "D": "T2: scope error - flatten merges nested arrays and never restores a row for a NULL collection"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/functions/explode"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-043",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde03-transformation-batch01.json",
+      "stem": "A pipeline joins a streaming bookings source to a slowly-changing users table stored in Delta Lake. The design must avoid any state the engine has to track between micro-batches, and the team is deciding whether this join requires watermarks on both sides.",
+      "option_texts": {
+        "A": "Configure watermarks on both sides, because any join that reads a stream is stateful",
+        "B": "Configure a watermark on the streaming side only, because a static side cannot carry one",
+        "C": "Configure the users table as a second stream, so both sides of the join match in type",
+        "D": "Configure no watermarks, because a stream-static join is stateless and reads the latest version of the static table"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.2",
+      "blueprint_task_title": "Combine DataFrames with operations such as Inner join, left join, broadcast join, multiple keys, cross join, union, and union all",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "A stream-static join is stateless, so no watermarking is needed; each micro-batch joins the latest valid version of the static Delta table",
+      "drill_rationale": "Stream-static joins are stateless, so you don't need to configure watermarking, and the latest valid version of data from the static Delta table joins with the records present in the current micro-batch.",
+      "decision_hinge": "Stream-static joins are stateless, so you don't need to configure watermarking, and the latest valid version of data from the static Delta table joins with the records present in the current micro-batch.",
+      "plausible_options": {
+        "A": "whether this join requires watermarks on both sides"
+      },
+      "eliminated_by": {
+        "B": "a slowly-changing users table stored in Delta Lake",
+        "C": "The design must avoid any state the engine has to track between micro-batches"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - stream-stream joins are stateful and do want watermarks on both sides, a stream-static join does not",
+        "B": "T1: fabricated - there is no partial watermark rule that applies to the streaming side of a stateless join",
+        "C": "T4: breaks a stated requirement - promoting the static side to a stream makes the join stateful"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/transform/join"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-044",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde03-transformation-batch01.json",
+      "stem": "A nightly job runs a large sort merge join on a current Databricks runtime with default settings. One task runs far longer than the rest because a few join keys dominate the data. An engineer proposes adding a skew join hint, and the team must decide whether that hint is required.",
+      "option_texts": {
+        "A": "Add the skew hint, because skew handling stays off until a hint names the skewed column",
+        "B": "Add nothing, because AQE already splits the skewed tasks into roughly evenly sized tasks",
+        "C": "Add a repartition on the join key, because splitting can only happen before the shuffle",
+        "D": "Add a broadcast hint, because broadcasting the larger side of the join removes the skew"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.5",
+      "blueprint_task_title": "Understand the basic tuning parameters (spark.sql.shuffle.partitions, spark.default.parallelism, spark.executor/driver.memory, spark.sql.autoBroadcastJoinThreshold) and re-measure the performance",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "AQE handles skew in sort merge join automatically, so a skew join hint is not required",
+      "drill_rationale": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "decision_hinge": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "plausible_options": {
+        "A": "An engineer proposes adding a skew join hint"
+      },
+      "eliminated_by": {
+        "C": "One task runs far longer than the rest because a few join keys dominate the data",
+        "D": "a current Databricks runtime with default settings"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - hints exist for range joins, but skew handling is automatic and needs no hint",
+        "C": "T2: scope error - AQE re-optimizes using runtime statistics after the shuffle exchange, not only before it",
+        "D": "T1: fabricated - broadcasting the larger side of a join is not a skew remedy"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/aqe"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-045",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde03-transformation-batch01.json",
+      "stem": "A gold materialized view was defined once with a long CREATE OR REPLACE statement. An on-call engineer must bring it up to date after an unscheduled backfill of the base table, and must do so without pasting the defining query again.",
+      "option_texts": {
+        "A": "Run CREATE OR REPLACE MATERIALIZED VIEW again, supplying the full defining query",
+        "B": "Run OPTIMIZE on the materialized view so that it picks up the new base table files",
+        "C": "Run REFRESH MATERIALIZED VIEW, which updates the view to reflect the latest changes to the base table",
+        "D": "Run DROP and recreate, because a materialized view cannot be brought up to date on demand"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "REFRESH MATERIALIZED VIEW updates the view to the latest base-table changes without resupplying the query",
+      "drill_rationale": "Refreshing a materialized view updates the view to reflect the latest changes to the base table at the time of the refresh, and you can use the REFRESH MATERIALIZED VIEW statement without needing to supply the query again.",
+      "decision_hinge": "Refreshing a materialized view updates the view to reflect the latest changes to the base table at the time of the refresh, and you can use the REFRESH MATERIALIZED VIEW statement without needing to supply the query again.",
+      "plausible_options": {
+        "A": "must bring it up to date after an unscheduled backfill of the base table"
+      },
+      "eliminated_by": {
+        "B": "A gold materialized view was defined once with a long CREATE OR REPLACE statement",
+        "D": "must do so without pasting the defining query again"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the same statement does serve scheduled refreshes, but it means supplying the query again",
+        "B": "T2: scope error - OPTIMIZE rewrites file layout and never recomputes the view against the base table",
+        "D": "T1: fabricated - a materialized view supports an on-demand refresh, so dropping it is unnecessary"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/views/materialized"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 289,
+  "total": 294,
   "last_updated_at": "2026-11-03"
 }

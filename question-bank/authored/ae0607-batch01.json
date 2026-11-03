@@ -127,11 +127,11 @@
     "stem": "A source sets both `loaded_at_field` and `loaded_at_query` on the same table, expecting dbt to fall back from one to the other. The project must parse cleanly before the next deploy. What is the result?",
     "option_texts": {
       "A": "A parse warning, after which `loaded_at_query` takes precedence",
-      "B": "A parse error, because setting both on one resource is not allowed",
-      "C": "Clean parsing, because `loaded_at_field` is used when metadata is absent",
+      "B": "Clean parsing, because `loaded_at_field` is used when metadata is absent",
+      "C": "A parse error, because setting both on one resource is not allowed",
       "D": "Clean parsing, but the `filter` clause is then silently ignored"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Setting both loaded_at_query and loaded_at_field on one resource is a parse error",
     "decision_hinge": "Setting both loaded_at_query and loaded_at_field on the same resource is a parse error.",
     "sources": [
@@ -141,7 +141,7 @@
       "A": "expecting dbt to fall back from one to the other"
     },
     "eliminated_by": {
-      "C": {
+      "B": {
         "signal": "A source sets both `loaded_at_field` and `loaded_at_query` on the same table",
         "requires_fact": "loaded_at_field is the column dbt queries to determine the most recent loaded timestamp, required when adapter metadata is unavailable."
       },
@@ -152,7 +152,7 @@
     },
     "distractor_traps": {
       "A": "T3: dbt defines no precedence between the two — it refuses to parse instead",
-      "C": "T5: the metadata-unavailable rule is real but describes when loaded_at_field is needed, not this conflict",
+      "B": "T5: the metadata-unavailable rule is real but describes when loaded_at_field is needed, not this conflict",
       "D": "T2: the filter caveat is about loaded_at_query's scan, not about parsing"
     },
     "topics": [
@@ -190,11 +190,11 @@
     "stem": "A pull request edits only the `tags` value on one model and a column-level `meta` value on another. A Slim CI job selects `state:modified` against the production manifest and builds nothing. The team must explain the empty run. Why did nothing build?",
     "option_texts": {
       "A": "The comparison manifest was stale, so both edits look unchanged",
-      "B": "Column-level YAML edits never participate in state comparison at all",
-      "C": "dbt treats `tags` and `meta` as metadata only, so neither counts",
+      "B": "dbt treats `tags` and `meta` as metadata only, so neither counts",
+      "C": "Column-level YAML edits never participate in state comparison at all",
       "D": "`persist_docs` is disabled, so YAML-only edits are all ignored"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "tags and meta are metadata-only and deliberately do not trigger state:modified",
     "decision_hinge": "dbt treats tags and meta as metadata-only fields, not modifications, at both the resource and column level. Changing a tags or meta value doesn't trigger state:modified, because these fields don't affect how dbt materializes the resource.",
     "sources": [
@@ -209,14 +209,14 @@
         "signal": "A pull request edits only the `tags` value on one model",
         "requires_fact": "state:new means there is no node with the same unique_id in the comparison manifest."
       },
-      "B": {
+      "C": {
         "signal": "a column-level `meta` value on another",
         "requires_fact": "description is treated as a modification, but only when persist_docs is enabled, at relation or column level."
       }
     },
     "distractor_traps": {
       "A": "T5: a stale manifest is a real failure mode, but it would also hide genuine code changes",
-      "B": "T1: column-level edits do participate — a column description counts when persist_docs is on",
+      "C": "T1: column-level edits do participate — a column description counts when persist_docs is on",
       "D": "T3: persist_docs governs descriptions specifically, not every YAML-only edit"
     },
     "topics": [
@@ -351,11 +351,11 @@
     "stem": "A run failed midway. The on-call engineer wants to resume, but also to widen the selector to include two extra models that were never part of the failed invocation. They must get all of it built in one go. What should they do?",
     "option_texts": {
       "A": "Run `dbt retry`, which honours a new selector passed alongside it",
-      "B": "Run the build command again with the widened selector, not `dbt retry`",
-      "C": "Run `dbt retry --full-refresh`, which re-selects and rebuilds everything",
+      "B": "Run `dbt retry --full-refresh`, which re-selects and rebuilds everything",
+      "C": "Run the build command again with the widened selector, not `dbt retry`",
       "D": "Run `dbt retry` twice, so the second pass picks up the extra models"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "retry resumes the previous invocation; it does not re-select",
     "decision_hinge": "Retry re-executes the last invocation from the point of failure. Once some nodes have run, you can use retry to re-execute from any new point of failure.",
     "sources": [
@@ -363,7 +363,7 @@
       "https://docs.getdbt.com/reference/commands/run"
     ],
     "plausible_options": {
-      "C": "also to widen the selector to include two extra models that were never part of the failed invocation"
+      "B": "also to widen the selector to include two extra models that were never part of the failed invocation"
     },
     "eliminated_by": {
       "A": {
@@ -377,7 +377,7 @@
     },
     "distractor_traps": {
       "A": "T1: retry replays the recorded invocation and does not accept a replacement selector",
-      "C": "T3: full-refresh changes how incremental models rebuild, not which nodes are selected",
+      "B": "T3: full-refresh changes how incremental models rebuild, not which nodes are selected",
       "D": "T5: a second retry is a no-op once the first one succeeds"
     },
     "topics": [

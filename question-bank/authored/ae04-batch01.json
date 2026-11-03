@@ -8,18 +8,18 @@
     "stem": "A team runs `dbt clone --state prod_artifacts` on a platform that has no zero-copy cloning. They must still end up with queryable objects in the development schema for every selected model. What does dbt produce?",
     "option_texts": {
       "A": "An error, because the `clone` materialization needs platform support",
-      "B": "A pointer view that selects from the source object",
-      "C": "A full table copy, sized the same as the source relation",
+      "B": "A full table copy, sized the same as the source relation",
+      "C": "A pointer view that selects from the source object",
       "D": "Nothing at all, because pre-existing relations are left alone"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Without zero-copy support dbt falls back to a simple pointer view",
     "decision_hinge": "If your data platform supports zero-copy cloning of tables and this model exists as a table in the source environment, dbt will create it in your target environment as a clone. Otherwise, dbt will create a simple pointer view, select star from the source object.",
     "sources": [
       "https://docs.getdbt.com/reference/commands/clone"
     ],
     "plausible_options": {
-      "C": "They must still end up with queryable objects in the development schema for every selected model"
+      "B": "They must still end up with queryable objects in the development schema for every selected model"
     },
     "eliminated_by": {
       "A": {
@@ -33,7 +33,7 @@
     },
     "distractor_traps": {
       "A": "T1: the command does not fail without zero-copy support; it changes what it creates",
-      "C": "T3: a real copy is what zero-copy cloning avoids, and it is not the fallback either",
+      "B": "T3: a real copy is what zero-copy cloning avoids, and it is not the fallback either",
       "D": "T5: the pre-existing-relation rule is real, but the stem describes a fresh development schema"
     },
     "topics": [
@@ -112,11 +112,11 @@
     "stem": "A CI run must build a changed model and everything downstream of it. Several downstream models also read from other parents that have never been built in this schema. The selection must therefore pull in those other parents too. Which selector does that?",
     "option_texts": {
       "A": "`--select \"+my_model+\"`, which adds the model's own ancestors too",
-      "B": "`--select \"my_model+\"`, which adds every descendant of the model",
-      "C": "`--select \"@my_model\"`, which adds the ancestors of the descendants",
+      "B": "`--select \"@my_model\"`, which adds the ancestors of the descendants",
+      "C": "`--select \"my_model+\"`, which adds every descendant of the model",
       "D": "`--select \"my_model+1\"`, which steps one edge past the model"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "@ is + plus all ancestors of all descendants",
     "decision_hinge": "The at operator is similar to plus, but will also include all ancestors of all descendants of the selected model. This is useful in continuous integration environments where you want to build a model and all of its descendants, but the ancestors of those descendants might not exist in the schema yet.",
     "sources": [
@@ -126,7 +126,7 @@
       "A": "Several downstream models also read from other parents that have never been built in this schema"
     },
     "eliminated_by": {
-      "B": {
+      "C": {
         "signal": "The selection must therefore pull in those other parents too",
         "requires_fact": "Placed after a model or resource, the plus operator includes the resource itself and all its descendants, which are its downstream dependencies."
       },
@@ -137,7 +137,7 @@
     },
     "distractor_traps": {
       "A": "T3: confusable sibling — it adds the selected model's own ancestors, not the descendants' ancestors",
-      "B": "T4: it covers descendants but never reaches the descendants' other parents",
+      "C": "T4: it covers descendants but never reaches the descendants' other parents",
       "D": "T8: scope error — the n-plus operator limits depth rather than widening the graph"
     },
     "topics": [
