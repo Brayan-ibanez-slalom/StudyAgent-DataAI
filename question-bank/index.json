@@ -19424,8 +19424,208 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-131",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch13.json",
+      "stem": "A job should start as soon as an upstream table is written, but the team also wants a nightly safety net in case that write never happens. They are checking whether one job can carry both arrangements at once.",
+      "option_texts": {
+        "A": "Several can be added, and a run starts when any active one evaluates to true",
+        "B": "Only one arrangement is allowed, so the safety net needs a second job",
+        "C": "Several can be added, but a run starts only when all of them agree",
+        "D": "Only one arrangement is allowed unless the job is set to run continuously"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "A job can carry multiple triggers; when any active trigger evaluates to true it starts a run",
+      "drill_rationale": "You can add multiple triggers of the same or different types to a job, and when any active trigger evaluates to true it starts a run, for example a table update trigger plus an additional scheduled trigger as a backup.",
+      "decision_hinge": "You can add multiple triggers of the same or different types to a job, and when any active trigger evaluates to true it starts a run, for example a table update trigger plus an additional scheduled trigger as a backup.",
+      "plausible_options": {
+        "B": "wants a nightly safety net in case that write never happens"
+      },
+      "eliminated_by": {
+        "C": "should start as soon as an upstream table is written",
+        "D": "checking whether one job can carry both arrangements at once"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - a second job is unnecessary because triggers combine on one job",
+        "C": "T3: confusable sibling - requiring agreement would defeat a backup that fires when the first never does",
+        "D": "T1: fabricated - continuous running is unrelated to how many triggers a job may hold"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-132",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch13.json",
+      "stem": "An on-call rota wants to hear about a job that is merely running far longer than usual, well before it has either finished or failed. The team is checking whether the built-in alerting can express that at all.",
+      "option_texts": {
+        "A": "No, alerting fires only once a run has reached a finished or failed state",
+        "B": "Yes, there is an event for a run whose duration exceeds a configured threshold",
+        "C": "Yes, but only by polling the run history from an outside scheduler",
+        "D": "No, a long run has to be caught by a separate watchdog job"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Notification events include start, success, failure, and a duration exceeding a configured threshold",
+      "drill_rationale": "You can set up notifications on runs of a job and individual job tasks for Start, Successful completion, Failure, the duration exceeds a configured threshold, and a streaming backlog metric exceeds a configured threshold.",
+      "decision_hinge": "You can set up notifications on runs of a job and individual job tasks for Start, Successful completion, Failure, the duration exceeds a configured threshold, and a streaming backlog metric exceeds a configured threshold.",
+      "plausible_options": {
+        "C": "wants to hear about a job that is merely running far longer than usual"
+      },
+      "eliminated_by": {
+        "A": "well before it has either finished or failed",
+        "D": "checking whether the built-in alerting can express that at all"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - start and duration events both fire before a run resolves",
+        "C": "T2: scope error - an outside poller is the workaround the built-in event removes",
+        "D": "T3: confusable sibling - a watchdog would work but duplicates a shipped feature"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/notifications"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-133",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch13.json",
+      "stem": "A downstream job starts whenever an upstream job completes, and one morning the upstream finishes twice while the downstream is still busy with an earlier run. The team must say what happened to the second completion.",
+      "option_texts": {
+        "A": "It started a parallel run, because completion is not subject to the concurrency cap",
+        "B": "It was skipped, exactly as an overlapping schedule would have been skipped",
+        "C": "It was retained until another run could start, because completions are held",
+        "D": "It was discarded and recorded as an error against the upstream job"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Job completion triggers retain ready completions until another run can start, unlike most trigger types which are skipped",
+      "drill_rationale": "Runs from most trigger types are skipped when they exceed the configured max concurrency for a job, but job completion triggers retain ready completions until another run can start.",
+      "decision_hinge": "Runs from most trigger types are skipped when they exceed the configured max concurrency for a job, but job completion triggers retain ready completions until another run can start.",
+      "plausible_options": {
+        "B": "the upstream finishes twice while the downstream is still busy with an earlier run"
+      },
+      "eliminated_by": {
+        "A": "A downstream job starts whenever an upstream job completes",
+        "D": "The team must say what happened to the second completion"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - the concurrency cap still applies, which is why the completion waits",
+        "B": "T3: confusable sibling - that is the behaviour of most trigger types, but completion triggers are the exception",
+        "D": "T1: fabricated - a held completion is not an error on the upstream job"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-134",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch13.json",
+      "stem": "A join matches each event timestamp against a table of validity windows, and it runs far slower than an equality join of the same size. The team is identifying which optimization applies to a condition shaped this way.",
+      "option_texts": {
+        "A": "Skew handling, because matching against windows concentrates work on a few tasks",
+        "B": "Broadcast, because a condition of this shape always has one tiny side",
+        "C": "Partition pruning, an optimization that skips whole files at read time",
+        "D": "The range join optimization, for a point in interval or interval overlap condition"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.3",
+      "blueprint_task_title": "Identify common performance bottlenecks such as data skew, shuffling, and disk spilling by interpreting stage-level metrics in the Spark UI",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Range join optimization applies to point-in-interval or interval-overlap conditions and uses a bin size",
+      "drill_rationale": "The range join optimization applies to a query that has a point in interval or interval overlap range join condition, and has a bin size, either derived automatically or specified manually.",
+      "decision_hinge": "The range join optimization applies to a query that has a point in interval or interval overlap range join condition, and has a bin size, either derived automatically or specified manually.",
+      "plausible_options": {
+        "A": "it runs far slower than an equality join of the same size"
+      },
+      "eliminated_by": {
+        "B": "A join matches each event timestamp against a table of validity windows",
+        "C": "identifying which optimization applies to a condition shaped this way"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - skew is a distribution problem, where this is the join condition's shape",
+        "B": "T5: common misconception - nothing about an interval condition implies a small side",
+        "C": "T2: scope error - pruning depends on the layout of the table, not on the join condition"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/range-join"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 379,
+  "total": 383,
   "last_updated_at": "2026-11-03"
 }
