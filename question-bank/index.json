@@ -18474,8 +18474,258 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-112",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch09.json",
+      "stem": "A job is scheduled every fifteen minutes, but one afternoon a run takes almost an hour. The team reviews the history afterwards and has to account for what became of the triggers that fired while the long run was still going.",
+      "option_texts": {
+        "A": "They were skipped, because only a single run of a job can be active at a time",
+        "B": "They were queued and replayed in order once the long run finally finished",
+        "C": "They started in parallel, because a schedule is independent of any run in flight",
+        "D": "They failed and were recorded as errors against the schedule that produced them"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "By default only one run of a job is active at a time, and runs from most trigger types are skipped beyond that limit",
+      "drill_rationale": "By default only a single run of a job can be active at a time, and runs from most trigger types are skipped when they exceed the configured max concurrency for a job.",
+      "decision_hinge": "By default only a single run of a job can be active at a time, and runs from most trigger types are skipped when they exceed the configured max concurrency for a job.",
+      "plausible_options": {
+        "B": "account for what became of the triggers that fired while the long run was still going"
+      },
+      "eliminated_by": {
+        "C": "A job is scheduled every fifteen minutes",
+        "D": "The team reviews the history afterwards"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - job completion triggers do retain a ready completion, but a schedule does not queue",
+        "C": "T5: common misconception - concurrency is capped at one run unless the limit is raised",
+        "D": "T1: fabricated - a skipped trigger is not recorded as a failure"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-113",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch09.json",
+      "stem": "An ingest stream started on the simpler discovery method, and the directory has since grown enough that the team wants the other one. They must know what moving across costs them in correctness when the stream is restarted.",
+      "option_texts": {
+        "A": "A full reprocess, because the new mode has no record of the files already taken",
+        "B": "Nothing, because the mode can be switched across restarts with exactly-once still held",
+        "C": "Possible duplicates, because progress does not carry across the two mechanisms",
+        "D": "A new target table, because a stream cannot change how it discovers its input"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "You can switch file discovery modes across stream restarts and still get exactly-once processing",
+      "drill_rationale": "Auto Loader supports two modes for detecting new files, directory listing and file notification, and you can switch file discovery modes across stream restarts and still obtain exactly-once data processing guarantees.",
+      "decision_hinge": "Auto Loader supports two modes for detecting new files, directory listing and file notification, and you can switch file discovery modes across stream restarts and still obtain exactly-once data processing guarantees.",
+      "plausible_options": {
+        "C": "what moving across costs them in correctness when the stream is restarted"
+      },
+      "eliminated_by": {
+        "A": "the directory has since grown enough that the team wants the other one",
+        "D": "An ingest stream started on the simpler discovery method"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - the checkpoint survives the switch, so nothing is re-read",
+        "C": "T3: confusable sibling - progress lives in the checkpoint rather than in either discovery mechanism",
+        "D": "T1: fabricated - the discovery mode is a stream option and is meant to be changed"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-detection-modes"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-114",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch09.json",
+      "stem": "A new team member asks why the design moves records through three named tiers rather than loading the source straight into the tables that analysts query. The reviewer wants the answer framed in terms of what each hop is for.",
+      "option_texts": {
+        "A": "Each hop belongs to a different team, so the tiers mirror the organisation chart",
+        "B": "Each hop stores the same records again so a failure in one tier can be rolled back",
+        "C": "Each hop incrementally improves the structure and quality of the data as it flows",
+        "D": "Each hop uses a different file format, so the tiers trade storage against speed"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.1",
+      "blueprint_task_title": "Implement data cleaning by reading bronze tables with PySpark/SQL, cleaning nulls, standardizing data types, and writing to new silver tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "The medallion pattern incrementally and progressively improves the structure and quality of data across Bronze, Silver and Gold",
+      "drill_rationale": "A medallion architecture is a data design pattern whose goal is to incrementally and progressively improve the structure and quality of data as it flows through each layer, from Bronze to Silver to Gold layer tables.",
+      "decision_hinge": "A medallion architecture is a data design pattern whose goal is to incrementally and progressively improve the structure and quality of data as it flows through each layer, from Bronze to Silver to Gold layer tables.",
+      "plausible_options": {
+        "B": "why the design moves records through three named tiers"
+      },
+      "eliminated_by": {
+        "A": "The reviewer wants the answer framed in terms of what each hop is for",
+        "D": "rather than loading the source straight into the tables that analysts query"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - the tiers are stages of refinement, not an ownership split",
+        "B": "T3: confusable sibling - the tiers do retain earlier copies, but recovery is not the purpose of the pattern",
+        "D": "T1: fabricated - the layers are not distinguished by file format"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/lakehouse/medallion"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-115",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch09.json",
+      "stem": "A reviewer is checking whether a proposed tier is drawn correctly. The proposal holds a handful of curated tables such as customer spending and an executive summary, and it is the surface business users read.",
+      "option_texts": {
+        "A": "It is the Bronze tier, which keeps the raw state of each source in its original form",
+        "B": "It is the Silver tier, which holds validated detail for business analysts to work through",
+        "C": "It is a serving cache, which sits outside the pattern and is rebuilt on each query",
+        "D": "It is the Gold tier, designed for business users and holding fewer datasets than the rest"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "The Gold layer is designed for business users and contains fewer datasets than silver and bronze",
+      "drill_rationale": "The Gold layer is designed for business users and contains fewer datasets than silver and bronze, holding highly aggregated information such as a business summary for the executive staff.",
+      "decision_hinge": "The Gold layer is designed for business users and contains fewer datasets than silver and bronze, holding highly aggregated information such as a business summary for the executive staff.",
+      "plausible_options": {
+        "B": "a handful of curated tables such as customer spending and an executive summary"
+      },
+      "eliminated_by": {
+        "A": "it is the surface business users read",
+        "C": "A reviewer is checking whether a proposed tier is drawn correctly"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - raw original-format records are the Bronze tier, two hops below",
+        "B": "T3: confusable sibling - Silver keeps the detail, where this proposal is aggregated and small",
+        "C": "T1: fabricated - no serving cache tier exists in the pattern"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/lakehouse/medallion"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-116",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch09.json",
+      "stem": "A partitioned table is being moved onto the newer layout feature, and the team runs the alter statement without naming any columns at all. They want to predict which columns the table ends up organised by.",
+      "option_texts": {
+        "A": "The current partition columns, which become the new clustering columns",
+        "B": "Every column, because an unspecified list means the whole row is used",
+        "C": "None, because the statement is rejected until a column list is supplied",
+        "D": "The primary key columns, which the platform falls back to when none are named"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "With no options specified the statement uses the current partition columns as the new clustering columns",
+      "drill_rationale": "With no options specified, the statement uses the current partition columns as the new clustering columns.",
+      "decision_hinge": "With no options specified, the statement uses the current partition columns as the new clustering columns.",
+      "plausible_options": {
+        "C": "runs the alter statement without naming any columns at all"
+      },
+      "eliminated_by": {
+        "B": "They want to predict which columns the table ends up organised by",
+        "D": "A partitioned table is being moved onto the newer layout feature"
+      },
+      "distractor_traps": {
+        "B": "T1: fabricated - clustering on every column is never the default",
+        "C": "T3: confusable sibling - the bare form is valid precisely because a sensible default exists",
+        "D": "T5: common misconception - a primary key is informational and is not a layout input"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/clustering"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 360,
+  "total": 365,
   "last_updated_at": "2026-11-03"
 }
