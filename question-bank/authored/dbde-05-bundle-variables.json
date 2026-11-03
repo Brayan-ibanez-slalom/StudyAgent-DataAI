@@ -1,0 +1,290 @@
+[
+  {
+    "id": "draft-dbde05-001",
+    "domain": "dbde-05",
+    "blueprint_task": "5.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your team uses a Declarative Automation Bundle to deploy a job that queries a warehouse. The job must use different warehouse IDs in dev, test, and prod environments without editing the databricks.yml file between deployments. Which approach correctly configures warehouse-specific settings in the bundle?",
+    "option_texts": {
+      "A": "Define a warehouse_id variable in the variables block with target-specific overrides in each target configuration",
+      "B": "Hard-code the warehouse IDs directly in the job resource definition and add a deployment script to swap them",
+      "C": "Create separate databricks.yml files for each environment and switch between them during CI/CD",
+      "D": "Store the warehouse ID in a Databricks secret scope and retrieve it with a spark.conf.set() call in each notebook"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables with target overrides allow the same databricks.yml to deploy to multiple environments. Targets override variable values per environment without modifying source files.",
+    "decision_hinge": "The exam guide Task 5.2 explicitly states: Understand environment-specific configuration using Declarative Automation Bundle variables and overrides while promoting the same codebase across dev, test, and prod targets. Targets override variables; the file stays unchanged.",
+    "plausible_options": {
+      "B": "Deployment scripts could work, but they require modifying source or adding deployment-time logic rather than using the built-in bundle variables feature.",
+      "C": "Multiple databricks.yml files could technically work, but violates the stated requirement: the same codebase must promote without being edited.",
+      "D": "Secrets work for sensitive values, but warehouse IDs are not secrets and belong in variables. Also, spark.conf.set() in notebooks puts infrastructure config in application code."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: swapping values via deployment script is manual and errorprone; the bundle feature exists to avoid this."
+      },
+      "C": {
+        "code": "T4",
+        "description": "Breaks stated requirement: the exam guide requires the same codebase promote without being edited. Multiple files means choosing which to use."
+      },
+      "D": {
+        "code": "T5",
+        "description": "Common misconception: secrets are for credentials, not for configuration that varies by environment. Also, Spark config in notebooks couples infrastructure to application logic."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "without editing the databricks.yml file between deployments",
+        "requires_fact": "Databricks Asset Bundles support target-specific variable overrides so the same file deploys to multiple environments without modification."
+      },
+      "C": {
+        "signal": "without editing the databricks.yml file between deployments",
+        "requires_fact": "The requirement is to promote the same codebase across environments; multiple files violate this constraint."
+      },
+      "D": {
+        "signal": "warehouse IDs in dev, test, and prod environments",
+        "requires_fact": "Bundle variables and targets are the correct abstraction for infrastructure configuration that varies by environment. Secrets are for sensitive values, not configuration."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/en/dev-tools/bundles/",
+      "https://docs.databricks.com/en/dev-tools/bundles/settings/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-002",
+    "domain": "dbde-05",
+    "blueprint_task": "5.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "You are working in a Databricks Git folder and need to make changes to a job definition before it is deployed to production. Your team uses a branching strategy where feature development happens on branches. Which action correctly creates and switches to a new branch for your changes?",
+    "option_texts": {
+      "A": "Click the branch dropdown in the workspace UI Git panel and select Create Branch, enter the branch name, and confirm",
+      "B": "Run databricks bundle deploy --branch feature-name from the CLI to automatically create and switch branches",
+      "C": "Edit the databricks.yml file to add a new branch field and then re-open the workspace",
+      "D": "Use the Lakeflow Jobs UI to create a job-specific branch that applies only to that job"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Databricks Git folders integrate branch management into the workspace UI. The branch dropdown provides create and switch operations without using the CLI.",
+    "decision_hinge": "Task 5.1 explicitly requires: Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders. The UI Git panel is the tool for this task.",
+    "plausible_options": {
+      "B": "The Databricks CLI is used for bundle validation and deployment, but branch creation is a Git operation handled by Git folders in the workspace UI, not the bundle deploy command.",
+      "C": "databricks.yml defines bundle resources and environments, not Git branches. Branch control is part of Git, not the bundle configuration.",
+      "D": "Lakeflow Jobs do not have job-specific branches; branching is a repository-level Git concept that affects all files in the folder."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: the CLI is for bundle operations, not Git branch management. Git folders expose branching through the workspace UI."
+      },
+      "C": {
+        "code": "T1",
+        "description": "Fabricated: databricks.yml has no branch field. Branches are managed by Git, not by bundle configuration."
+      },
+      "D": {
+        "code": "T3",
+        "description": "Confusable sibling: Lakeflow Jobs and Git folders are separate concepts. Git branches apply to the entire repository, not individual jobs."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches",
+        "requires_fact": "Branch creation is a Git operation available in the workspace UI Git folders panel, not a bundle CLI command."
+      },
+      "C": {
+        "signal": "creating and switching between branches in Databricks Git folders",
+        "requires_fact": "Branches are created and managed through Git, not through bundle configuration files like databricks.yml."
+      },
+      "D": {
+        "signal": "creating and switching between branches in Databricks Git folders",
+        "requires_fact": "Git folders manage branches at the repository level, not per-job. All files in a branch are affected, not just one job."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/en/repos/",
+      "https://docs.databricks.com/en/repos/git-operations/",
+      "https://docs.databricks.com/en/dev-tools/bundles/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-003",
+    "domain": "dbde-05",
+    "blueprint_task": "5.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your CI/CD pipeline runs databricks bundle validate to check a Declarative Automation Bundle before deployment. The validation passes, but when you run databricks bundle deploy, the deployment fails because a job references a secret that does not exist in the target environment. How should you supply the missing secret value at deploy time?",
+    "option_texts": {
+      "A": "Define the secret name as a bundle variable, export it as BUNDLE_VAR_<variable_name> with the secret value, and redeploy",
+      "B": "Add a deployment hook that creates the secret in the target workspace immediately before running databricks bundle deploy",
+      "C": "Embed the secret value in the databricks.yml file using encryption, then decrypt it during deployment",
+      "D": "Modify the job definition to read the secret from a different scope using spark.conf.get() instead of secrets"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables supplied via BUNDLE_VAR_ environment variables are the correct mechanism for providing secrets and configuration at deploy time without committing them to the repository.",
+    "decision_hinge": "The exam guide Task 5.4 and the seed note both establish: Declare a variable in the variables block and supply its value at deploy time through an environment variable prefixed BUNDLE_VAR_. This is the documented pattern for secrets.",
+    "plausible_options": {
+      "B": "Pre-deployment hooks could create infrastructure, but secrets belong in the bundle variables pattern. Adding deployment logic outside the bundle complicates CI/CD.",
+      "C": "There is no built-in bundle encryption for secrets. Obfuscation is not secret management, and secrets must not be in source control.",
+      "D": "spark.conf.get() reads from Spark config, not Databricks secret scopes. Also, putting credential handling in notebooks couples security to application code."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T5",
+        "description": "Common misconception: CI/CD logic outside the bundle makes credential management fragile. The bundle variables pattern is built for this."
+      },
+      "C": {
+        "code": "T1",
+        "description": "Fabricated: there is no encryption field or encrypt command in bundles. Secrets must not be committed in any form."
+      },
+      "D": {
+        "code": "T2",
+        "description": "Misplaced: spark.conf is for Spark configuration, not for reading Databricks secrets. The job must reference the secret scope correctly."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "supply the missing secret value at deploy time",
+        "requires_fact": "Bundle variables with BUNDLE_VAR_ environment variables are the standard mechanism for providing secrets at deploy time without committing them."
+      },
+      "C": {
+        "signal": "supply the missing secret value at deploy time",
+        "requires_fact": "There is no encryption mechanism in bundle configuration. Secrets must never be stored in databricks.yml or any source file."
+      },
+      "D": {
+        "signal": "a job references a secret that does not exist",
+        "requires_fact": "The job must reference the secret scope correctly; spark.conf.get() reads from Spark config, not from Databricks secret scopes."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/en/dev-tools/bundles/",
+      "https://docs.databricks.com/en/dev-tools/bundles/settings/",
+      "https://docs.databricks.com/en/security/secrets/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-004",
+    "domain": "dbde-05",
+    "blueprint_task": "5.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "Your team has a Declarative Automation Bundle that deploys a Lakeflow Declarative Pipeline and a Lakeflow Job that depends on it. You need to deploy this bundle to three targets: dev, test, and prod. The pipeline must read data from different catalogs in each environment. Which configuration in databricks.yml correctly parameterizes the source catalog for each target?",
+    "option_texts": {
+      "A": "Define pipeline in resources with source.catalog set to a variable reference, then define the variable with default and override it in each target's targets block",
+      "B": "Create three separate pipeline resources in databricks.yml, one for each environment, and modify the job to conditionally select the correct one",
+      "C": "Store the catalog name in a Unity Catalog metastore and retrieve it at runtime using the job definition",
+      "D": "Hardcode the catalog for dev in the pipeline, then add a manual step to edit the bundle configuration before deploying to test and prod"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables with target-specific overrides allow a single pipeline resource to read from different catalogs per environment. Variables are substituted at deploy time based on the target.",
+    "decision_hinge": "Task 5.2 and 5.3 together establish: Use Declarative Automation Bundle variables and target overrides to configure environment-specific values like catalog names. A single resource definition with variable references promotes unchanged across targets.",
+    "plausible_options": {
+      "B": "Multiple pipeline resources would work technically, but require duplication and manual job logic to select the correct one. Bundle variables are the standard way to avoid duplication.",
+      "C": "Reading metadata at runtime is possible, but decouples the infrastructure configuration from the bundle definition. Bundle variables make environment configuration explicit.",
+      "D": "Manual editing defeats the purpose of infrastructure as code and bundles. The point of bundles is to parameterize, not to hand-edit."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: creating multiple resources avoids using the bundle variables feature. The job would need conditional logic to select which pipeline to use."
+      },
+      "C": {
+        "code": "T3",
+        "description": "Confusable sibling: Unity Catalog stores data and metadata, not infrastructure configuration. Infrastructure config belongs in the bundle, not in the metastore."
+      },
+      "D": {
+        "code": "T4",
+        "description": "Breaks stated requirement: manual editing means the codebase is not promoted unchanged. This violates the core principle of infrastructure as code."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "deploy this bundle to three targets: dev, test, and prod",
+        "requires_fact": "Bundle targets with variable overrides allow one resource definition to deploy to multiple environments; duplicating the resource defeats this mechanism."
+      },
+      "C": {
+        "signal": "The pipeline must read data from different catalogs in each environment",
+        "requires_fact": "Infrastructure configuration like catalog selection is not runtime metadata; it belongs in the bundle configuration with variables and targets."
+      },
+      "D": {
+        "signal": "deploy this bundle to three targets: dev, test, and prod",
+        "requires_fact": "The core requirement is to promote the same codebase unchanged across environments; manual editing violates this."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/en/dev-tools/bundles/",
+      "https://docs.databricks.com/en/dev-tools/bundles/settings/",
+      "https://docs.databricks.com/en/compute/lakeflow/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-005",
+    "domain": "dbde-05",
+    "blueprint_task": "5.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your CI/CD system needs to validate a Declarative Automation Bundle, check for syntax errors, and confirm that all resources are correctly defined before deploying. Which Databricks CLI command performs this validation without modifying any workspace state?",
+    "option_texts": {
+      "A": "Run databricks bundle validate to check syntax and resource definitions without deploying",
+      "B": "Run databricks bundle deploy --dry-run to preview changes and validate configuration",
+      "C": "Run databricks bundle run to execute the bundle and report any configuration errors",
+      "D": "Run databricks bundle push to validate and synchronize the bundle with the workspace"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "databricks bundle validate checks the bundle configuration, syntax, and resource definitions without making any changes to the workspace or executing resources.",
+    "decision_hinge": "Task 5.4 requires: Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles. The validate command is specifically for checking configuration before deployment.",
+    "plausible_options": {
+      "B": "bundle deploy --dry-run previews changes but is a deployment command; validate is the lightweight option for configuration checking.",
+      "C": "bundle run executes the bundle resources (jobs, pipelines, etc.), which modifies workspace state and is not a validation-only operation.",
+      "D": "There is no bundle push command; the correct command is bundle deploy to apply changes to the workspace."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: deploy --dry-run is a deployment-related command that connects to the workspace. validate is the dedicated validation command."
+      },
+      "C": {
+        "code": "T4",
+        "description": "Breaks stated requirement: run executes the bundle, which modifies state. The requirement is to validate without modifying workspace state."
+      },
+      "D": {
+        "code": "T1",
+        "description": "Fabricated: there is no bundle push command in the Databricks CLI. The correct command is bundle deploy."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "validate a Declarative Automation Bundle, check for syntax errors, and confirm that all resources are correctly defined before deploying",
+        "requires_fact": "databricks bundle validate is the command for configuration validation. deploy --dry-run is a deployment-related command."
+      },
+      "C": {
+        "signal": "without modifying any workspace state",
+        "requires_fact": "bundle run executes the resources, which changes workspace state. Only validate performs read-only checking."
+      },
+      "D": {
+        "signal": "validate a Declarative Automation Bundle",
+        "requires_fact": "There is no bundle push command. The Databricks CLI provides validate, deploy, and run for bundle management."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/en/dev-tools/cli/bundle-cli/",
+      "https://docs.databricks.com/en/dev-tools/bundles/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  }
+]

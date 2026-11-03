@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 147,
+  "count": 155,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1177,6 +1177,70 @@
       "title": "Databricks tables | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "f495baa4741531ecf7c324400a5a2f7d1885b48f863bbecf99b2b8c1f562d6f5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/delta-live-tables/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/delta-live-tables/index.html.txt",
+      "title": "Spark Declarative Pipelines on Lakeflow | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "11000d71ed7a81aa688245b2c2f31bd2c8c282b99e0ba860a94233a1548630e6",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/delta/table-properties.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/delta/table-properties.html.txt",
+      "title": "Table properties reference | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b2a49286694c9b10b9b71456e7b767d33b9d0c248427617abede471ce10cf13d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/udf/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/udf/index.html.txt",
+      "title": "What are user-defined functions (UDFs)? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "0cfc84852eeaa97ae5fc807850278b2f8c41389b4b77c24e89e1d54227c296ab",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/lakehouse-monitoring/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/lakehouse-monitoring/index.html.txt",
+      "title": "Data profiling | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "e20c9f7611de8f67b297ad10ab023e514ff27a6c22adb846585d31f862391fb4",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/repos/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/repos/index.html.txt",
+      "title": "Databricks Git folders | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "60b2c938c2eb274e2f3077c003388f72831e94ba9183d3ba7475026147de1125",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/admin/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/admin/index.html.txt",
+      "title": "Administration | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "2f5bc076a0bf94d1194b7d3e2f94d82e77fd5944fbb033e43fd0ff7d96c2553e",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/dev-tools/cli/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/dev-tools/cli/index.html.txt",
+      "title": "Databricks CLI | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "722c757d68139b2192266ec9b790a405c6ec02aef7bed0ab18114b63582805e3",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/en/dev-tools/bundles/index.html",
+      "path": "sources/cache/_raw/docs.databricks.com/en/dev-tools/bundles/index.html.txt",
+      "title": "What are Declarative Automation Bundles? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "94ae639a4dbd6bf706473c1f6bbad481b3230fc920a5d756f142f4926450bf47",
       "source": "mcp-cache_fetch"
     }
   ]

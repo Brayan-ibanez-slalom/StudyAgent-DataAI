@@ -1,0 +1,578 @@
+[
+  {
+    "id": "draft-dbde05-001",
+    "domain": "dbde-05",
+    "blueprint_task": "5.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your team uses a Declarative Automation Bundle to deploy a job that queries a warehouse. The job must use different warehouse IDs in dev, test, and prod environments without editing the databricks.yml file between deployments. Which approach correctly configures warehouse-specific settings in the bundle?",
+    "option_texts": {
+      "A": "Define a warehouse_id variable in the variables block with target-specific overrides in each target configuration",
+      "B": "Hard-code the warehouse IDs directly in the job resource definition and add a deployment script to swap them",
+      "C": "Create separate databricks.yml files for each environment and switch between them during CI/CD",
+      "D": "Store the warehouse ID in a Databricks secret scope and retrieve it with a spark.conf.set() call in each notebook"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables with target overrides allow the same databricks.yml to deploy to multiple environments. Targets override variable values per environment without modifying source files.",
+    "decision_hinge": "The exam guide Task 5.2 explicitly states: Understand environment-specific configuration using Declarative Automation Bundle variables and overrides while promoting the same codebase across dev, test, and prod targets. Targets override variables; the file stays unchanged.",
+    "plausible_options": {
+      "B": "Deployment scripts could work, but they require modifying source or adding deployment-time logic rather than using the built-in bundle variables feature.",
+      "C": "Multiple databricks.yml files could technically work, but violates the stated requirement: the same codebase must promote without being edited.",
+      "D": "Secrets work for sensitive values, but warehouse IDs are not secrets and belong in variables. Also, spark.conf.set() in notebooks puts infrastructure config in application code."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: swapping values via deployment script is manual and errorprone; the bundle feature exists to avoid this."
+      },
+      "C": {
+        "code": "T4",
+        "description": "Breaks stated requirement: the exam guide requires the same codebase promote without being edited. Multiple files means choosing which to use."
+      },
+      "D": {
+        "code": "T5",
+        "description": "Common misconception: secrets are for credentials, not for configuration that varies by environment. Also, Spark config in notebooks couples infrastructure to application logic."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "without editing the databricks.yml file between deployments",
+        "requires_fact": "Databricks Asset Bundles support target-specific variable overrides so the same file deploys to multiple environments without modification."
+      },
+      "C": {
+        "signal": "without editing the databricks.yml file between deployments",
+        "requires_fact": "The requirement is to promote the same codebase across environments; multiple files violate this constraint."
+      },
+      "D": {
+        "signal": "warehouse IDs in dev, test, and prod environments",
+        "requires_fact": "Bundle variables and targets are the correct abstraction for infrastructure configuration that varies by environment. Secrets are for sensitive values, not configuration."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/",
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/settings/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-002",
+    "domain": "dbde-05",
+    "blueprint_task": "5.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "You are working in a Databricks Git folder and need to make changes to a job definition before it is deployed to production. Your team uses a branching strategy where feature development happens on branches. Which action correctly creates and switches to a new branch for your changes?",
+    "option_texts": {
+      "A": "Click the branch dropdown in the workspace UI Git panel and select Create Branch, enter the branch name, and confirm",
+      "B": "Run databricks bundle deploy --branch feature-name from the CLI to automatically create and switch branches",
+      "C": "Edit the databricks.yml file to add a new branch field and then re-open the workspace",
+      "D": "Use the Lakeflow Jobs UI to create a job-specific branch that applies only to that job"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Databricks Git folders integrate branch management into the workspace UI. The branch dropdown provides create and switch operations without using the CLI.",
+    "decision_hinge": "Task 5.1 explicitly requires: Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders. The UI Git panel is the tool for this task.",
+    "plausible_options": {
+      "B": "The Databricks CLI is used for bundle validation and deployment, but branch creation is a Git operation handled by Git folders in the workspace UI, not the bundle deploy command.",
+      "C": "databricks.yml defines bundle resources and environments, not Git branches. Branch control is part of Git, not the bundle configuration.",
+      "D": "Lakeflow Jobs do not have job-specific branches; branching is a repository-level Git concept that affects all files in the folder."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: the CLI is for bundle operations, not Git branch management. Git folders expose branching through the workspace UI."
+      },
+      "C": {
+        "code": "T1",
+        "description": "Fabricated: databricks.yml has no branch field. Branches are managed by Git, not by bundle configuration."
+      },
+      "D": {
+        "code": "T3",
+        "description": "Confusable sibling: Lakeflow Jobs and Git folders are separate concepts. Git branches apply to the entire repository, not individual jobs."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches",
+        "requires_fact": "Branch creation is a Git operation available in the workspace UI Git folders panel, not a bundle CLI command."
+      },
+      "C": {
+        "signal": "creating and switching between branches in Databricks Git folders",
+        "requires_fact": "Branches are created and managed through Git, not through bundle configuration files like databricks.yml."
+      },
+      "D": {
+        "signal": "creating and switching between branches in Databricks Git folders",
+        "requires_fact": "Git folders manage branches at the repository level, not per-job. All files in a branch are affected, not just one job."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/repos/",
+      "https://docs.databricks.com/aws/en/repos/git-operations/",
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-003",
+    "domain": "dbde-05",
+    "blueprint_task": "5.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your CI/CD pipeline runs databricks bundle validate to check a Declarative Automation Bundle before deployment. The validation passes, but when you run databricks bundle deploy, the deployment fails because a job references a secret that does not exist in the target environment. How should you supply the missing secret value at deploy time?",
+    "option_texts": {
+      "A": "Define the secret name as a bundle variable, export it as BUNDLE_VAR_<variable_name> with the secret value, and redeploy",
+      "B": "Add a deployment hook that creates the secret in the target workspace immediately before running databricks bundle deploy",
+      "C": "Embed the secret value in the databricks.yml file using encryption, then decrypt it during deployment",
+      "D": "Modify the job definition to read the secret from a different scope using spark.conf.get() instead of secrets"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables supplied via BUNDLE_VAR_ environment variables are the correct mechanism for providing secrets and configuration at deploy time without committing them to the repository.",
+    "decision_hinge": "The exam guide Task 5.4 and the seed note both establish: Declare a variable in the variables block and supply its value at deploy time through an environment variable prefixed BUNDLE_VAR_. This is the documented pattern for secrets.",
+    "plausible_options": {
+      "B": "Pre-deployment hooks could create infrastructure, but secrets belong in the bundle variables pattern. Adding deployment logic outside the bundle complicates CI/CD.",
+      "C": "There is no built-in bundle encryption for secrets. Obfuscation is not secret management, and secrets must not be in source control.",
+      "D": "spark.conf.get() reads from Spark config, not Databricks secret scopes. Also, putting credential handling in notebooks couples security to application code."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T5",
+        "description": "Common misconception: CI/CD logic outside the bundle makes credential management fragile. The bundle variables pattern is built for this."
+      },
+      "C": {
+        "code": "T1",
+        "description": "Fabricated: there is no encryption field or encrypt command in bundles. Secrets must not be committed in any form."
+      },
+      "D": {
+        "code": "T2",
+        "description": "Misplaced: spark.conf is for Spark configuration, not for reading Databricks secrets. The job must reference the secret scope correctly."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "supply the missing secret value at deploy time",
+        "requires_fact": "Bundle variables with BUNDLE_VAR_ environment variables are the standard mechanism for providing secrets at deploy time without committing them."
+      },
+      "C": {
+        "signal": "supply the missing secret value at deploy time",
+        "requires_fact": "There is no encryption mechanism in bundle configuration. Secrets must never be stored in databricks.yml or any source file."
+      },
+      "D": {
+        "signal": "a job references a secret that does not exist",
+        "requires_fact": "The job must reference the secret scope correctly; spark.conf.get() reads from Spark config, not from Databricks secret scopes."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/",
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/settings/",
+      "https://docs.databricks.com/aws/en/security/secrets/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-004",
+    "domain": "dbde-05",
+    "blueprint_task": "5.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "Your team has a Declarative Automation Bundle that deploys a Lakeflow Declarative Pipeline and a Lakeflow Job that depends on it. You need to deploy this bundle to three targets: dev, test, and prod. The pipeline must read data from different catalogs in each environment. Which configuration in databricks.yml correctly parameterizes the source catalog for each target?",
+    "option_texts": {
+      "A": "Define pipeline in resources with source.catalog set to a variable reference, then define the variable with default and override it in each target's targets block",
+      "B": "Create three separate pipeline resources in databricks.yml, one for each environment, and modify the job to conditionally select the correct one",
+      "C": "Store the catalog name in a Unity Catalog metastore and retrieve it at runtime using the job definition",
+      "D": "Hardcode the catalog for dev in the pipeline, then add a manual step to edit the bundle configuration before deploying to test and prod"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Bundle variables with target-specific overrides allow a single pipeline resource to read from different catalogs per environment. Variables are substituted at deploy time based on the target.",
+    "decision_hinge": "Task 5.2 and 5.3 together establish: Use Declarative Automation Bundle variables and target overrides to configure environment-specific values like catalog names. A single resource definition with variable references promotes unchanged across targets.",
+    "plausible_options": {
+      "B": "Multiple pipeline resources would work technically, but require duplication and manual job logic to select the correct one. Bundle variables are the standard way to avoid duplication.",
+      "C": "Reading metadata at runtime is possible, but decouples the infrastructure configuration from the bundle definition. Bundle variables make environment configuration explicit.",
+      "D": "Manual editing defeats the purpose of infrastructure as code and bundles. The point of bundles is to parameterize, not to hand-edit."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: creating multiple resources avoids using the bundle variables feature. The job would need conditional logic to select which pipeline to use."
+      },
+      "C": {
+        "code": "T3",
+        "description": "Confusable sibling: Unity Catalog stores data and metadata, not infrastructure configuration. Infrastructure config belongs in the bundle, not in the metastore."
+      },
+      "D": {
+        "code": "T4",
+        "description": "Breaks stated requirement: manual editing means the codebase is not promoted unchanged. This violates the core principle of infrastructure as code."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "deploy this bundle to three targets: dev, test, and prod",
+        "requires_fact": "Bundle targets with variable overrides allow one resource definition to deploy to multiple environments; duplicating the resource defeats this mechanism."
+      },
+      "C": {
+        "signal": "The pipeline must read data from different catalogs in each environment",
+        "requires_fact": "Infrastructure configuration like catalog selection is not runtime metadata; it belongs in the bundle configuration with variables and targets."
+      },
+      "D": {
+        "signal": "deploy this bundle to three targets: dev, test, and prod",
+        "requires_fact": "The core requirement is to promote the same codebase unchanged across environments; manual editing violates this."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/",
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/settings/",
+      "https://docs.databricks.com/aws/en/compute/lakeflow/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde05-005",
+    "domain": "dbde-05",
+    "blueprint_task": "5.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your CI/CD system needs to validate a Declarative Automation Bundle, check for syntax errors, and confirm that all resources are correctly defined before deploying. Which Databricks CLI command performs this validation without modifying any workspace state?",
+    "option_texts": {
+      "A": "Run databricks bundle validate to check syntax and resource definitions without deploying",
+      "B": "Run databricks bundle deploy --dry-run to preview changes and validate configuration",
+      "C": "Run databricks bundle run to execute the bundle and report any configuration errors",
+      "D": "Run databricks bundle push to validate and synchronize the bundle with the workspace"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "databricks bundle validate checks the bundle configuration, syntax, and resource definitions without making any changes to the workspace or executing resources.",
+    "decision_hinge": "Task 5.4 requires: Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles. The validate command is specifically for checking configuration before deployment.",
+    "plausible_options": {
+      "B": "bundle deploy --dry-run previews changes but is a deployment command; validate is the lightweight option for configuration checking.",
+      "C": "bundle run executes the bundle resources (jobs, pipelines, etc.), which modifies workspace state and is not a validation-only operation.",
+      "D": "There is no bundle push command; the correct command is bundle deploy to apply changes to the workspace."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: deploy --dry-run is a deployment-related command that connects to the workspace. validate is the dedicated validation command."
+      },
+      "C": {
+        "code": "T4",
+        "description": "Breaks stated requirement: run executes the bundle, which modifies state. The requirement is to validate without modifying workspace state."
+      },
+      "D": {
+        "code": "T1",
+        "description": "Fabricated: there is no bundle push command in the Databricks CLI. The correct command is bundle deploy."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "validate a Declarative Automation Bundle, check for syntax errors, and confirm that all resources are correctly defined before deploying",
+        "requires_fact": "databricks bundle validate is the command for configuration validation. deploy --dry-run is a deployment-related command."
+      },
+      "C": {
+        "signal": "without modifying any workspace state",
+        "requires_fact": "bundle run executes the resources, which changes workspace state. Only validate performs read-only checking."
+      },
+      "D": {
+        "signal": "validate a Declarative Automation Bundle",
+        "requires_fact": "There is no bundle push command. The Databricks CLI provides validate, deploy, and run for bundle management."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-cli/",
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/"
+    ],
+    "topics": [
+      "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+    ]
+  },
+  {
+    "id": "draft-dbde06-001",
+    "domain": "dbde-06",
+    "blueprint_task": "6.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "While reviewing the Spark UI for a production job, you observe that a groupBy aggregation completes quickly on most tasks, but one task runs significantly longer than all others. The Max shuffle read bytes for that task is 50 GB, while the median across all tasks is 2 GB. Adaptive Query Execution is enabled. What is the most likely cause and the correct remediation?",
+    "option_texts": {
+      "A": "Data skew on the groupBy key; salt the key so it distributes across more partitions, then combine partial results in a second stage",
+      "B": "Insufficient memory on the cluster; scale up the cluster to provide more executor memory so the task completes faster",
+      "C": "The shuffle operation is too expensive; lower spark.sql.shuffle.partitions to reduce the number of shuffle operations",
+      "D": "Adaptive Query Execution is not optimizing this workload; disable AQE and use broadcast aggregation instead"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "The large difference between one task's shuffle read and the median indicates a single task is processing most of the data\u2014classic data skew. Salting the key spreads the skewed partitions across tasks. AQE does not fix skewed groupBy, only skewed joins.",
+    "decision_hinge": "Task 6.3 requires identifying data skew from stage-level metrics. The seed note explicitly states: Adaptive Query Execution handles skewed joins automatically. It does NOT relieve a skewed groupBy aggregation. Salting is the answer.",
+    "plausible_options": {
+      "B": "Scaling up adds memory, but does not fix skew; the oversized task still runs alone while new executors idle. Skew is a distribution problem, not a capacity problem.",
+      "C": "Lowering partition count concentrates more rows per partition, worsening skew. More partitions spread the load; fewer partitions concentrate it.",
+      "D": "AQE is enabled and does optimize joins, but the exam guide's answer key explicitly states it does not help with skewed groupBy. Disabling AQE would not help."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T5",
+        "description": "Common misconception: scaling up does not fix skew. A skewed task will still run alone on one executor while others remain idle."
+      },
+      "C": {
+        "code": "T5",
+        "description": "Common misconception: lowering spark.sql.shuffle.partitions concentrates more rows per partition, which worsens skew, not improves it."
+      },
+      "D": {
+        "code": "T5",
+        "description": "Common misconception: AQE is designed to optimize skewed joins, not groupBy. The exam guide notes that AQE does not help with skewed aggregations."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "one task runs significantly longer than all others",
+        "requires_fact": "Scaling the cluster does not address data skew; the imbalanced task distribution remains a problem even with more memory."
+      },
+      "C": {
+        "signal": "one task runs significantly longer than all others. The Max shuffle read bytes for that task is 50 GB, while the median across all tasks is 2 GB",
+        "requires_fact": "Lower partition counts concentrate data, worsening skew. More partitions spread the load. The solution is to increase partitions or salt the key."
+      },
+      "D": {
+        "signal": "Adaptive Query Execution is enabled",
+        "requires_fact": "AQE optimizes skewed joins automatically but does not help with skewed groupBy operations. The exam guide's answer key confirms salting is required for skewed groupBy."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/optimizations/spark-ui-guide/",
+      "https://docs.databricks.com/aws/en/optimizations/",
+      "https://docs.databricks.com/aws/en/sql/aqe/"
+    ],
+    "topics": [
+      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+    ]
+  },
+  {
+    "id": "draft-dbde06-002",
+    "domain": "dbde-06",
+    "blueprint_task": "6.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your team has a Lakeflow Job that processes daily ETL data. This morning, the job completed in 45 minutes, but yesterday it completed in 12 minutes. There were no code changes. Which Lakeflow Jobs UI view should you check first to identify why today's run was slower?",
+    "option_texts": {
+      "A": "The run history view to compare today's execution time against historical baselines and identify the performance regression",
+      "B": "The task graph view to see all parallel tasks and verify that all downstream jobs are scheduled correctly",
+      "C": "The Spark UI metrics tab to review stage-level shuffle and memory usage without accessing the cluster",
+      "D": "The workspace file browser to check if the input data files have changed size since yesterday"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Task 6.1 explicitly requires using the run history view to compare current execution times against historical baselines. This is the first place to spot performance regressions.",
+    "decision_hinge": "Task 6.1 states: Identify trends in job performance using the Lakeflow Jobs run history view to compare current execution times against historical baselines. Run history is the dedicated view for this purpose.",
+    "plausible_options": {
+      "B": "The task graph shows the DAG structure and dependencies but does not show per-run timing. Run history shows the actual times over time.",
+      "C": "The Spark UI is for detailed stage-level diagnostics, but you first need to identify which run is slow; run history establishes the baseline and regression.",
+      "D": "Input data size could affect performance, but you would check run history first to confirm the regression, then investigate causes."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T2",
+        "description": "Misplaced: the task graph shows the DAG structure, not run timing. Run history is the dedicated view for performance trends."
+      },
+      "C": {
+        "code": "T2",
+        "description": "Misplaced: Spark UI metrics are for deep-dive diagnostics after you know the job is slow. Run history establishes the baseline first."
+      },
+      "D": {
+        "code": "T3",
+        "description": "Confusable sibling: data size could affect performance, but the Lakeflow Jobs UI (not the file browser) is where you compare execution times."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "the job completed in 45 minutes, but yesterday it completed in 12 minutes",
+        "requires_fact": "The task graph shows DAG structure and dependencies, not run timing. Run history is the view that shows execution time trends."
+      },
+      "C": {
+        "signal": "identify why today's run was slower",
+        "requires_fact": "The Spark UI shows stage-level metrics for deep diagnosis, but run history is the first place to confirm the performance regression against historical runs."
+      },
+      "D": {
+        "signal": "Which Lakeflow Jobs UI view should you check first",
+        "requires_fact": "The Lakeflow Jobs UI run history view is the correct starting point; the file browser is outside the Jobs UI and does not show run timing."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/compute/lakeflow/monitor-jobs/",
+      "https://docs.databricks.com/aws/en/compute/jobs/"
+    ],
+    "topics": [
+      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+    ]
+  },
+  {
+    "id": "draft-dbde06-003",
+    "domain": "dbde-06",
+    "blueprint_task": "6.5",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "You attempt to launch a Lakeflow Job on a cluster, but the cluster fails to start. The job configuration is correct and has run successfully before. Where should you check to diagnose the cluster startup failure?",
+    "option_texts": {
+      "A": "Review the cluster event log to identify initialization script errors, driver or library conflicts, or infrastructure issues",
+      "B": "Open the Spark UI on the cluster to check for out-of-memory errors or task failures",
+      "C": "Check the job's run history to see if it eventually succeeded after retrying",
+      "D": "Review the Lakeflow Job DAG to identify if an upstream dependency failed to create the cluster"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Cluster startup failures are infrastructure or initialization problems, not Spark runtime problems. The cluster event log shows startup errors, init-script failures, and library conflicts.",
+    "decision_hinge": "Task 6.5 requires diagnosing cluster startup failures. The seed note explicitly states: A cluster that will not start is an infrastructure or init-script problem; look at the cluster event log, not the Spark UI.",
+    "plausible_options": {
+      "B": "The Spark UI is for runtime diagnostics after the cluster has started. If the cluster fails to start, there is no Spark UI to view.",
+      "C": "Run history might show retries, but does not explain why the cluster failed to start. The event log has the diagnosis.",
+      "D": "The job DAG shows task dependencies, not cluster initialization. A cluster that will not start is an infrastructure issue, not a DAG issue."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T5",
+        "description": "Common misconception: the Spark UI is not available until the cluster has started and is running. Startup failures occur before Spark starts."
+      },
+      "C": {
+        "code": "T2",
+        "description": "Misplaced: run history shows whether the job succeeded eventually, but the diagnostic data is in the cluster event log."
+      },
+      "D": {
+        "code": "T3",
+        "description": "Confusable sibling: the job DAG shows task dependencies, but cluster startup is an infrastructure concern, not a task dependency issue."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "the cluster fails to start",
+        "requires_fact": "The Spark UI is only available after the cluster has started successfully. Startup failures are infrastructure issues visible in the event log."
+      },
+      "C": {
+        "signal": "the cluster fails to start",
+        "requires_fact": "Run history shows outcomes, but cluster startup failures are diagnosed via the cluster event log, not job history."
+      },
+      "D": {
+        "signal": "the cluster fails to start",
+        "requires_fact": "Cluster startup is an infrastructure operation, not a job task. The DAG shows task dependencies after the cluster is ready."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/compute/clusters/",
+      "https://docs.databricks.com/aws/en/compute/lakeflow/monitor-jobs/"
+    ],
+    "topics": [
+      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+    ]
+  },
+  {
+    "id": "draft-dbde06-004",
+    "domain": "dbde-06",
+    "blueprint_task": "6.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A stage in your Spark job shows high spill-to-disk metrics, indicating that data is being written to disk because partitions are too large to fit in memory. Which approach correctly reduces spilling for this workload?",
+    "option_texts": {
+      "A": "Increase spark.sql.shuffle.partitions to create more partitions so each partition is smaller and fits in memory",
+      "B": "Reduce spark.sql.shuffle.partitions to combine fewer partitions and reduce shuffle overhead",
+      "C": "Scale down the cluster to force more efficient packing of data in memory",
+      "D": "Enable Predictive Optimization to automatically reduce spilling without configuration changes"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "High spill-to-disk means partitions are too large for memory. More partitions distribute the data across more tasks, so each partition is smaller and fits in memory.",
+    "decision_hinge": "Task 6.3 requires identifying spill as a partition-size problem and fixing it. The seed note states: Large spill-to-disk metrics on a stage = Partitions too large for memory = More partitions, more memory, or less data per task.",
+    "plausible_options": {
+      "B": "Fewer partitions concentrates more data per partition, which worsens spilling. The fix is to increase partitions, not decrease them.",
+      "C": "Scaling down removes memory, which worsens spilling. The problem is too much data per partition; scaling down makes it worse.",
+      "D": "Predictive Optimization optimizes storage and maintenance, not memory management during query execution. It does not reduce spilling."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T5",
+        "description": "Common misconception: reducing partitions concentrates more data per partition, which increases spilling, not reduces it."
+      },
+      "C": {
+        "code": "T5",
+        "description": "Common misconception: removing memory makes the problem worse. The issue is data-per-partition; less memory means more spilling."
+      },
+      "D": {
+        "code": "T3",
+        "description": "Confusable sibling: Predictive Optimization manages table layout and maintenance. Spilling is a query execution memory problem, not a storage optimization."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "partitions are too large to fit in memory",
+        "requires_fact": "Fewer partitions concentrates more data per partition, worsening spilling. More partitions spread the load."
+      },
+      "C": {
+        "signal": "partitions are too large to fit in memory",
+        "requires_fact": "Scaling down removes memory, which worsens the problem. The solution is to add memory or reduce partition size."
+      },
+      "D": {
+        "signal": "high spill-to-disk metrics",
+        "requires_fact": "Predictive Optimization manages table maintenance and layout, not query-execution memory management or spilling."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/optimizations/spark-ui-guide/",
+      "https://docs.databricks.com/aws/en/optimizations/",
+      "https://docs.databricks.com/aws/en/optimizations/liquid-clustering/"
+    ],
+    "topics": [
+      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+    ]
+  },
+  {
+    "id": "draft-dbde06-005",
+    "domain": "dbde-06",
+    "blueprint_task": "6.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "Your team manages a large Delta table in Databricks that is frequently updated and queried. The table has a natural order by customer_id, but queries are accessing random pages of the table, causing performance issues. You want to use a feature that automatically optimizes the table layout without requiring manual partitioning or explicit maintenance jobs. Which feature is best suited for this use case?",
+    "option_texts": {
+      "A": "Liquid clustering with customer_id as the clustering key to automatically optimize table layout and allow dynamic column changes",
+      "B": "Create a static partition by customer_id in the table schema to enforce range-based data organization",
+      "C": "Use Predictive Optimization to automatically run OPTIMIZE and VACUUM on a schedule managed by Databricks",
+      "D": "Enable Z-ordering on customer_id and run OPTIMIZE manually once per week to maintain table layout"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Liquid clustering automatically optimizes table layout based on a clustering key, eliminating the need for manual partitioning or scheduled maintenance. It also allows changing the clustering key later without rewriting the table.",
+    "decision_hinge": "Task 6.4 requires understanding Liquid Clustering. The seed note states: Liquid clustering replaces fixed partitioning and Z-ordering with a clustering key you can change later without rewriting the table layout by hand.",
+    "plausible_options": {
+      "B": "Static partitioning would organize data but requires manual schema changes to modify the partition scheme and cannot dynamically adjust to query patterns.",
+      "C": "Predictive Optimization manages when to run OPTIMIZE/VACUUM but does not change the table layout. Liquid clustering changes how data is physically organized.",
+      "D": "Z-ordering improves locality but requires manual OPTIMIZE runs and cannot be easily changed. Liquid clustering is more flexible and automatic."
+    },
+    "distractor_traps": {
+      "B": {
+        "code": "T3",
+        "description": "Confusable sibling: partitioning and clustering are different approaches. Static partitions cannot adapt dynamically to query patterns."
+      },
+      "C": {
+        "code": "T2",
+        "description": "Misplaced: Predictive Optimization manages maintenance scheduling, not table layout optimization. Liquid clustering changes the physical organization."
+      },
+      "D": {
+        "code": "T7",
+        "description": "Outdated behavior: Z-ordering is an older approach. Liquid clustering is the modern feature that replaces fixed partitioning and Z-ordering."
+      }
+    },
+    "eliminated_by": {
+      "B": {
+        "signal": "without requiring manual partitioning",
+        "requires_fact": "Static partitioning requires manual schema changes to adjust; liquid clustering is dynamic and does not require schema changes."
+      },
+      "C": {
+        "signal": "automatically optimizes the table layout",
+        "requires_fact": "Predictive Optimization manages when to run OPTIMIZE/VACUUM; liquid clustering changes table layout. They address different optimization aspects."
+      },
+      "D": {
+        "signal": "without requiring manual partitioning or explicit maintenance jobs",
+        "requires_fact": "Z-ordering requires manual OPTIMIZE runs; liquid clustering is automatic. Liquid clustering also allows changing the key later without rewriting."
+      }
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/delta/clustering",
+      "https://docs.databricks.com/aws/en/optimizations/",
+      "https://docs.databricks.com/aws/en/optimizations/predictive-optimization/"
+    ],
+    "topics": [
+      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+    ]
+  }
+]
