@@ -18724,8 +18724,208 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-117",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch10.json",
+      "stem": "A platform team is writing the standard for how new tables should be declared, and has to justify a default rather than leave each squad to choose. They care about running cost and about not hand-scheduling upkeep.",
+      "option_texts": {
+        "A": "Prefer managed tables, which cost less and maintain and optimize themselves automatically",
+        "B": "Prefer external tables, since keeping the files outside is what lowers the running cost",
+        "C": "Prefer external tables, because only they stay reachable from clients outside the platform",
+        "D": "Leave it open, because the two types differ only in who holds the storage path"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Managed tables are the default and recommended type: cheaper to store and query, and self-maintaining",
+      "drill_rationale": "Managed tables are the default and recommended table type, and compared with external tables managed tables cost less to store and query, maintain and optimize themselves automatically, and stay accessible to external clients through open APIs.",
+      "decision_hinge": "Managed tables are the default and recommended table type, and compared with external tables managed tables cost less to store and query, maintain and optimize themselves automatically, and stay accessible to external clients through open APIs.",
+      "plausible_options": {
+        "B": "They care about running cost and about not hand-scheduling upkeep"
+      },
+      "eliminated_by": {
+        "C": "has to justify a default rather than leave each squad to choose",
+        "D": "writing the standard for how new tables should be declared"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - external tables are a real choice, but they are the dearer one to store and query",
+        "C": "T1: fabricated - managed tables stay reachable to external clients through open APIs",
+        "D": "T5: common misconception - the types also differ in cost, upkeep and lifecycle"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/managed"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-118",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch10.json",
+      "stem": "Reporting habits on a large table shift every few months as new dashboards land, and the team is tired of revisiting its layout choice by hand each time. They want the layout to follow however the table is actually being read.",
+      "option_texts": {
+        "A": "Pick the columns once from today's dashboards, since read patterns settle quickly",
+        "B": "Let the platform select and update the clustering keys as query patterns change",
+        "C": "Re-run a layout command weekly, because only a schedule can track changing reads",
+        "D": "Partition on the busiest column, because partitions adapt as the reads move around"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Automatic liquid clustering selects and updates clustering keys as query patterns change",
+      "drill_rationale": "Predictive optimization automatically selects and updates clustering keys as query patterns change to improve performance and lower costs.",
+      "decision_hinge": "Predictive optimization automatically selects and updates clustering keys as query patterns change to improve performance and lower costs.",
+      "plausible_options": {
+        "C": "tired of revisiting its layout choice by hand each time"
+      },
+      "eliminated_by": {
+        "A": "Reporting habits on a large table shift every few months as new dashboards land",
+        "D": "They want the layout to follow however the table is actually being read"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - a one-off choice is exactly the hand revisiting being avoided",
+        "C": "T3: confusable sibling - a schedule re-runs the work but still uses whichever keys were chosen by hand",
+        "D": "T1: fabricated - partitions are fixed at definition and do not adapt to reads"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/managed"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-119",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch10.json",
+      "stem": "A department has ten employees recorded, but two of them have no salary captured yet. A report computes the mean salary per department and the team must say what the figure is divided by.",
+      "option_texts": {
+        "A": "Ten, with the two blanks read as zero before the mean is computed",
+        "B": "Ten, because every recorded employee counts toward the mean of the group",
+        "C": "Eight, because the aggregate is computed over the non-null values in the group",
+        "D": "Nothing, because a group holding a blank yields a null figure overall"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.4",
+      "blueprint_task_title": "Perform data deduplication operations and aggregate operations on DataFrames, such as count, approximate count distinct, and mean, summary",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "avg returns the mean calculated from the values of the group, ignoring null values",
+      "drill_rationale": "The avg aggregate function returns the mean calculated from values of a group, and null values within the group are ignored.",
+      "decision_hinge": "The avg aggregate function returns the mean calculated from values of a group, and null values within the group are ignored.",
+      "plausible_options": {
+        "A": "two of them have no salary captured yet"
+      },
+      "eliminated_by": {
+        "B": "the team must say what the figure is divided by",
+        "D": "A report computes the mean salary per department"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - treating a blank as zero is what a fillna would do first",
+        "B": "T5: common misconception - the divisor counts the values present, not the rows",
+        "D": "T1: fabricated - a single null does not poison the whole aggregate"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/functions/avg"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-120",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src3-batch10.json",
+      "stem": "Booking events arrive stamped in UTC, and a regional report has to show each one in the local wall-clock time of its airport. The team is choosing the function that performs that shift.",
+      "option_texts": {
+        "A": "cast to timestamp, which resolves the zone from the session that reads it",
+        "B": "to_utc_timestamp, which moves the stamp into the zone the report needs",
+        "C": "date_format, which prints the stamp using a pattern that names the zone",
+        "D": "from_utc_timestamp, which renders the stamp in the named time zone"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.1",
+      "blueprint_task_title": "Implement data cleaning by reading bronze tables with PySpark/SQL, cleaning nulls, standardizing data types, and writing to new silver tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "from_utc_timestamp renders a UTC timestamp in the supplied time zone",
+      "drill_rationale": "The from_utc_timestamp function returns the timestamp expr rendered in the time zone given by the timezone argument.",
+      "decision_hinge": "The from_utc_timestamp function returns the timestamp expr rendered in the time zone given by the timezone argument.",
+      "plausible_options": {
+        "B": "has to show each one in the local wall-clock time of its airport"
+      },
+      "eliminated_by": {
+        "A": "The team is choosing the function that performs that shift",
+        "C": "Booking events arrive stamped in UTC"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - a cast does not apply a named zone conversion",
+        "B": "T3: confusable sibling - that function converts the other way, into UTC",
+        "C": "T2: scope error - formatting changes how a value prints without shifting the instant"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/functions/from_utc_timestamp"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 365,
+  "total": 369,
   "last_updated_at": "2026-11-03"
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 206,
+  "count": 209,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1649,6 +1649,30 @@
       "title": "Create schemas | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "605b4ad5aba6bad96d849dd7076fb77d0490f96d554aaddad2aa1148efd56bee",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/avg",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/avg.txt",
+      "title": "avg aggregate function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "40b6151552eb20c7f2870ce16da49eecab3a0824fb8e73ac92fd4bde0d59a432",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/from_utc_timestamp",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/from_utc_timestamp.txt",
+      "title": "from_utc_timestamp function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "66c1ee3df01a76d537453fa1773eaf838695ab898e5292cea85aa0bd4471ca9c",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/catalog-explorer/index",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/catalog-explorer/index.txt",
+      "title": "What is Catalog Explorer? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "a272aeb3f452e9d95cb91c2fe1cb1c9b05052eed5a8ff3b826b7da87e751cfac",
       "source": "mcp-cache_fetch"
     }
   ]
