@@ -17,7 +17,7 @@ import traceback
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
-from study_agent_mcp import repo, server  # noqa: E402
+from study_agent_mcp import exam_config, repo, server  # noqa: E402
 
 PASS, FAIL = [], []
 
@@ -78,9 +78,17 @@ def main() -> int:
         # ---- read-only, no fixture needed -------------------------------------
         check("exam_facts", lambda: server.exam_facts(),
               lambda r: "tracks" in r and "ae" in r["tracks"])
-        check("exam_facts names unpublished items",
+        check("exam_facts covers every track",
               lambda: server.exam_facts(),
-              lambda r: len(r["not_published_by_dbt_labs"]) >= 3)
+              lambda r: set(r["tracks"]) == set(exam_config.VALID_TRACKS))
+        check("exam_facts names unpublished items per track",
+              lambda: server.exam_facts(),
+              lambda r: set(r["not_published"]) == set(exam_config.VALID_TRACKS)
+              and all(v for v in r["not_published"].values()))
+        check("exam_facts flags whether the share is official",
+              lambda: server.exam_facts(),
+              lambda r: all(t["share_is_official"] == t["weights_published"]
+                            for t in r["tracks"].values()))
         check("drill_help", lambda: server.drill_help(),
               lambda r: "workflow" in r and len(r["question_formats"]) == 7)
         check("ingest_help", lambda: server.ingest_help(), no_error)

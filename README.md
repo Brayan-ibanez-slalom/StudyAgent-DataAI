@@ -1,39 +1,47 @@
-# StudyAgent-DBT
+# StudyAgent-DataAI
 
-An agentic study workbench for the two **dbt Labs certifications**, built as a local MCP
-server plus a verified knowledge base.
+An agentic study workbench for **five data and AI certifications across three vendors**,
+built as a local MCP server plus a verified knowledge base.
 
-| Track | Exam |
-|---|---|
-| `ae` | **dbt Analytics Engineering Certification** — the learning path and study guide call it the *dbt Certified Developer* exam |
-| `arch` | **dbt Architect Certification** |
+| Track | Exam | Vendor |
+|---|---|---|
+| `ae` | **dbt Analytics Engineering Certification** — the learning path and study guide call it the *dbt Certified Developer* exam | dbt Labs |
+| `arch` | **dbt Architect Certification** | dbt Labs |
+| `dbde` | **Databricks Certified Data Engineer Associate** | Databricks |
+| `dbgenai` | **Databricks Certified Generative AI Engineer Associate** | Databricks |
+| `gcgenai` | **Google Cloud Certified — Generative AI Leader** | Google Cloud |
+
+The repo name is historical — it started dbt-only.
 
 Ported from [`StudyAgent-AIP-C01`](../StudyAgent-AIP-C01) (AWS). Same topic-first,
-cache-first, MCP-first architecture; different source of truth and a multi-format grading
-engine.
+cache-first, MCP-first architecture; the source of truth is now per track, and the
+grading engine is multi-format.
 
 ---
 
 ## What makes this different from a flashcard app
 
 - **Nothing is asserted without a citation.** Every question's answer is sealed against a
-  cached `docs.getdbt.com` page, and the authoring gate rejects any item whose deciding
-  fact cannot be found in that cached text.
-- **All six dbt question formats are drilled in their real form** — including Discrete
+  cached page from **the vendor that owns the track**, and the authoring gate rejects any
+  item whose deciding fact cannot be found in that cached text — or whose citation points
+  at a different vendor.
+- **All seven question formats are drilled in their real form** — including Discrete
   Option Multiple Choice, where options are shown one at a time and you cannot revise.
   Practising only multiple choice trains recognition instead of recall.
 - **Reasoning is graded, not just the answer.** `drill_grade_reasoned` compares your
   stated reason against the sealed rationale, so "right for the wrong reason" is caught.
-- **No invented exam facts.** Domains are the official topic outlines from the dbt Labs
-  study guides. Per-topic weighting is *not* published, so this repo has none — and a
-  unit test fails the build if anyone adds one.
+- **No invented exam facts.** Domains are the official topic outlines from each vendor's
+  guide. dbt publishes no per-topic weighting, so the dbt tracks have none; Databricks and
+  Google do publish section weights, so those are stored as facts. A unit test fails the
+  build if a weight appears where the vendor publishes none — or if a passing score is
+  stated for a vendor that publishes no cut score.
 
 ---
 
 ## Getting started
 
 ```bash
-git clone <this repo> && cd StudyAgent-DBT
+git clone <this repo> && cd StudyAgent-DataAI
 ./scripts/setup.sh
 ```
 
@@ -49,7 +57,7 @@ the `study-agent` server is listed and started.
 |---|---|---|
 | `/study` | Sonnet | Brief a domain from the notes, then drill it |
 | `/drill` | Sonnet | Interactive quiz, one question per turn, reasoning validated |
-| `/author` | Opus | Write new items from dbt docs through the quality gate |
+| `/author` | Opus | Write new items from the track's vendor docs through the quality gate |
 | `/seal` | Opus | Independently derive and verify an unsealed answer |
 | `/verify` | Sonnet | Sweep for broken seals, stale sources, and version drift |
 
@@ -67,24 +75,83 @@ trust the MCP config is silently ignored.
 
 ---
 
-## The bank starts empty. That is deliberate.
+## Agent customization — nothing to install
 
-There is no dbt equivalent of the large public question dumps that exist for cloud exams,
-and the third-party dbt material that does exist frequently describes older dbt versions.
-Seeding from it would poison the bank.
+Everything that shapes the agent lives in `.github/` and is **workspace-local**. Clone
+the repo, trust the folder, and it is active. There is no extension to install, no
+marketplace entry, and nothing to copy into your user profile.
 
-So the first real session is authoring, not drilling:
+| Asset | Path | How it activates |
+|---|---|---|
+| **Global rules** | `.github/copilot-instructions.md` | Loaded automatically on every request in this workspace |
+| **Scoped instructions** | `.github/instructions/*.instructions.md` | Applied when the file you are touching matches the `applyTo` glob in the frontmatter |
+| **Prompts** | `.github/prompts/*.prompt.md` | Invoked explicitly as a `/` slash command, named after the file |
+| **Skills** | `.github/skills/<name>/SKILL.md` | Loaded on demand when your request matches the skill's `description` |
+
+### What each one is for
+
+- **`copilot-instructions.md`** is the constitution: the prime directive, the
+  source-of-truth hierarchy, the per-vendor confusion pairs, and the drill protocol. It
+  applies no matter which agent or chat mode you are in.
+- **`instructions/`** are narrow and glob-scoped. `knowledge-base.instructions.md`
+  (`applyTo: knowledge/**`) holds the note contract; `question-bank.instructions.md`
+  (`applyTo: question-bank/**`) holds the record contract. They load only when relevant,
+  which keeps them out of the way during a drill.
+- **`prompts/`** pin a model and a tool allowlist per workflow — `/drill` gets the fast
+  tier and only drill tools, `/author` gets the heavy tier and only authoring tools. That
+  allowlist is what stops `/drill` from quietly fetching docs mid-question.
+- **`skills/`** are multi-step procedures the agent pulls in by itself. Today there is
+  one: **`import-practice-questions`**, which turns a pasted third-party practice exam
+  into original, gate-verified items.
+
+### Using the import skill
+
+You do not invoke it by name. Paste the practice questions into chat and say what you
+want, e.g. *"add these to the bank for `dbde`"*. The agent matches your request against
+the skill description and follows the procedure: copyright triage, domain remapping,
+independent re-grounding against the right vendor's docs, authoring, then
+`item_gate` → `balance_keys` → `authored_ingest`.
+
+It will **not** copy stems verbatim and will **not** accept the source's claimed answer
+key without re-deriving it. That is the point of the skill — third-party practice
+material sits at the bottom of the source-of-truth hierarchy.
+
+### Adding your own
+
+```bash
+mkdir -p .github/skills/my-skill && $EDITOR .github/skills/my-skill/SKILL.md
+```
+
+The frontmatter needs `name` and a `description` written for *matching* — state the
+trigger conditions in the user's words, not a summary of the contents. Reference files
+go alongside it (see `skills/import-practice-questions/references/`). Prompts are the
+same idea with `mode`, `model`, `description` and a `tools` allowlist.
+
+---
+
+## Growing the bank
+
+There is no trustworthy public question dump for any of these five exams, and the
+third-party material that exists frequently describes superseded product versions and
+names. Seeding from it uncritically would poison the bank — so every item enters through
+one of two doors, both of which end at the same quality gate:
 
 ```
-/author
+/author                      # write originals from the vendor docs
 ```
 
-It will pull `coverage_report`, pick the emptiest task, fetch the relevant
-`docs.getdbt.com` pages into the cache, and write items through `item_gate`.
+picks the emptiest task from `coverage_report`, fetches the relevant vendor pages into
+the cache, and writes items through `item_gate`.
 
-Expect to build the bank up over several sessions. `coverage_report(track="ae")` shows
-both task gaps and **format gaps** — it will tell you when the bank has drifted into
-being all multiple choice.
+```
+paste a practice exam + "add these for <track>"
+```
+
+triggers the `import-practice-questions` skill, which re-derives each answer
+independently before anything is admitted.
+
+`coverage_report(track="dbde")` shows both task gaps and **format gaps** — it will tell
+you when the bank has drifted into being all multiple choice.
 
 ---
 
@@ -92,37 +159,54 @@ being all multiple choice.
 
 | Path | What it is |
 |---|---|
-| `mcp-server/study_agent_mcp/exam_config.py` | **Single source of truth**: official topic outlines, tasks, formats, ID prefixes. Adding a domain is one edit here plus `bootstrap_repo.py`. |
-| `mcp-server/study_agent_mcp/grading.py` | Multi-format answer engine (all six dbt formats) |
+| `mcp-server/study_agent_mcp/exam_config.py` | **Single source of truth**: official topic outlines, tasks, formats, per-track authoritative hosts, ID prefixes. Adding a track or domain is one edit here plus `bootstrap_repo.py`. |
+| `mcp-server/study_agent_mcp/grading.py` | Multi-format answer engine (all seven formats) |
 | `mcp-server/study_agent_mcp/server.py` | The MCP tool surface |
-| `mcp-server/tests/` | 55 unit tests + a 40-check integration smoke test |
+| `mcp-server/tests/` | 68 unit tests + a 43-check integration smoke test |
+| `.github/` | Agent customization — global rules, scoped instructions, prompts, skills |
 | `knowledge/<track>/<domain>/` | Verified topic notes — the knowledge base |
 | `question-bank/` | `index.json` (sealed bank) and `authored/` (drafts awaiting the gate) |
 | `progress/` | Scorecard, missed queue, per-attempt log, session snapshots |
-| `sources/cache/` | Cached dbt docs; 90-day freshness window |
-| `docs/` | Blueprints, question formats, authoring spec, domain rubric, model routing, decision log |
+| `sources/cache/` | Cached vendor docs; 90-day freshness window |
+| `docs/` | Blueprints (one per track), question formats, authoring spec, domain rubric, model routing, decision log |
 | `scripts/` | Index builder, quality gate, ingest, coverage, bootstrap |
 
 ---
 
-## Exam facts (published)
+## Exam facts — and what each vendor refuses to publish
 
-Both exams: **65 questions**, **65% to pass**, **2 hours**, **$200**, online proctored via
-Talview, not open book, valid 2 years. AE targets **dbt Core 1.11** and is offered in
-English and Japanese; Architect adds French and assumes Enterprise account administration
-experience.
+| | AE | Architect | DB DE Assoc | DB GenAI Assoc | GC GenAI Leader |
+|---|---|---|---|---|---|
+| Scored questions | 65 | 65 | 45 | 45 | 50–60 (range only) |
+| Passing score | 65% | 65% | **not published** | **not published** | **not published** |
+| Duration | 2 h | 2 h | 90 min | 90 min | 90 min |
+| Cost (USD) | 200 | 200 | 200 | 200 | 99 |
+| Validity | 2 yr | 2 yr | 2 yr | 2 yr | 3 yr |
+| Domains | 7 | 8 | 7 | 6 | 4 |
+| Per-domain weights | **not published** | **not published** | published | published | published (`~`) |
 
-Scoring: one point per correct answer, all questions weighted equally, plus an undisclosed
-number of unscored research questions mixed in.
+Domains in this repo are the **official outlines** transcribed from each vendor's guide,
+with section and objective titles quoted verbatim. Databricks prints its objectives as
+unnumbered bullets, so the `N.M` task ids for those two tracks are ours — the titles are
+not.
 
-Domains in this repo are the **official topic outlines** transcribed from the dbt Labs
-study guides — 7 topics for AE, 8 for Architect, with sub-topic titles quoted verbatim.
+The two asymmetries are enforced by tests rather than by discipline:
 
-**Still not published:** per-topic weighting. `exam_facts()` returns a `subtopic_share_pct`
-proxy derived from sub-topic counts (AE Topic 1 has 14 sub-topics, Topic 4 has 2), clearly
-labelled as a proxy. Never quote it as a weight.
+- **dbt publishes no per-topic weighting.** `exam_facts()` returns a `subtopic_share_pct`
+  proxy derived from sub-topic counts, flagged `share_is_official: false`. Databricks and
+  Google do print section percentages, so those are stored as real weights and flagged
+  `true`. `test_weights_are_not_fabricated` fails the build either way round.
+- **Databricks and Google publish no cut score.** `passing_score_pct` is `null` for those
+  three tracks and `test_passing_score_is_only_stated_where_published` keeps it that way.
 
-[source: getdbt.com official study guides — accessed 2026-09-29]
+Call `exam_facts(track=...)` rather than trusting this table — it is generated from the
+same config the tests guard.
+
+Per-track detail: [AE](docs/exam-blueprint-ae.md) ·
+[Architect](docs/exam-blueprint-architect.md) ·
+[Databricks DE](docs/exam-blueprint-databricks-de.md) ·
+[Databricks GenAI](docs/exam-blueprint-databricks-genai.md) ·
+[Google GenAI Leader](docs/exam-blueprint-google-genai-leader.md)
 
 ---
 
@@ -164,15 +248,44 @@ the tool surface is the product.
 
 ---
 
-## Adding a domain or a question format
+## Extending it
 
-**Domain:** edit `exam_config.DOMAINS`, run `python3 scripts/bootstrap_repo.py`, then
-`python3 scripts/build_topic_index.py`. `test_exam_config.py` will catch an id that
-disagrees with its folder or a task with the wrong major number.
+### Adding a track
 
-**Format:** see the checklist at the end of
-[docs/question-formats.md](docs/question-formats.md). A test fails if you skip the
-rendering step.
+1. Add an entry to `exam_config.EXAM_FACTS` — including `vendor`,
+   `authoritative_hosts`, `weights_published` and `passing_score_published`. State only
+   what the vendor actually prints; leave the rest `None`.
+2. Add its domains to `exam_config.DOMAINS`, quoting section and objective titles
+   verbatim and recording `provenance`.
+3. `python3 scripts/bootstrap_repo.py` to create `knowledge/<track>/<NN>-<slug>/`.
+4. Add a blueprint in `docs/`, scorecard rows in `progress/scorecard.md`, and a glossary
+   in `server.py` if the vendor's vocabulary is new.
+5. `python3 scripts/build_topic_index.py`, then run the tests.
+
+Nothing else hardcodes a track — regexes build their alternation from
+`exam_config.TRACK_RE_GROUP`, and citation checks resolve hosts per track.
+
+### Adding a domain
+
+Edit `exam_config.DOMAINS`, run `bootstrap_repo.py`, then `build_topic_index.py`.
+`test_exam_config.py` catches an id that disagrees with its folder or a task with the
+wrong major number, and `test_docs_consistency.py` fails if any doc names a folder that
+does not exist.
+
+### Adding a question format
+
+See the checklist at the end of [docs/question-formats.md](docs/question-formats.md).
+A test fails if you skip the rendering step.
+
+### Renaming the repo
+
+1. Rename it on GitHub (Settings → Repository name). GitHub redirects the old URL, so
+   existing clones and links keep working.
+2. `git remote set-url origin <new-url>`
+3. Rename the local folder and reopen it — the MCP config uses `${workspaceFolder}`, so
+   it follows automatically.
+4. Update the name in `README.md`, `.github/copilot-instructions.md` and
+   `scripts/setup.sh`, and append the reasoning to `docs/decision-log.md`.
 
 ---
 

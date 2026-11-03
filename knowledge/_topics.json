@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "generated_at": "2026-09-29",
+  "generated_at": "2026-11-03",
   "description": "Machine-readable index of knowledge/ topic notes. Regenerate with scripts/build_topic_index.py.",
   "weight_note": "dbt Labs does not publish section weights; domain_weight is null by design.",
-  "topic_count": 24,
+  "topic_count": 41,
   "topics": [
     {
       "id": "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -98,6 +98,7 @@
         "table",
         "target",
         "test",
+        "tpu",
         "trap",
         "traps",
         "view",
@@ -788,6 +789,7 @@
         "target",
         "test",
         "three commands people confuse",
+        "tpu",
         "trap",
         "traps",
         "troubleshooting",
@@ -951,16 +953,20 @@
       "domain": "ae-04",
       "domain_title": "Troubleshooting and optimizing dbt pipelines",
       "domain_weight": null,
-      "verified": "2026-09-29",
+      "verified": "2026-10-30",
       "keywords": [
         "`dbt retry`",
         "access",
+        "checks: a project-standard gate before anything builds",
         "dbt clone",
         "dbt retry",
         "environment",
         "error",
         "graph operator",
+        "hook",
         "model",
+        "post-hook",
+        "pre-hook",
         "re-running just the broken part",
         "related",
         "run_results",
@@ -982,7 +988,10 @@
         "skipping",
         "on_error",
         "run_results.json",
-        "dbt retry"
+        "dbt retry",
+        "checks",
+        "dbt Information Schema",
+        "--skip-checks"
       ],
       "sources": [
         {
@@ -1421,6 +1430,1097 @@
       "related": [
         "ae/07-dbt-state/dbt-retry"
       ]
+    },
+    {
+      "id": "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "path": "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md",
+      "title": "Databricks platform architecture and compute choice",
+      "track": "dbde",
+      "domain": "dbde-01",
+      "domain_title": "Databricks Intelligence Platform",
+      "domain_weight": 6,
+      "verified": "2026-11-03",
+      "keywords": [
+        "access",
+        "all-purpose cluster",
+        "choosing compute",
+        "core components",
+        "delta lake",
+        "job cluster",
+        "model",
+        "photon",
+        "rag",
+        "scope \u2014 official objectives",
+        "seed",
+        "serverless",
+        "source",
+        "sql warehouse",
+        "sso",
+        "table",
+        "test",
+        "trap",
+        "traps",
+        "unity catalog",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "delta lake",
+        "unity catalog",
+        "time travel",
+        "lakehouse",
+        "all-purpose cluster",
+        "job cluster",
+        "sql warehouse",
+        "serverless",
+        "photon",
+        "dbu"
+      ],
+      "sources": [
+        {
+          "title": "Delta Lake on Databricks",
+          "url": "https://docs.databricks.com/aws/en/delta/"
+        },
+        {
+          "title": "Unity Catalog",
+          "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/"
+        },
+        {
+          "title": "Compute",
+          "url": "https://docs.databricks.com/aws/en/compute/"
+        },
+        {
+          "title": "Data Engineer Associate exam guide",
+          "url": "https://www.databricks.com/learn/certification/data-engineer-associate"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "path": "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md",
+      "title": "Choosing and configuring an ingestion path",
+      "track": "dbde",
+      "domain": "dbde-02",
+      "domain_title": "Data Ingestion and Loading",
+      "domain_weight": 21,
+      "verified": "2026-11-03",
+      "keywords": [
+        "auto loader",
+        "auto loader schema handling",
+        "copy into",
+        "incremental",
+        "lakeflow connect",
+        "lakeflow jobs",
+        "merge",
+        "notification",
+        "rag",
+        "schema evolution",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "structured data",
+        "table",
+        "target",
+        "trap",
+        "traps",
+        "unity catalog",
+        "unstructured data",
+        "verify before sealing",
+        "volume",
+        "which ingestion mechanism",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "auto loader",
+        "cloudFiles",
+        "copy into",
+        "lakeflow connect",
+        "schema evolution",
+        "_rescued_data",
+        "directory listing",
+        "file notification",
+        "semi-structured"
+      ],
+      "sources": [
+        {
+          "title": "Ingest data into a Databricks lakehouse",
+          "url": "https://docs.databricks.com/aws/en/ingestion/"
+        },
+        {
+          "title": "Auto Loader",
+          "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/"
+        },
+        {
+          "title": "COPY INTO",
+          "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/copy-into/"
+        },
+        {
+          "title": "Lakeflow Connect",
+          "url": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "path": "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md",
+      "title": "Transformations, joins and the gold layer",
+      "track": "dbde",
+      "domain": "dbde-03",
+      "domain_title": "Data Transformation and Modeling",
+      "domain_weight": 22,
+      "verified": "2026-11-03",
+      "keywords": [
+        "append",
+        "delta lake",
+        "joins and dedup \u2014 what to watch",
+        "materialized view",
+        "medallion",
+        "rag",
+        "scope \u2014 official objectives",
+        "seed",
+        "shuffle",
+        "source",
+        "streaming table",
+        "table",
+        "trap",
+        "traps",
+        "tuning parameters",
+        "unity catalog",
+        "verify before sealing",
+        "view",
+        "which gold-layer object",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "medallion",
+        "bronze",
+        "silver",
+        "gold",
+        "broadcast join",
+        "dropDuplicates",
+        "approx_count_distinct",
+        "explode",
+        "materialized view",
+        "streaming table",
+        "expectations",
+        "shuffle partitions"
+      ],
+      "sources": [
+        {
+          "title": "Transform data",
+          "url": "https://docs.databricks.com/aws/en/transform/"
+        },
+        {
+          "title": "Delta Lake on Databricks",
+          "url": "https://docs.databricks.com/aws/en/delta/"
+        },
+        {
+          "title": "Optimization recommendations",
+          "url": "https://docs.databricks.com/aws/en/optimizations/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "path": "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md",
+      "title": "Lakeflow Jobs \u2014 tasks, control flow and triggers",
+      "track": "dbde",
+      "domain": "dbde-04",
+      "domain_title": "Working with Lakeflow Jobs",
+      "domain_weight": 16,
+      "verified": "2026-11-03",
+      "keywords": [
+        "choosing a trigger",
+        "control flow",
+        "error",
+        "file arrival trigger",
+        "lakeflow jobs",
+        "scope \u2014 official objectives",
+        "seed",
+        "sso",
+        "table",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "lakeflow jobs",
+        "task graph",
+        "retries",
+        "conditional task",
+        "for each task",
+        "task values",
+        "scheduled trigger",
+        "file arrival trigger",
+        "table update trigger",
+        "continuous trigger"
+      ],
+      "sources": [
+        {
+          "title": "Lakeflow Jobs",
+          "url": "https://docs.databricks.com/aws/en/jobs/"
+        },
+        {
+          "title": "Data Engineer Associate exam guide",
+          "url": "https://www.databricks.com/learn/certification/data-engineer-associate"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/05-implementing-ci-cd/bundles-and-git",
+      "path": "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md",
+      "title": "Git folders, bundles and the Databricks CLI",
+      "track": "dbde",
+      "domain": "dbde-05",
+      "domain_title": "Implementing CI/CD",
+      "domain_weight": 10,
+      "verified": "2026-11-03",
+      "keywords": [
+        "asset bundle",
+        "databricks cli",
+        "environment",
+        "error",
+        "git folder",
+        "lakeflow jobs",
+        "model",
+        "naming \u2014 a live rename",
+        "package",
+        "scope \u2014 official objectives",
+        "secrets",
+        "seed",
+        "source",
+        "target",
+        "test",
+        "trap",
+        "traps",
+        "unity catalog",
+        "verify before sealing",
+        "which tool for which job",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "git folder",
+        "databricks repos",
+        "asset bundle",
+        "declarative automation bundle",
+        "databricks.yml",
+        "targets",
+        "bundle variables",
+        "BUNDLE_VAR_",
+        "databricks cli",
+        "bundle validate",
+        "bundle deploy"
+      ],
+      "sources": [
+        {
+          "title": "Databricks Asset Bundles",
+          "url": "https://docs.databricks.com/aws/en/dev-tools/bundles/"
+        },
+        {
+          "title": "Databricks CLI",
+          "url": "https://docs.databricks.com/aws/en/dev-tools/cli/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "path": "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md",
+      "title": "Diagnosing slow and failing pipelines",
+      "track": "dbde",
+      "domain": "dbde-06",
+      "domain_title": "Troubleshooting, Monitoring, and Optimization",
+      "domain_weight": 10,
+      "verified": "2026-11-03",
+      "keywords": [
+        "aqe",
+        "data skew",
+        "group",
+        "lakeflow jobs",
+        "layout and maintenance",
+        "liquid clustering",
+        "predictive optimization",
+        "reading the symptom",
+        "scope \u2014 official objectives",
+        "seed",
+        "shuffle",
+        "spark ui",
+        "spill",
+        "table",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "view",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "spark ui",
+        "data skew",
+        "shuffle",
+        "spill",
+        "aqe",
+        "salting",
+        "liquid clustering",
+        "predictive optimization",
+        "run history",
+        "out of memory",
+        "cluster startup failure"
+      ],
+      "sources": [
+        {
+          "title": "Optimization recommendations",
+          "url": "https://docs.databricks.com/aws/en/optimizations/"
+        },
+        {
+          "title": "Spark UI guide",
+          "url": "https://docs.databricks.com/aws/en/optimizations/spark-ui-guide/"
+        },
+        {
+          "title": "Liquid clustering",
+          "url": "https://docs.databricks.com/aws/en/delta/clustering"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbde/07-governance-and-security/unity-catalog-governance",
+      "path": "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md",
+      "title": "Unity Catalog governance and security",
+      "track": "dbde",
+      "domain": "dbde-07",
+      "domain_title": "Governance and Security",
+      "domain_weight": 15,
+      "verified": "2026-11-03",
+      "keywords": [
+        "abac",
+        "access",
+        "column mask",
+        "external table",
+        "group",
+        "managed table",
+        "managed vs external",
+        "model",
+        "rag",
+        "restricting what a user sees",
+        "row filter",
+        "scope \u2014 official objectives",
+        "seed",
+        "service principal",
+        "table",
+        "trap",
+        "traps",
+        "unity catalog",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "managed table",
+        "external table",
+        "grant",
+        "revoke",
+        "deny",
+        "principal",
+        "service principal",
+        "column mask",
+        "row filter",
+        "is_account_group_member",
+        "abac",
+        "securable"
+      ],
+      "sources": [
+        {
+          "title": "Unity Catalog",
+          "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/"
+        },
+        {
+          "title": "Manage privileges",
+          "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/"
+        },
+        {
+          "title": "Row filters and column masks",
+          "url": "https://docs.databricks.com/aws/en/tables/row-and-column-filters"
+        },
+        {
+          "title": "ABAC in Unity Catalog",
+          "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/"
+        },
+        {
+          "title": "Managed tables",
+          "url": "https://docs.databricks.com/aws/en/tables/managed"
+        },
+        {
+          "title": "External tables",
+          "url": "https://docs.databricks.com/aws/en/tables/external"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/01-design-applications/solution-design",
+      "path": "knowledge/dbgenai/01-design-applications/solution-design.md",
+      "title": "Designing a gen AI application on Databricks",
+      "track": "dbgenai",
+      "domain": "dbgenai-01",
+      "domain_title": "Design Applications",
+      "domain_weight": 14,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "agent bricks",
+        "designing the chain",
+        "model",
+        "scope \u2014 official objectives",
+        "seed",
+        "sso",
+        "tpu",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "which agent bricks offering",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "prompt design",
+        "structured output",
+        "chain component",
+        "tool calling",
+        "multi-stage reasoning",
+        "agent bricks",
+        "knowledge assistant",
+        "multiagent supervisor",
+        "information extraction"
+      ],
+      "sources": [
+        {
+          "title": "Generative AI on Databricks",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/guide/"
+        },
+        {
+          "title": "Agent Bricks",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/agent-bricks/"
+        },
+        {
+          "title": "GenAI Engineer Associate exam guide",
+          "url": "https://www.databricks.com/learn/certification/genai-engineer-associate"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "path": "knowledge/dbgenai/02-data-preparation/chunking-and-retrieval-prep.md",
+      "title": "Preparing documents for retrieval",
+      "track": "dbgenai",
+      "domain": "dbgenai-02",
+      "domain_title": "Data Preparation",
+      "domain_weight": 14,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "choosing a chunking strategy",
+        "chunking",
+        "context window",
+        "delta lake",
+        "embedding",
+        "model",
+        "package",
+        "rag",
+        "re-ranking",
+        "retrieval metrics",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "table",
+        "trap",
+        "traps",
+        "unity catalog",
+        "vector search",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "chunking",
+        "chunk overlap",
+        "semantic chunking",
+        "parent document retriever",
+        "re-ranking",
+        "recall@k",
+        "precision@k",
+        "ndcg",
+        "mrr",
+        "delta lake",
+        "change data feed"
+      ],
+      "sources": [
+        {
+          "title": "RAG on Databricks",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/retrieval-augmented-generation"
+        },
+        {
+          "title": "Mosaic AI Vector Search",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/vector-search"
+        },
+        {
+          "title": "Agent evaluation",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/03-application-development/building-the-application",
+      "path": "knowledge/dbgenai/03-application-development/building-the-application.md",
+      "title": "Building the application \u2014 models, prompts and guardrails",
+      "track": "dbgenai",
+      "domain": "dbgenai-03",
+      "domain_title": "Application Development",
+      "domain_weight": 30,
+      "verified": "2026-11-03",
+      "keywords": [
+        "access",
+        "agent",
+        "agent framework",
+        "choosing a model",
+        "chunking",
+        "context window",
+        "embedding",
+        "evaluation vs monitoring",
+        "genie space",
+        "guardrail",
+        "mlflow",
+        "model",
+        "prompt engineering",
+        "prompt injection",
+        "provisioned throughput",
+        "rag",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "structured data",
+        "structured data in an agent",
+        "table",
+        "tpu",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "volume",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "langchain",
+        "model selection",
+        "embedding context length",
+        "model card",
+        "mlflow",
+        "agent framework",
+        "mlflow tracing",
+        "guardrail",
+        "prompt injection",
+        "genie space",
+        "evaluation vs monitoring"
+      ],
+      "sources": [
+        {
+          "title": "Generative AI on Databricks",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/guide/"
+        },
+        {
+          "title": "Build gen AI apps with Agent Framework",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/agent-framework/build-genai-apps"
+        },
+        {
+          "title": "MLflow for GenAI",
+          "url": "https://docs.databricks.com/aws/en/mlflow3/genai/"
+        },
+        {
+          "title": "AI/BI Genie",
+          "url": "https://docs.databricks.com/aws/en/genie/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "path": "knowledge/dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy.md",
+      "title": "Assembling, registering and serving the application",
+      "track": "dbgenai",
+      "domain": "dbgenai-04",
+      "domain_title": "Assembling and Deploying Applications",
+      "domain_weight": 22,
+      "verified": "2026-11-03",
+      "keywords": [
+        "access",
+        "agent",
+        "ai_query",
+        "embedding",
+        "environment",
+        "foundation model",
+        "logging a chain",
+        "mcp",
+        "mlflow",
+        "model",
+        "model serving",
+        "provisioned throughput",
+        "pyfunc",
+        "rag",
+        "real-time vs batch",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "table",
+        "test",
+        "tpu",
+        "trap",
+        "traps",
+        "unity catalog",
+        "vector search",
+        "vector search sizing",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "pyfunc",
+        "model signature",
+        "input example",
+        "unity catalog model registry",
+        "vector search index",
+        "delta sync index",
+        "model serving",
+        "foundation model api",
+        "provisioned throughput",
+        "ai_query",
+        "mcp",
+        "databricks apps"
+      ],
+      "sources": [
+        {
+          "title": "Mosaic AI Vector Search",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/vector-search"
+        },
+        {
+          "title": "Model serving",
+          "url": "https://docs.databricks.com/aws/en/machine-learning/model-serving/"
+        },
+        {
+          "title": "Foundation Model APIs",
+          "url": "https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/"
+        },
+        {
+          "title": "Manage model lifecycle in Unity Catalog",
+          "url": "https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/"
+        },
+        {
+          "title": "ai_query",
+          "url": "https://docs.databricks.com/aws/en/large-language-models/ai-query"
+        },
+        {
+          "title": "MCP",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/mcp/"
+        },
+        {
+          "title": "Databricks Apps",
+          "url": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/05-governance/genai-governance",
+      "path": "knowledge/dbgenai/05-governance/genai-governance.md",
+      "title": "Governance for gen AI applications",
+      "track": "dbgenai",
+      "domain": "dbgenai-05",
+      "domain_title": "Governance",
+      "domain_weight": 8,
+      "verified": "2026-11-03",
+      "keywords": [
+        "ai gateway",
+        "guardrail",
+        "model",
+        "prompt injection",
+        "rag",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "tpu",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "which control",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "masking",
+        "pii redaction",
+        "guardrail",
+        "prompt injection",
+        "jailbreak",
+        "licensing",
+        "problematic text",
+        "ai gateway"
+      ],
+      "sources": [
+        {
+          "title": "Mosaic AI Gateway",
+          "url": "https://docs.databricks.com/aws/en/ai-gateway/"
+        },
+        {
+          "title": "Generative AI on Databricks",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/guide/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "path": "knowledge/dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring.md",
+      "title": "Evaluating and monitoring a deployed gen AI system",
+      "track": "dbgenai",
+      "domain": "dbgenai-06",
+      "domain_title": "Evaluation and Monitoring",
+      "domain_weight": 12,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "agent framework",
+        "ai gateway",
+        "controlling cost",
+        "groundedness",
+        "group",
+        "inference table",
+        "judges and ground truth",
+        "llm judge",
+        "mlflow",
+        "model",
+        "model serving",
+        "provisioned throughput",
+        "rag",
+        "scope \u2014 official objectives",
+        "scorer",
+        "seed",
+        "table",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "volume",
+        "which instrument",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "mlflow evaluate",
+        "mlflow tracing",
+        "llm judge",
+        "ground truth",
+        "groundedness",
+        "inference table",
+        "agent monitoring",
+        "ai gateway",
+        "usage table",
+        "rate limiting",
+        "custom scorer"
+      ],
+      "sources": [
+        {
+          "title": "Agent evaluation",
+          "url": "https://docs.databricks.com/aws/en/generative-ai/agent-evaluation/"
+        },
+        {
+          "title": "MLflow for GenAI",
+          "url": "https://docs.databricks.com/aws/en/mlflow3/genai/"
+        },
+        {
+          "title": "Mosaic AI Gateway",
+          "url": "https://docs.databricks.com/aws/en/ai-gateway/"
+        },
+        {
+          "title": "Model serving",
+          "url": "https://docs.databricks.com/aws/en/machine-learning/model-serving/"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "path": "knowledge/gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals.md",
+      "title": "Fundamentals of gen AI",
+      "track": "gcgenai",
+      "domain": "gcgenai-01",
+      "domain_title": "Fundamentals of gen AI",
+      "domain_weight": 30,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "choosing a foundation model",
+        "context window",
+        "data types",
+        "fine-tuning",
+        "foundation model",
+        "gemini",
+        "gemma",
+        "google's foundation models",
+        "grounding",
+        "imagen",
+        "labeled data",
+        "model",
+        "scope \u2014 official objectives",
+        "seed",
+        "structured data",
+        "table",
+        "the five layers of the gen ai landscape",
+        "tpu",
+        "trap",
+        "traps",
+        "unstructured data",
+        "veo",
+        "verify before sealing",
+        "view",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "foundation model",
+        "multimodal",
+        "diffusion model",
+        "large language model",
+        "supervised",
+        "unsupervised",
+        "reinforcement",
+        "ml lifecycle",
+        "structured data",
+        "unstructured data",
+        "labeled data",
+        "gemini",
+        "gemma",
+        "imagen",
+        "veo"
+      ],
+      "sources": [
+        {
+          "title": "What is generative AI?",
+          "url": "https://cloud.google.com/learn/what-is-generative-ai"
+        },
+        {
+          "title": "Generative AI on Vertex AI overview",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview"
+        },
+        {
+          "title": "Google models",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models"
+        },
+        {
+          "title": "Generative AI Leader exam guide",
+          "url": "https://cloud.google.com/learn/certification/generative-ai-leader"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "path": "knowledge/gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings.md",
+      "title": "Google Cloud's gen AI offerings",
+      "track": "gcgenai",
+      "domain": "gcgenai-02",
+      "domain_title": "Google Cloud's gen AI offerings",
+      "domain_weight": 35,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "agent platform",
+        "agent tooling (2.5)",
+        "gemini",
+        "google cloud's stated strengths (2.1)",
+        "grounding",
+        "model",
+        "model garden",
+        "rag",
+        "scope \u2014 official objectives",
+        "seed",
+        "tpu",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "view",
+        "which offering for which audience",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "ai-first",
+        "hypercomputer",
+        "tpu",
+        "model garden",
+        "agent platform",
+        "agent studio",
+        "google ai studio",
+        "gemini app",
+        "gemini enterprise",
+        "gemini for google workspace",
+        "customer engagement suite",
+        "conversational agents",
+        "agent assist"
+      ],
+      "sources": [
+        {
+          "title": "Gemini for Google Cloud",
+          "url": "https://cloud.google.com/gemini/docs/overview"
+        },
+        {
+          "title": "Agent Builder / Agent Platform",
+          "url": "https://cloud.google.com/products/agent-builder"
+        },
+        {
+          "title": "Model Garden",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/model-garden/explore-models"
+        },
+        {
+          "title": "Customer engagement AI",
+          "url": "https://cloud.google.com/solutions/customer-engagement-ai"
+        },
+        {
+          "title": "Cloud TPU",
+          "url": "https://cloud.google.com/tpu"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "path": "knowledge/gcgenai/03-techniques-to-improve-model-output/improving-model-output.md",
+      "title": "Improving gen AI model output",
+      "track": "gcgenai",
+      "domain": "gcgenai-03",
+      "domain_title": "Techniques to improve gen AI model output",
+      "domain_weight": 20,
+      "verified": "2026-11-03",
+      "keywords": [
+        "agent",
+        "chain-of-thought",
+        "continuous monitoring (3.1)",
+        "few-shot",
+        "fine-tuning",
+        "foundation model",
+        "grounding",
+        "hallucination",
+        "human in the loop",
+        "knowledge cutoff",
+        "model",
+        "prompt engineering",
+        "prompting ladder",
+        "rag",
+        "react",
+        "sampling parameters",
+        "scope \u2014 official objectives",
+        "seed",
+        "source",
+        "table",
+        "temperature",
+        "top-p",
+        "tpu",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "view",
+        "which technique for which failure",
+        "why this is on the exam",
+        "zero-shot"
+      ],
+      "concepts": [
+        "knowledge cutoff",
+        "hallucination",
+        "bias",
+        "grounding",
+        "rag",
+        "prompt engineering",
+        "zero-shot",
+        "one-shot",
+        "few-shot",
+        "role prompting",
+        "prompt chaining",
+        "chain-of-thought",
+        "react",
+        "fine-tuning",
+        "human in the loop",
+        "temperature",
+        "top-p",
+        "safety settings"
+      ],
+      "sources": [
+        {
+          "title": "Prompt design strategies",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompt-design-strategies"
+        },
+        {
+          "title": "Grounding overview",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/overview"
+        },
+        {
+          "title": "Content generation parameters",
+          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters"
+        }
+      ],
+      "related": []
+    },
+    {
+      "id": "gcgenai/04-business-strategies/business-strategy-and-responsible-ai",
+      "path": "knowledge/gcgenai/04-business-strategies/business-strategy-and-responsible-ai.md",
+      "title": "Business strategy, secure AI and responsible AI",
+      "track": "gcgenai",
+      "domain": "gcgenai-04",
+      "domain_title": "Business strategies for a successful gen AI solution",
+      "domain_weight": 15,
+      "verified": "2026-11-03",
+      "keywords": [
+        "access",
+        "implementing a solution (4.1)",
+        "responsible ai",
+        "responsible ai (4.3)",
+        "saif",
+        "scope \u2014 official objectives",
+        "secure ai (4.2)",
+        "secure vs responsible \u2014 do not conflate",
+        "seed",
+        "trap",
+        "traps",
+        "verify before sealing",
+        "why this is on the exam"
+      ],
+      "concepts": [
+        "gen ai solution types",
+        "business requirements",
+        "measure impact",
+        "secure ai framework",
+        "saif",
+        "iam",
+        "security command center",
+        "responsible ai",
+        "transparency",
+        "anonymization",
+        "pseudonymization",
+        "accountability",
+        "explainability"
+      ],
+      "sources": [
+        {
+          "title": "Security and AI",
+          "url": "https://cloud.google.com/security/ai"
+        },
+        {
+          "title": "Responsible AI",
+          "url": "https://cloud.google.com/responsible-ai"
+        },
+        {
+          "title": "Security Command Center",
+          "url": "https://cloud.google.com/security-command-center"
+        },
+        {
+          "title": "Generative AI Leader exam guide",
+          "url": "https://cloud.google.com/learn/certification/generative-ai-leader"
+        }
+      ],
+      "related": []
     }
   ]
 }

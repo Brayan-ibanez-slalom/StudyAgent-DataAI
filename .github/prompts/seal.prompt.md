@@ -1,7 +1,7 @@
 ---
 mode: agent
 model: Claude Opus 4.7 (copilot)
-description: Deep sealing pass — independently derive and verify the answer to an unsealed question against docs.getdbt.com, then seal it.
+description: Deep sealing pass — independently derive and verify the answer to an unsealed question against the track's vendor docs, then seal it.
 tools: ["ingest_help", "ingest_scan", "ingest_seal", "ingest_dispute", "question_full", "cache_check", "cache_fetch", "cache_fetch_batch", "topic_search", "topic_read", "concept_lookup", "verify_seal", "exam_facts", "coverage_report"]
 ---
 

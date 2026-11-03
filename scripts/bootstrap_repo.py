@@ -53,12 +53,15 @@ def _write(path: Path, content: str, force: bool, created: list, skipped: list,
 
 def domain_readme(domain_id: str, meta: dict) -> str:
     facts = exam_config.EXAM_FACTS[meta["track"]]
+    weight = (f"{meta['weight']}% — published by {facts['vendor']} in the exam guide"
+              if facts["weights_published"]
+              else f"not published by {facts['vendor']}. Every question scores one point.")
     task_rows = "\n".join(
         f"| {tid} | {title} |" for tid, (title, _) in sorted(meta["tasks"].items()))
     return f"""# {domain_id} — {meta['title']}
 
 **Exam:** {facts['name']}
-**Weight:** not published by dbt Labs. Every question scores one point.
+**Weight:** {weight}
 **Provenance of this domain:** {meta['provenance']}
 
 ## Tasks
@@ -89,9 +92,9 @@ SCORECARD_HEADER = """# Scorecard
 
 Accuracy per domain, updated automatically by `drill_grade_reasoned`.
 
-There is no weighted column. dbt Labs does not publish section weights and states that
-all questions are weighted equally, so a weighted total would be invented arithmetic.
-Use the raw accuracy and the attempt count.
+There is no weighted column, even for the tracks whose vendor publishes section
+weights. Accuracy per domain plus the attempt count is what tells you where to study;
+blending them into one number hides the small-sample domains.
 
 Reset with `session_clear(scope="scorecard", confirm=true)`.
 

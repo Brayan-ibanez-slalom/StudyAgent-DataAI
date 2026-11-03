@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "generated_at": "2026-09-29",
+  "generated_at": "2026-11-03",
   "description": "Reverse index: keyword/tag -> topic IDs. Look here before reading any note file.",
-  "tag_count": 138,
+  "tag_count": 269,
   "tags": {
     "`--empty` \u2014 schema-only dry run": [
       "ae/01-developing-and-optimizing-models/dry-runs-and-sampling"
@@ -46,6 +46,9 @@
     "`store_failures`": [
       "ae/05-implementing-tests/test-severity-and-workflow"
     ],
+    "abac": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
     "access": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
       "ae/01-developing-and-optimizing-models/dry-runs-and-sampling",
@@ -70,7 +73,12 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "adapter": [
       "ae/01-developing-and-optimizing-models/incremental-models",
@@ -79,6 +87,39 @@
       "ae/03-debugging-modeling-errors/compiled-code-and-logs",
       "ae/06-external-dependencies/source-freshness"
     ],
+    "agent": [
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "agent bricks": [
+      "dbgenai/01-design-applications/solution-design"
+    ],
+    "agent framework": [
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "agent platform": [
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "agent tooling (2.5)": [
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "ai gateway": [
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "ai_query": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "all-purpose cluster": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ],
     "analysis": [
       "ae/01-developing-and-optimizing-models/project-config-and-flags",
       "ae/03-debugging-modeling-errors/compiled-code-and-logs",
@@ -86,14 +127,52 @@
     ],
     "append": [
       "ae/01-developing-and-optimizing-models/incremental-models",
-      "ae/02-model-governance/model-contracts"
+      "ae/02-model-governance/model-contracts",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
+    "aqe": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "asset bundle": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
+    "auto loader": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ],
+    "auto loader schema handling": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
     ],
     "caveats that decide exam questions": [
       "ae/07-dbt-state/state-selection"
     ],
+    "chain-of-thought": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "checks: a project-standard gate before anything builds": [
+      "ae/04-troubleshooting-pipelines/dag-failure-points"
+    ],
+    "choosing a chunking strategy": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep"
+    ],
+    "choosing a foundation model": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "choosing a model": [
+      "dbgenai/03-application-development/building-the-application"
+    ],
     "choosing a strategy": [
       "ae/01-developing-and-optimizing-models/incremental-models",
       "ae/01-developing-and-optimizing-models/snapshots"
+    ],
+    "choosing a trigger": [
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers"
+    ],
+    "choosing compute": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ],
+    "chunking": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application"
     ],
     "ci job": [
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
@@ -102,14 +181,25 @@
     "column level vs model level": [
       "ae/02-model-governance/constraints"
     ],
+    "column mask": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
     "configuring": [
       "ae/01-developing-and-optimizing-models/materializations"
     ],
     "consequences you can be tested on": [
       "ae/03-debugging-modeling-errors/yaml-properties-vs-configs"
     ],
+    "context window": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
     "continuous integration": [
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge"
+    ],
+    "continuous monitoring (3.1)": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "contract": [
       "ae/01-developing-and-optimizing-models/materializations",
@@ -117,6 +207,18 @@
       "ae/02-model-governance/model-contracts",
       "ae/02-model-governance/model-versions",
       "ae/07-dbt-state/state-selection"
+    ],
+    "control flow": [
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers"
+    ],
+    "controlling cost": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "copy into": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ],
+    "core components": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
     ],
     "cross-project": [
       "ae/01-developing-and-optimizing-models/packages"
@@ -130,6 +232,15 @@
     ],
     "custom strategies": [
       "ae/01-developing-and-optimizing-models/incremental-models"
+    ],
+    "data skew": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "data types": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "databricks cli": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
     ],
     "dbt clone": [
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
@@ -185,8 +296,21 @@
       "ae/01-developing-and-optimizing-models/incremental-models",
       "ae/01-developing-and-optimizing-models/microbatch"
     ],
+    "delta lake": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep"
+    ],
     "dependencies.yml": [
       "ae/01-developing-and-optimizing-models/packages"
+    ],
+    "designing the chain": [
+      "dbgenai/01-design-applications/solution-design"
+    ],
+    "embedding": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
     ],
     "environment": [
       "ae/01-developing-and-optimizing-models/project-config-and-flags",
@@ -198,7 +322,9 @@
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
       "ae/04-troubleshooting-pipelines/dag-failure-points",
       "ae/04-troubleshooting-pipelines/dbt-clone",
-      "ae/07-dbt-state/dbt-retry"
+      "ae/07-dbt-state/dbt-retry",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
     ],
     "ephemeral": [
       "ae/01-developing-and-optimizing-models/materializations",
@@ -228,7 +354,12 @@
       "ae/05-implementing-tests/test-types",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
+    "evaluation vs monitoring": [
+      "dbgenai/03-application-development/building-the-application"
     ],
     "exposure": [
       "ae/02-model-governance/model-versions",
@@ -236,6 +367,19 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/state-selection"
+    ],
+    "external table": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
+    "few-shot": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "file arrival trigger": [
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers"
+    ],
+    "fine-tuning": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "fix-and-verify loop for a yaml error": [
       "ae/03-debugging-modeling-errors/yaml-properties-vs-configs"
@@ -249,12 +393,36 @@
     "flags that break the pattern": [
       "ae/01-developing-and-optimizing-models/project-config-and-flags"
     ],
+    "foundation model": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "gemini": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "gemma": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
     "generate_schema_name": [
       "ae/01-developing-and-optimizing-models/snapshots",
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge"
     ],
     "generic test": [
       "ae/05-implementing-tests/test-types"
+    ],
+    "genie space": [
+      "dbgenai/03-application-development/building-the-application"
+    ],
+    "git folder": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
+    "google cloud's stated strengths (2.1)": [
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "google's foundation models": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
     ],
     "grants": [
       "ae/01-developing-and-optimizing-models/grants",
@@ -264,19 +432,47 @@
       "ae/01-developing-and-optimizing-models/dbt-commands",
       "ae/04-troubleshooting-pipelines/dag-failure-points"
     ],
+    "groundedness": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "grounding": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
     "group": [
       "ae/01-developing-and-optimizing-models/grants",
       "ae/01-developing-and-optimizing-models/microbatch",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "guardrail": [
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/05-governance/genai-governance"
+    ],
+    "hallucination": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "hook": [
-      "ae/01-developing-and-optimizing-models/grants"
+      "ae/01-developing-and-optimizing-models/grants",
+      "ae/04-troubleshooting-pipelines/dag-failure-points"
     ],
     "how a test decides pass / warn / error": [
       "ae/05-implementing-tests/test-severity-and-workflow"
     ],
     "how it works": [
       "ae/01-developing-and-optimizing-models/microbatch"
+    ],
+    "human in the loop": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "imagen": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "implementing a solution (4.1)": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "incremental": [
       "ae/01-developing-and-optimizing-models/incremental-models",
@@ -287,11 +483,15 @@
       "ae/02-model-governance/model-contracts",
       "ae/04-troubleshooting-pipelines/dbt-clone",
       "ae/05-implementing-tests/test-types",
-      "ae/07-dbt-state/dbt-retry"
+      "ae/07-dbt-state/dbt-retry",
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
     ],
     "incremental_strategy": [
       "ae/01-developing-and-optimizing-models/incremental-models",
       "ae/01-developing-and-optimizing-models/microbatch"
+    ],
+    "inference table": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
     ],
     "inheritance: \"merge and clobber\"": [
       "ae/01-developing-and-optimizing-models/grants"
@@ -308,6 +508,42 @@
       "ae/01-developing-and-optimizing-models/packages",
       "ae/03-debugging-modeling-errors/compiled-code-and-logs"
     ],
+    "job cluster": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ],
+    "joins and dedup \u2014 what to watch": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
+    "judges and ground truth": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "knowledge cutoff": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "labeled data": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "lakeflow connect": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ],
+    "lakeflow jobs": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "layout and maintenance": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "liquid clustering": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "llm judge": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "logging a chain": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
     "logs": [
       "ae/03-debugging-modeling-errors/compiled-code-and-logs"
     ],
@@ -322,6 +558,12 @@
       "ae/03-debugging-modeling-errors/yaml-properties-vs-configs",
       "ae/05-implementing-tests/test-types",
       "ae/07-dbt-state/state-selection"
+    ],
+    "managed table": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
+    "managed vs external": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
     ],
     "manifest": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -347,7 +589,14 @@
     ],
     "materialized view": [
       "ae/01-developing-and-optimizing-models/materializations",
-      "ae/02-model-governance/model-contracts"
+      "ae/02-model-governance/model-contracts",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
+    "mcp": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "medallion": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
     ],
     "merge": [
       "ae/01-developing-and-optimizing-models/grants",
@@ -357,7 +606,8 @@
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
       "ae/03-debugging-modeling-errors/yaml-properties-vs-configs",
       "ae/04-troubleshooting-pipelines/dbt-clone",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
     ],
     "meta columns": [
       "ae/01-developing-and-optimizing-models/snapshots"
@@ -365,6 +615,11 @@
     "microbatch": [
       "ae/01-developing-and-optimizing-models/incremental-models",
       "ae/01-developing-and-optimizing-models/microbatch"
+    ],
+    "mlflow": [
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
     ],
     "model": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -390,14 +645,37 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "model garden": [
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "model serving": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
     ],
     "model version": [
       "ae/02-model-governance/model-versions",
       "ae/06-external-dependencies/exposures"
     ],
+    "naming \u2014 a live rename": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
     "notification": [
-      "ae/03-debugging-modeling-errors/fix-and-verify-before-merge"
+      "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
     ],
     "on_schema_change": [
       "ae/01-developing-and-optimizing-models/materializations",
@@ -407,10 +685,24 @@
       "ae/01-developing-and-optimizing-models/packages",
       "ae/01-developing-and-optimizing-models/project-config-and-flags",
       "ae/05-implementing-tests/test-types",
-      "ae/07-dbt-state/dbt-retry"
+      "ae/07-dbt-state/dbt-retry",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep"
     ],
     "persist_docs": [
       "ae/07-dbt-state/state-selection"
+    ],
+    "photon": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ],
+    "post-hook": [
+      "ae/04-troubleshooting-pipelines/dag-failure-points"
+    ],
+    "pre-hook": [
+      "ae/04-troubleshooting-pipelines/dag-failure-points"
+    ],
+    "predictive optimization": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ],
     "prerequisites": [
       "ae/02-model-governance/constraints"
@@ -418,8 +710,52 @@
     "prerequisites and unsupported cases": [
       "ae/05-implementing-tests/test-types"
     ],
+    "prompt engineering": [
+      "dbgenai/03-application-development/building-the-application",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "prompt injection": [
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/05-governance/genai-governance"
+    ],
+    "prompting ladder": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "provisioned throughput": [
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "pyfunc": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "rag": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "re-ranking": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep"
+    ],
     "re-running just the broken part": [
       "ae/04-troubleshooting-pipelines/dag-failure-points"
+    ],
+    "react": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "reading the symptom": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "real-time vs batch": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
     ],
     "related": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -450,12 +786,67 @@
     "relevant configs": [
       "ae/01-developing-and-optimizing-models/microbatch"
     ],
+    "responsible ai": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
+    "responsible ai (4.3)": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
+    "restricting what a user sees": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
+    "retrieval metrics": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep"
+    ],
+    "row filter": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
     "run_results": [
       "ae/04-troubleshooting-pipelines/dag-failure-points",
       "ae/07-dbt-state/dbt-retry"
     ],
     "running the check": [
       "ae/06-external-dependencies/source-freshness"
+    ],
+    "saif": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
+    "sampling parameters": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "schema evolution": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ],
+    "scope \u2014 official objectives": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
+    "scorer": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "secrets": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
+    "secure ai (4.2)": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
+    "secure vs responsible \u2014 do not conflate": [
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "seed": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -465,7 +856,24 @@
       "ae/02-model-governance/model-contracts",
       "ae/03-debugging-modeling-errors/yaml-properties-vs-configs",
       "ae/05-implementing-tests/test-types",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "selector": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -477,6 +885,16 @@
     ],
     "separate state for comparison and deferral": [
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge"
+    ],
+    "serverless": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
+    ],
+    "service principal": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ],
+    "shuffle": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ],
     "singular test": [
       "ae/05-implementing-tests/test-types"
@@ -520,18 +938,50 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "spark ui": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "spill": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ],
+    "sql warehouse": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute"
     ],
     "sso": [
-      "ae/03-debugging-modeling-errors/behaviour-flags"
+      "ae/03-debugging-modeling-errors/behaviour-flags",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbgenai/01-design-applications/solution-design"
     ],
     "state:modified": [
       "ae/03-debugging-modeling-errors/fix-and-verify-before-merge",
       "ae/07-dbt-state/dbt-retry",
       "ae/07-dbt-state/state-selection"
     ],
+    "streaming table": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
     "structure of a constraint": [
       "ae/02-model-governance/constraints"
+    ],
+    "structured data": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbgenai/03-application-development/building-the-application",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "structured data in an agent": [
+      "dbgenai/03-application-development/building-the-application"
     ],
     "table": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -550,7 +1000,19 @@
       "ae/05-implementing-tests/test-severity-and-workflow",
       "ae/05-implementing-tests/test-types",
       "ae/06-external-dependencies/source-freshness",
-      "ae/07-dbt-state/dbt-retry"
+      "ae/07-dbt-state/dbt-retry",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "target": [
       "ae/01-developing-and-optimizing-models/dry-runs-and-sampling",
@@ -561,7 +1023,12 @@
       "ae/03-debugging-modeling-errors/compiled-code-and-logs",
       "ae/04-troubleshooting-pipelines/dbt-clone",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
+    "temperature": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "test": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -581,7 +1048,10 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
     ],
     "the config": [
       "ae/06-external-dependencies/source-freshness"
@@ -597,6 +1067,9 @@
     ],
     "the five built-in strategies": [
       "ae/01-developing-and-optimizing-models/incremental-models"
+    ],
+    "the five layers of the gen ai landscape": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
     ],
     "the four state selectors": [
       "ae/07-dbt-state/state-selection"
@@ -619,6 +1092,20 @@
     ],
     "three commands people confuse": [
       "ae/03-debugging-modeling-errors/compiled-code-and-logs"
+    ],
+    "top-p": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "tpu": [
+      "ae/01-developing-and-optimizing-models/dry-runs-and-sampling",
+      "ae/03-debugging-modeling-errors/compiled-code-and-logs",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ],
     "trap": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -644,7 +1131,24 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "traps": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -670,7 +1174,24 @@
       "ae/06-external-dependencies/exposures",
       "ae/06-external-dependencies/source-freshness",
       "ae/07-dbt-state/dbt-retry",
-      "ae/07-dbt-state/state-selection"
+      "ae/07-dbt-state/state-selection",
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "traps about what a snapshot is not": [
       "ae/01-developing-and-optimizing-models/snapshots"
@@ -681,6 +1202,9 @@
       "ae/04-troubleshooting-pipelines/dag-failure-points",
       "ae/07-dbt-state/dbt-retry"
     ],
+    "tuning parameters": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
     "unit test": [
       "ae/05-implementing-tests/test-severity-and-workflow",
       "ae/05-implementing-tests/test-types"
@@ -688,12 +1212,54 @@
     "unit tests": [
       "ae/05-implementing-tests/test-types"
     ],
+    "unity catalog": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "unstructured data": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
     "upstream `event_time` is the thing people get wrong": [
       "ae/01-developing-and-optimizing-models/microbatch"
     ],
     "vars": [
       "ae/07-dbt-state/dbt-retry",
       "ae/07-dbt-state/state-selection"
+    ],
+    "vector search": [
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "vector search sizing": [
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy"
+    ],
+    "veo": [
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals"
+    ],
+    "verify before sealing": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
     ],
     "view": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
@@ -705,7 +1271,17 @@
       "ae/02-model-governance/model-contracts",
       "ae/04-troubleshooting-pipelines/dbt-clone",
       "ae/05-implementing-tests/test-types",
-      "ae/06-external-dependencies/exposures"
+      "ae/06-external-dependencies/exposures",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "volume": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
     ],
     "what `dbt compile` is for": [
       "ae/03-debugging-modeling-errors/compiled-code-and-logs"
@@ -757,6 +1333,30 @@
     "where unit tests run": [
       "ae/05-implementing-tests/test-types"
     ],
+    "which agent bricks offering": [
+      "dbgenai/01-design-applications/solution-design"
+    ],
+    "which control": [
+      "dbgenai/05-governance/genai-governance"
+    ],
+    "which gold-layer object": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ],
+    "which ingestion mechanism": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ],
+    "which instrument": [
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring"
+    ],
+    "which offering for which audience": [
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings"
+    ],
+    "which technique for which failure": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
+    ],
+    "which tool for which job": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ],
     "why this is likely on the exam": [
       "ae/01-developing-and-optimizing-models/dbt-commands",
       "ae/01-developing-and-optimizing-models/dry-runs-and-sampling",
@@ -783,8 +1383,30 @@
       "ae/07-dbt-state/dbt-retry",
       "ae/07-dbt-state/state-selection"
     ],
+    "why this is on the exam": [
+      "dbde/01-databricks-intelligence-platform/platform-and-compute",
+      "dbde/02-data-ingestion-and-loading/ingestion-options",
+      "dbde/03-data-transformation-and-modeling/medallion-transformations",
+      "dbde/04-working-with-lakeflow-jobs/jobs-and-triggers",
+      "dbde/05-implementing-ci-cd/bundles-and-git",
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics",
+      "dbde/07-governance-and-security/unity-catalog-governance",
+      "dbgenai/01-design-applications/solution-design",
+      "dbgenai/02-data-preparation/chunking-and-retrieval-prep",
+      "dbgenai/03-application-development/building-the-application",
+      "dbgenai/04-assembling-and-deploying-applications/assemble-and-deploy",
+      "dbgenai/05-governance/genai-governance",
+      "dbgenai/06-evaluation-and-monitoring/evaluation-and-monitoring",
+      "gcgenai/01-fundamentals-of-gen-ai/genai-fundamentals",
+      "gcgenai/02-google-cloud-gen-ai-offerings/google-cloud-offerings",
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output",
+      "gcgenai/04-business-strategies/business-strategy-and-responsible-ai"
+    ],
     "why version rather than edit in place": [
       "ae/02-model-governance/model-versions"
+    ],
+    "zero-shot": [
+      "gcgenai/03-techniques-to-improve-model-output/improving-model-output"
     ]
   }
 }

@@ -264,7 +264,9 @@ def log_miss(qid: str, domain: str, given, correct, topics: list[str]) -> None:
 
 
 _SCORE_ROW_RE = re.compile(
-    r"^\|\s*(?P<domain>(?:ae|arch)-\d{2})\s*\|(?P<title>[^|]*)\|"
+    r"^\|\s*(?P<domain>(?:" + "|".join(
+        sorted(exam_config.VALID_TRACKS, key=len, reverse=True)) + r")-\d{2})\s*\|"
+    r"(?P<title>[^|]*)\|"
     r"\s*(?P<attempted>\d+)\s*\|\s*(?P<correct>\d+)\s*\|(?P<acc>[^|]*)\|",
     re.MULTILINE,
 )
@@ -273,8 +275,9 @@ _SCORE_ROW_RE = re.compile(
 def bump_scorecard(domain: str, correct: bool) -> None:
     """Increment attempted/correct/accuracy for `domain` in progress/scorecard.md.
 
-    The scorecard has no weighted column: dbt does not publish section weights and
-    scores every question equally, so a weighted total would be invented arithmetic.
+    The scorecard has no weighted column, even where the vendor publishes section
+    weights: per-domain accuracy plus the attempt count is what tells you where to
+    study, and blending them hides the small-sample domains.
     """
     if not SCORECARD_MD.exists() or domain not in VALID_DOMAINS:
         return

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "count": 106,
-  "updated_at": "2026-10-26",
+  "count": 107,
+  "updated_at": "2026-11-01",
   "entries": [
     {
       "url": "https://docs.getdbt.com/docs/build/incremental-models",
@@ -849,6 +849,14 @@
       "title": "Materializations | dbt Developer Hub",
       "fetched_at": "2026-10-26",
       "sha256": "d63f838f11e81a9f05de87780c490cf25094ce601c0685fed2954d623177ce01",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end",
+      "path": "sources/cache/_raw/docs.getdbt.com/reference/project-configs/on-run-start-on-run-end.txt",
+      "title": "on-run-start & on-run-end | dbt Developer Hub",
+      "fetched_at": "2026-11-01",
+      "sha256": "b8c655db227195052af6d3ca5630e4c13fab83c4f5d461b9a0cb6e2701e1547e",
       "source": "mcp-cache_fetch"
     }
   ]

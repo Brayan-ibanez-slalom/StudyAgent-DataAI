@@ -21,12 +21,14 @@ DOC_GLOBS = ("README.md", "docs/*.md", "knowledge/*.md", "question-bank/*.md",
              ".github/*.md", ".github/**/*.md")
 
 # knowledge/<track>/<domain-dir>/... appearing anywhere in prose, a path, or JSON.
-KNOWLEDGE_PATH_RE = re.compile(r"knowledge/(ae|arch)/([0-9a-z][0-9a-z\-]+)")
+KNOWLEDGE_PATH_RE = re.compile(
+    rf"knowledge/{exam_config.TRACK_RE_GROUP}/([0-9a-z][0-9a-z\-]+)")
 
 # A bare '<track>/<domain-dir>/<note>' planned-topic id, which ingest_seal also accepts.
-PLANNED_TOPIC_RE = re.compile(r"(?<![\w/])(ae|arch)/(\d{2}-[a-z][a-z0-9\-]+)/[a-z]")
+PLANNED_TOPIC_RE = re.compile(
+    rf"(?<![\w/]){exam_config.TRACK_RE_GROUP}/(\d{{2}}-[a-z][a-z0-9\-]+)/[a-z]")
 
-DOMAIN_ID_RE = re.compile(r"\b(ae|arch)-(\d{2})\b")
+DOMAIN_ID_RE = re.compile(rf"\b{exam_config.TRACK_RE_GROUP}-(\d{{2}})\b")
 
 
 def _docs() -> list[pathlib.Path]:

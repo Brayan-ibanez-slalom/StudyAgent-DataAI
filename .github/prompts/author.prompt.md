@@ -1,7 +1,7 @@
 ---
 mode: agent
 model: Claude Opus 4.7 (copilot)
-description: Author new exam items from docs.getdbt.com through the quality gate — the primary way this bank grows.
+description: Author new exam items from the track's vendor docs through the quality gate — the primary way this bank grows.
 tools: ["item_gate", "balance_keys", "authored_ingest", "coverage_report", "cache_check", "cache_fetch", "cache_fetch_batch", "topic_search", "topic_read", "concept_lookup", "defect_scan", "bank_audit", "exam_facts", "question_full"]
 ---
 

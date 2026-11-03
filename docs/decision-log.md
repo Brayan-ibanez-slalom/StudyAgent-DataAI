@@ -189,4 +189,58 @@ rename now breaks the build instead of quietly misleading a reader.
 `docs/domain-rubric.md` was rewritten from scratch — every row of its tie-breaker table
 had described the old derived domains and would have actively misfiled questions.
 
+## 2026-11-03 — Three more exams, two more vendors, one repo
+
+The candidate passed the AE exam and added Databricks Certified Data Engineer
+Associate (`dbde`), Databricks Certified Generative AI Engineer Associate (`dbgenai`)
+and Google Cloud Certified — Generative AI Leader (`gcgenai`).
+
+Same reasoning as the original two-track decision: the drill protocol, grading engine,
+seal pipeline, cache layer and note contract are vendor-independent. Only three things
+genuinely were dbt-shaped, and all three are now per-track:
+
+- **`AUTHORITATIVE_HOSTS` was a single global tuple.** It is now
+  `EXAM_FACTS[track]["authoritative_hosts"]`, reachable through
+  `authoritative_hosts(track)` / `hosts_for_domain(domain)`. The module constant
+  survives only as the union, for generic filtering. This matters more than it looks:
+  with one global list, a Databricks claim sourced to `docs.getdbt.com` would have
+  passed the gate. It now fails.
+- **`_PLAIN_GLOSSARY` in `server.py` was dbt vocabulary.** Split into per-vendor
+  glossaries selected by the question's track, so `drill_explain` cannot answer a
+  Google question with a definition of `is_incremental`.
+- **`(ae|arch)` was hardcoded in four regexes** (two scripts, the server, the docs
+  test). All four now build their alternation from `exam_config.VALID_TRACKS` via
+  `TRACK_RE_GROUP`, so the next track costs nothing. `repo._SCORE_ROW_RE` had the same
+  problem and silently skipped scorecard rows for unknown tracks.
+
+**The weights decision reversed, per track.** `test_weights_are_not_fabricated` used to
+assert that *every* domain weight is `None`, because dbt publishes none. Databricks and
+Google print a percentage per section in their exam guides, so the invariant is now
+conditional on `weights_published`: None where unpublished, real numbers summing to 100
+where published. `study_share()` returns `(share, is_official)` so no caller can
+accidentally present the sub-topic proxy as a vendor weight.
+
+This matters most for `gcgenai`, which has only 15 sub-objectives split 4/5/3/3. The
+proxy would rate Sections 1 and 2 nearly equal; the published weights say 30% and 35%.
+The proxy was never meant to beat a real number — it existed because dbt gives us none.
+
+**A new asymmetry runs the other way.** dbt publishes a 65% pass mark; Databricks and
+Google publish no cut score at all. `passing_score_pct` is therefore `None` for the
+three new tracks, guarded by `test_passing_score_is_only_stated_where_published`, and
+Google publishes only a 50–60 question *range* — `planning_question_count()` returns
+the mid-point purely so study estimates divide by something, and says so.
+
+Databricks numbers its exam-guide objectives as unnumbered bullets, so the `N.M` task
+ids for `dbde` and `dbgenai` are ours, assigned in published order. The titles are
+verbatim. This is recorded in the `exam_config` docstring so nobody later mistakes our
+numbering for the vendor's.
+
+Also kept honest: `provenance` now accepts "exam guide" as well as "study guide",
+because Databricks and Google do not use dbt's wording.
+
+The repo was renamed `StudyAgent-DBT` → `StudyAgent-DataAI` in the same change. The
+name had become actively misleading: three of the five tracks have nothing to do with
+dbt, and a contributor reading the old name would reasonably assume dbt-only scope.
+GitHub redirects the old URL, so existing clones and links keep working.
+
 

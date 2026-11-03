@@ -57,6 +57,26 @@ KEYWORD_TAGS = [
     "service token", "permission set", "rbac", "sso", "webhook", "notification",
     "discovery api", "dbt catalog", "dbt explorer", "dbt mesh", "cross-project",
     "dependencies.yml", "project dependency", "branching strategy", "ip restriction",
+    # Databricks platform
+    "delta lake", "unity catalog", "medallion", "managed table", "external table",
+    "auto loader", "copy into", "lakeflow connect", "lakeflow jobs", "volume",
+    "streaming table", "schema evolution", "sql warehouse", "all-purpose cluster",
+    "job cluster", "serverless", "photon", "liquid clustering",
+    "predictive optimization", "asset bundle", "databricks cli", "git folder",
+    "column mask", "row filter", "abac", "service principal", "spark ui",
+    "data skew", "shuffle", "spill", "aqe", "file arrival trigger",
+    # generative AI
+    "rag", "chunking", "embedding", "vector search", "re-ranking", "mlflow",
+    "pyfunc", "model serving", "foundation model", "provisioned throughput",
+    "agent", "agent framework", "agent bricks", "mcp", "guardrail",
+    "prompt injection", "ai gateway", "inference table", "llm judge",
+    "groundedness", "scorer", "genie space", "ai_query",
+    # Google Cloud gen AI
+    "gemini", "gemma", "imagen", "veo", "context window", "knowledge cutoff",
+    "hallucination", "grounding", "prompt engineering", "zero-shot", "few-shot",
+    "chain-of-thought", "react", "fine-tuning", "human in the loop",
+    "temperature", "top-p", "model garden", "agent platform", "tpu", "saif",
+    "responsible ai", "structured data", "unstructured data", "labeled data",
     # cross-cutting
     "trap", "terminology", "troubleshooting", "error",
 ]

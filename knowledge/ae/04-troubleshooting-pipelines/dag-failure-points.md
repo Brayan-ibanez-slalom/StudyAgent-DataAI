@@ -1,8 +1,8 @@
 # DAG failure points and selection
 
 **Domain:** ae-04 — Task 4.1
-**Verified:** 2026-09-29
-**Concepts:** graph operators, plus operator, n-plus, at operator, @, --exclude, skipping, on_error, run_results.json, dbt retry
+**Verified:** 2026-10-30
+**Concepts:** graph operators, plus operator, n-plus, at operator, @, --exclude, skipping, on_error, run_results.json, dbt retry, checks, dbt Information Schema, --skip-checks
 
 Official topic: *"Troubleshooting and managing failure points in the DAG"*
 (AE study guide, Topic 04).
@@ -21,6 +21,28 @@ Official topic: *"Troubleshooting and managing failure points in the DAG"*
 - For a test with multiple parents where one parent depends on the other, the test blocks
   and skips children of the **most-downstream parent only**. For independent parents, dbt
   skips a downstream node only if it depends on **all** of those parents.
+
+## Checks: a project-standard gate before anything builds
+
+`dbt build` runs **checks** before it compiles or runs any models — this is a distinct,
+earlier gate than the test-skipping rules above.
+
+- A check is a **SQL query you write against the dbt Information Schema** (your project's
+  own metadata, queryable like a database's `INFORMATION_SCHEMA`) to enforce a
+  project-standard rule — e.g. "every model has a description."
+- A check **passes when its query returns no rows**.
+- A failing check **stops the build before anything is materialized**, unless the check's
+  `severity` is set to `warn`.
+- Use `--skip-checks` to bypass the whole checks gate for one invocation, or set
+  `enabled: false` on a single check's config to disable just that one.
+
+**Trap:** checks are not the same thing as hooks. A `pre-hook`/`post-hook` runs SQL
+**per-model**, immediately before/after that model builds. A check runs **once, upfront,
+against project-wide metadata**, before compiling or running anything — it is the
+feature for "stop the whole build if a project-standard rule is violated," not a
+per-model side effect.
+
+[source: [About dbt build command — dbt Docs](https://docs.getdbt.com/reference/commands/build) — accessed 2026-10-30]
 
 ## Re-running just the broken part
 

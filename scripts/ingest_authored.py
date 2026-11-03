@@ -31,7 +31,8 @@ AUTHORED_DIR = REPO_ROOT / "question-bank" / "authored"
 
 # Same shapes `ingest_seal` accepts, so a topic reference means the same thing whichever
 # door an item comes through.
-TOPIC_PLANNED_RE = re.compile(r"^(ae|arch)/\d{2}-[a-z][a-z0-9\-]+/[a-z][a-z0-9\-]+$")
+TOPIC_PLANNED_RE = re.compile(
+    rf"^{exam_config.TRACK_RE_GROUP}/\d{{2}}-[a-z][a-z0-9\-]+/[a-z][a-z0-9\-]+$")
 
 
 def resolve_topic(t: str) -> str | None:

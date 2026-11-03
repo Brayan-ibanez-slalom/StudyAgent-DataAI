@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-shot setup for a fresh clone of StudyAgent-DBT.
+# One-shot setup for a fresh clone of StudyAgent-DataAI.
 # Creates the MCP server venv, installs deps, bootstraps the skeleton, and builds the
 # topic index. Safe to re-run.
 

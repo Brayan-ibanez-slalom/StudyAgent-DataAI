@@ -84,43 +84,69 @@ def _guard(condition: bool, error_msg: str, code: str, user_override: bool) -> O
 
 @mcp.tool()
 def exam_facts(track: Optional[str] = None) -> dict:
-    """Published facts about the dbt exams, plus what is explicitly NOT published.
+    """Published facts about every supported exam, plus what is explicitly NOT published.
 
-    Domains and tasks come from the official dbt Labs study guides. Question count
-    (65) and passing score (65%) are published. Per-topic weighting is NOT — so
-    `subtopic_share_pct` and `estimated_questions` are clearly-labelled proxies derived
-    from how many sub-topics each topic lists, never presented as exam facts.
+    Domains and tasks come from each vendor's official guide. What is published varies
+    by vendor, so read the flags rather than assuming:
+
+      - `weights_published` — dbt Labs publishes NO per-topic weighting, so for `ae`
+        and `arch` the per-domain figure is `subtopic_share_pct`, a DERIVED proxy.
+        Databricks and Google DO publish a percentage per section; there the figure is
+        `official_weight` and it is a fact.
+      - `passing_score_published` — dbt publishes 65%. Databricks and Google publish no
+        cut score for these exams, so `passing_score_pct` is null and you must not
+        quote one.
+
+    `share_is_official` on each track says which of the two you were handed.
     """
     tracks = [track] if track in exam_config.EXAM_FACTS else list(exam_config.EXAM_FACTS)
     out: dict[str, Any] = {"tracks": {}}
     for t in tracks:
         facts = dict(exam_config.EXAM_FACTS[t])
         domains = exam_config.domains_for(t)
-        share = exam_config.subtopic_share(t)
+        share, share_is_official = exam_config.study_share(t)
+        proxy = exam_config.subtopic_share(t)
         est = exam_config.estimated_questions(t)
         facts["domains"] = {
             d: {"title": v["title"],
                 "official_weight": v["weight"],
                 "subtopic_count": len(v["tasks"]),
-                "subtopic_share_pct": share[d],
-                "estimated_questions_proxy": est[d],
+                "subtopic_share_pct": proxy[d],
+                "study_share_pct": share[d],
+                "estimated_questions": est[d],
                 "tasks": {k: title for k, (title, _) in v["tasks"].items()},
                 "provenance": v["provenance"]}
             for d, v in domains.items()
         }
         facts["domain_count"] = len(domains)
         facts["subtopic_count"] = sum(len(v["tasks"]) for v in domains.values())
-        facts["unscored_questions"] = exam_config.UNSCORED_QUESTIONS_NOTE
+        facts["share_is_official"] = share_is_official
+        facts["planning_question_count"] = exam_config.planning_question_count(t)
+        facts["unscored_questions"] = facts.get("unscored_note")
         out["tracks"][t] = facts
-    out["not_published_by_dbt_labs"] = [
-        "per-topic weighting — both guides say only that all questions are weighted equally",
-        "how many of the 65 questions fall in each topic",
-        "how many of the 65 questions are unscored research items",
-    ]
+    out["not_published"] = {
+        "ae": [
+            "per-topic weighting — both dbt guides say only that all questions are "
+            "weighted equally",
+            "how many of the 65 questions fall in each topic",
+            "how many of the 65 questions are unscored research items",
+        ],
+        "arch": [
+            "per-topic weighting",
+            "how many of the 65 questions fall in each topic",
+            "how many of the 65 questions are unscored research items",
+        ],
+        "dbde": ["the passing score / cut score", "which items are unscored"],
+        "dbgenai": ["the passing score / cut score", "which items are unscored"],
+        "gcgenai": ["the passing score / cut score",
+                    "the exact question count — only the 50-60 range is published"],
+    }
     out["proxy_warning"] = (
-        "subtopic_share_pct and estimated_questions_proxy are DERIVED from sub-topic "
-        "counts in the official outline. They are a study-time heuristic, not a "
-        "statement about the exam. Never present them as official weights."
+        "Where share_is_official is false, subtopic_share_pct and estimated_questions "
+        "are DERIVED from sub-topic counts in the official outline. They are a "
+        "study-time heuristic, not a statement about the exam. Never present them as "
+        "official weights. Where share_is_official is true, official_weight is quoted "
+        "from the vendor's exam guide and may be stated as fact."
     )
     out["question_formats"] = exam_config.QUESTION_TYPES
     return out
@@ -524,10 +550,10 @@ def drill_hint(question_id: str) -> dict:
     }
 
 
-# Plain-English glossary for common dbt jargon. Only entries whose key phrase appears
-# in the sealed content are surfaced, so the calling model is not handed a wall of
-# irrelevant definitions.
-_PLAIN_GLOSSARY: dict[str, str] = {
+# Plain-English glossaries, one per vendor. Only entries whose key phrase appears in
+# the sealed content are surfaced, so the calling model is not handed a wall of
+# irrelevant definitions — and a Databricks question never gets dbt definitions.
+_DBT_GLOSSARY: dict[str, str] = {
     # Core objects
     "model": "A SELECT statement in a .sql file. dbt wraps it in CREATE TABLE/VIEW and runs it for you.",
     "ref(": "How one model points at another. dbt reads these to build the DAG and to work out run order.",
@@ -581,12 +607,133 @@ _PLAIN_GLOSSARY: dict[str, str] = {
     "threads": "How many models dbt builds in parallel against the warehouse in a single run.",
 }
 
+_DATABRICKS_GLOSSARY: dict[str, str] = {
+    # Platform
+    "delta lake": "The storage format underneath Databricks tables. It adds ACID transactions, versioning and time travel on top of files in cloud storage.",
+    "unity catalog": "The governance layer. One metastore holds catalogs, schemas and tables, and permissions are granted on those objects rather than on files.",
+    "time travel": "Querying or restoring a Delta table as it was at an earlier version or timestamp.",
+    "medallion": "The bronze/silver/gold layering convention: raw landed data, cleaned and conformed data, then business-ready aggregates.",
+    "managed table": "A table whose data files Unity Catalog owns. Dropping it deletes the data.",
+    "external table": "A table registered over files you own at a LOCATION. Dropping it leaves the data in place.",
+    "volume": "A Unity Catalog object governing a directory of non-tabular files.",
+    # Compute
+    "all-purpose cluster": "Interactive compute for notebooks and ad hoc work. Stays up until you or auto-termination stops it.",
+    "job cluster": "Compute created for one job run and torn down afterwards. Cheaper for scheduled work.",
+    "sql warehouse": "Compute tuned for concurrent SQL queries and BI tools, not for notebook ETL.",
+    "serverless": "Databricks-managed compute that starts in seconds; you do not size or keep the VMs.",
+    "photon": "A vectorized native execution engine that speeds up SQL and DataFrame work.",
+    "dbu": "Databricks Unit — the consumption unit your compute cost is billed in.",
+    # Ingestion
+    "auto loader": "Incrementally picks up new files as they land in cloud storage, tracking what it has already read so it never reprocesses a file.",
+    "copy into": "A SQL command that idempotently loads files into a table, skipping files it has loaded before.",
+    "lakeflow connect": "Managed and standard connectors that pull from enterprise sources into Unity Catalog tables.",
+    "schema evolution": "Letting new columns appearing in source files be added to the target table instead of failing the load.",
+    "_rescued_data": "The column Auto Loader puts values in when they do not fit the inferred schema, so nothing is silently dropped.",
+    "streaming table": "A table defined by a streaming query that keeps appending as new source data arrives.",
+    "materialized view": "A precomputed, refreshable result set, used for gold-layer serving.",
+    # Jobs
+    "lakeflow jobs": "The orchestrator. A job is a graph of tasks with dependencies, schedules and retries.",
+    "file arrival trigger": "Start a job when new files appear at a storage location, instead of polling on a clock.",
+    "task values": "Small values one task passes to a later task in the same job run.",
+    # Spark tuning
+    "data skew": "One key holds far more rows than the rest, so a single task runs long after the others finish.",
+    "shuffle": "Redistributing rows across the cluster so that matching keys land together — the expensive part of joins and wide aggregations.",
+    "spill": "Spark running out of memory for a task and writing intermediate data to disk, which is much slower.",
+    "aqe": "Adaptive Query Execution — Spark re-planning a query at runtime using real statistics.",
+    "salting": "Adding a random suffix to a hot key so its rows spread across several tasks, then combining the partial results.",
+    "liquid clustering": "A Delta layout that keeps related rows together without fixed partitioning, and can be changed later.",
+    "predictive optimization": "Databricks deciding and running maintenance operations like OPTIMIZE and VACUUM for you.",
+    # CI/CD and governance
+    "asset bundle": "A Git-versioned definition of your jobs, pipelines and code, deployed per environment target.",
+    "declarative automation bundle": "The current name for Databricks Asset Bundles.",
+    "git folder": "A Git working copy inside the workspace, where you branch, commit and push.",
+    "service principal": "A non-human identity used by automation, with its own permissions.",
+    "column mask": "A function applied to a column so some users see a redacted value instead of the real one.",
+    "row filter": "A function that limits which rows a principal can see in a table.",
+    "abac": "Attribute-based access control — policies that apply by tag or attribute rather than object by object.",
+    "is_account_group_member": "The SQL check used inside masks and row filters to branch on the caller's group.",
+}
+
+_DBX_GENAI_GLOSSARY: dict[str, str] = {
+    "rag": "Retrieval-augmented generation — look up relevant text first, then put it in the prompt so the model answers from your data instead of memory.",
+    "chunking": "Splitting source documents into pieces small enough to embed and fit in the prompt, with enough context to stay meaningful.",
+    "embedding": "A numeric vector representing text, so that similar meanings sit close together and can be searched by distance.",
+    "vector search": "An index over embeddings that returns the nearest chunks to a query vector.",
+    "delta sync index": "A Vector Search index that keeps itself in step with a source Delta table.",
+    "re-ranking": "A second, more expensive scoring pass over the first-stage candidates to put the genuinely relevant ones on top.",
+    "model serving": "Databricks-hosted endpoints that run your model or agent behind an API.",
+    "foundation model api": "Pay-per-token or provisioned-throughput access to hosted base models, without deploying your own.",
+    "provisioned throughput": "Reserved serving capacity with predictable latency, billed on the reservation rather than per token.",
+    "mlflow": "The lifecycle tool: track experiments, log and version models, trace runs, and evaluate.",
+    "pyfunc": "MLflow's generic Python model flavor — the wrapper you use when your model is custom code with pre- and post-processing.",
+    "model signature": "The declared input and output schema logged with a model.",
+    "agent framework": "Databricks' toolkit for building, logging and deploying agents that call tools.",
+    "agent bricks": "Prebuilt, configurable agents (Knowledge Assistant, Multiagent Supervisor, Information Extraction) for common patterns.",
+    "mlflow tracing": "Recording each step of an agent run — prompts, tool calls, retrievals — so you can see where an answer came from.",
+    "llm judge": "Using a model to score another model's output. Some judges need a ground-truth answer to compare against; others do not.",
+    "groundedness": "Whether the answer is actually supported by the retrieved context, as opposed to invented.",
+    "guardrail": "A check around the model that blocks or rewrites unsafe input or output.",
+    "prompt injection": "Hostile text in user input or retrieved documents that tries to override your instructions.",
+    "ai gateway": "The control layer in front of serving endpoints: rate limits, usage tracking, inference tables and guardrails.",
+    "inference table": "A Delta table that automatically records the requests and responses hitting an endpoint.",
+    "ai_query": "A SQL function that runs model inference over a table, for batch scoring.",
+    "genie space": "A natural-language interface over governed tables, which an agent can call to fetch structured data.",
+    "mcp": "Model Context Protocol — a standard way to expose tools and data sources to an agent.",
+    "scorer": "A function that grades an agent's output during evaluation; custom ones encode your own definition of correct.",
+}
+
+_GCP_GENAI_GLOSSARY: dict[str, str] = {
+    "foundation model": "A large model pretrained on broad data that you adapt to many tasks rather than training from scratch.",
+    "multimodal": "A model that handles more than one kind of input or output — text plus images, audio or video.",
+    "gemini": "Google's flagship multimodal foundation model family.",
+    "gemma": "Google's family of open models you can run and customize yourself.",
+    "imagen": "Google's image generation model.",
+    "veo": "Google's video generation model.",
+    "context window": "How much text the model can consider at once, counted in tokens.",
+    "knowledge cutoff": "The date after which the base model has seen no training data, which is why it needs grounding for recent facts.",
+    "hallucination": "A fluent, confident answer that is not true — the model filling a gap rather than refusing.",
+    "grounding": "Tying the model's answer to a specific source — your enterprise data, third-party data, or web results — so it can be checked.",
+    "rag": "Retrieval-augmented generation — retrieve relevant documents first, then answer from them.",
+    "prompt engineering": "Writing the instruction well enough that the model produces what you need, without retraining it.",
+    "zero-shot": "Asking for the task with no worked examples in the prompt.",
+    "few-shot": "Including a handful of worked examples in the prompt to show the pattern.",
+    "chain-of-thought": "Prompting the model to work through intermediate steps before answering.",
+    "react": "A prompting pattern where the model alternates reasoning with taking actions through tools.",
+    "fine-tuning": "Further training a base model on your own examples so it adopts your task, tone or format.",
+    "human in the loop": "Keeping a person in the approval path for consequential outputs.",
+    "temperature": "How much randomness to allow when picking the next token. Lower is more predictable.",
+    "top-p": "Nucleus sampling — only consider the most likely tokens whose probabilities add up to p.",
+    "agent": "A system that uses a model plus tools to pursue a goal over several steps, not just answer once.",
+    "agent platform": "Google Cloud's environment for building, deploying and managing agents and models.",
+    "model garden": "The catalogue of first-party, open and partner models available to use on Google Cloud.",
+    "gemini enterprise": "Google's enterprise offering bringing Gemini, multimodal search and custom agents to a company's own data.",
+    "customer engagement suite": "Google's contact-centre offering: Conversational Agents, Agent Assist, Conversational Insights and CCaaS.",
+    "tpu": "Google's custom-designed accelerator chip for training and serving models.",
+    "saif": "Secure AI Framework — Google's framework for securing AI systems across the lifecycle.",
+    "responsible ai": "Building AI that is fair, transparent, accountable and explainable, and treating that as a business requirement.",
+    "structured data": "Data with a fixed schema, like rows in a table.",
+    "unstructured data": "Data with no fixed schema — documents, images, audio, video.",
+    "labeled data": "Examples that already carry the answer, which is what supervised learning needs.",
+}
+
+_GLOSSARIES: dict[str, dict[str, str]] = {
+    "ae": _DBT_GLOSSARY,
+    "arch": _DBT_GLOSSARY,
+    "dbde": _DATABRICKS_GLOSSARY,
+    "dbgenai": {**_DATABRICKS_GLOSSARY, **_DBX_GENAI_GLOSSARY},
+    "gcgenai": _GCP_GENAI_GLOSSARY,
+}
+
+
+def _glossary_for(domain: Optional[str]) -> dict[str, str]:
+    return _GLOSSARIES.get(exam_config.track_of(domain or "") or "", _DBT_GLOSSARY)
+
 
 @mcp.tool()
 def drill_explain(question_id: str, include_sealed: bool = True) -> dict:
     """Explain a sealed question in plain English.
 
-    Returns the sealed content plus a glossary filtered to the dbt jargon actually
+    Returns the sealed content plus a glossary filtered to the vendor jargon actually
     present in this question, plus rendering instructions the calling model can follow
     for a consistent style.
 
@@ -605,7 +752,8 @@ def drill_explain(question_id: str, include_sealed: bool = True) -> dict:
         *(str(v) for v in (e.get("distractor_traps") or {}).values()),
     ]).lower()
 
-    hits = {term: d for term, d in _PLAIN_GLOSSARY.items() if term in haystack}
+    hits = {term: d for term, d in _glossary_for(e.get("domain")).items()
+            if term in haystack}
 
     result: dict = {
         "id": question_id,
@@ -847,7 +995,8 @@ def cache_fetch(url: str, force: bool = False) -> dict:
     """Fetch a URL, extract main text, cache under sources/cache/_raw/.
 
     Skips the network if the URL is cached and less than 90 days old, unless force=True.
-    docs.getdbt.com is the intended target but any https:// page works.
+    The target is whichever vendor owns the track — see
+    `exam_config.authoritative_hosts(track)` — but any https:// page works.
     """
     if not url.startswith("https://"):
         return {"status": "invalid-url", "error": "cache_fetch requires an https:// URL",
@@ -947,6 +1096,7 @@ def verify_seal(question_id: str, deep: bool = False) -> dict:
         str(e.get(k) or "") for k in
         ("drill_answer_short", "options_analysis", "drill_rationale", "decision_hinge")))
     result["keywords"] = keywords
+    hosts = exam_config.hosts_for_domain(e.get("domain") or "")
 
     for src in sources:
         if src.startswith("knowledge/"):
@@ -960,7 +1110,7 @@ def verify_seal(question_id: str, deep: bool = False) -> dict:
                 checks.append({"check": f"note_freshness:{src}", "pass": age <= 180,
                                "detail": f"note Verified {age} days ago"})
             cited = [u.rstrip(").,;") for u in re.findall(r"https?://[^\s\)\]]+", content)
-                     if any(h in u for h in exam_config.AUTHORITATIVE_HOSTS)]
+                     if any(h in u for h in hosts)]
             for url in list(dict.fromkeys(cited))[:6]:
                 _kw_check(url, keywords, checks)
         elif src.startswith("http"):
@@ -1490,7 +1640,7 @@ def ingest_scan(track: Optional[str] = None, domain: Optional[str] = None,
 
 
 _TOPIC_PLANNED_RE = re.compile(
-    r"^(ae|arch)/\d{2}-[a-z][a-z0-9\-]+/[a-z][a-z0-9\-]+$")
+    rf"^{exam_config.TRACK_RE_GROUP}/\d{{2}}-[a-z][a-z0-9\-]+/[a-z][a-z0-9\-]+$")
 
 
 def _resolve_topic(t: str) -> tuple[Optional[str], Optional[str]]:

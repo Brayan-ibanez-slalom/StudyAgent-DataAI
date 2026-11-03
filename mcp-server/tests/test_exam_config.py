@@ -52,17 +52,52 @@ class TestExamConfigInvariants(unittest.TestCase):
                                         f"{did}:{task_id} has too few keywords")
 
     def test_weights_are_not_fabricated(self):
-        """dbt Labs publishes topic outlines but NO per-topic weighting.
+        """A weight may only exist where the vendor actually publishes one.
 
-        Question count and passing score ARE published (65 / 65%), so those must be
-        populated. A per-domain weight must not be, because no source states one.
+        dbt Labs publishes topic outlines but NO per-topic weighting, so `ae` and
+        `arch` domains must carry weight=None. Databricks and Google print a
+        percentage per section, so those must be real numbers that sum to 100.
         """
-        for did, meta in exam_config.DOMAINS.items():
-            self.assertIsNone(meta["weight"], f"{did} has a fabricated weight")
         for track, facts in exam_config.EXAM_FACTS.items():
-            self.assertFalse(facts["weights_published"], track)
+            weights = [m["weight"] for m in exam_config.domains_for(track).values()]
+            if facts["weights_published"]:
+                self.assertTrue(all(isinstance(w, (int, float)) for w in weights),
+                                f"{track} claims published weights but some are None")
+                self.assertAlmostEqual(sum(weights), 100, places=0,
+                                       msg=f"{track} weights do not sum to 100")
+            else:
+                self.assertTrue(all(w is None for w in weights),
+                                f"{track} has a fabricated weight")
+
+    def test_passing_score_is_only_stated_where_published(self):
+        """dbt publishes 65%. Databricks and Google publish no cut score — so None."""
+        for track, facts in exam_config.EXAM_FACTS.items():
+            if facts["passing_score_published"]:
+                self.assertIsInstance(facts["passing_score_pct"], int, track)
+            else:
+                self.assertIsNone(facts["passing_score_pct"],
+                                  f"{track} states a pass mark its vendor does not publish")
+
+    def test_dbt_tracks_keep_their_published_logistics(self):
+        for track in ("ae", "arch"):
+            facts = exam_config.EXAM_FACTS[track]
             self.assertEqual(facts["question_count"], 65, track)
             self.assertEqual(facts["passing_score_pct"], 65, track)
+
+    def test_every_track_has_a_planning_question_count(self):
+        for track, facts in exam_config.EXAM_FACTS.items():
+            count = exam_config.planning_question_count(track)
+            self.assertGreater(count, 0, track)
+            if facts["question_count"] is None:
+                lo, hi = facts["question_count_range"]
+                self.assertTrue(lo <= count <= hi, track)
+
+    def test_study_share_flags_whether_it_is_official(self):
+        for track, facts in exam_config.EXAM_FACTS.items():
+            share, is_official = exam_config.study_share(track)
+            self.assertEqual(is_official, facts["weights_published"], track)
+            self.assertEqual(set(share), set(exam_config.domains_for(track)), track)
+            self.assertAlmostEqual(sum(share.values()), 100.0, places=0, msg=track)
 
     def test_subtopic_share_is_a_proxy_that_sums_to_100(self):
         for track in exam_config.VALID_TRACKS:
@@ -72,15 +107,16 @@ class TestExamConfigInvariants(unittest.TestCase):
 
     def test_every_domain_cites_its_official_provenance(self):
         for did, meta in exam_config.DOMAINS.items():
-            self.assertIn("study guide", meta["provenance"].lower(),
-                          f"{did} does not cite the official study guide")
+            self.assertRegex(meta["provenance"].lower(), r"(study|exam) guide",
+                             f"{did} does not cite the official guide")
 
     def test_official_guide_urls_are_on_an_authoritative_host(self):
         for track, facts in exam_config.EXAM_FACTS.items():
+            hosts = exam_config.authoritative_hosts(track)
             for key in ("exam_guide_url", "study_guide_url"):
                 self.assertTrue(
-                    any(h in facts[key] for h in exam_config.AUTHORITATIVE_HOSTS),
-                    f"{track}.{key} is not on a dbt Labs host")
+                    any(h in facts[key] for h in hosts),
+                    f"{track}.{key} is not on an authoritative host for {facts['vendor']}")
 
     def test_id_prefixes_are_unique_per_track(self):
         seen = set()

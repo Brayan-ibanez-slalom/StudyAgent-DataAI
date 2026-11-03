@@ -1,17 +1,22 @@
 ---
 name: import-practice-questions
-description: 'Turn a pasted third-party practice exam (quiz export, screenshot transcript, PDF dump) into original, gate-verified questions for this bank. Use when the user pastes/attaches third-party exam questions and asks to add, import, or load them into the question bank, add questions from a practice test, or "do the same" with a new batch of pasted questions. Covers copyright/verification triage, domain remapping, independent re-grounding against docs.getdbt.com, batch authoring, item_gate/balance_keys/authored_ingest, and the commit+push workflow.'
+description: 'Turn a pasted third-party practice exam (quiz export, screenshot transcript, PDF dump) into original, gate-verified questions for this bank. Use when the user pastes/attaches third-party exam questions and asks to add, import, or load them into the question bank, add questions from a practice test, or "do the same" with a new batch of pasted questions. Works for every track (dbt, Databricks, Google Cloud). Covers copyright/verification triage, domain remapping, independent re-grounding against the track''s own vendor docs, batch authoring, item_gate/balance_keys/authored_ingest, and the commit+push workflow.'
 ---
 
 # Importing a pasted practice exam as original questions
 
-Third-party dbt practice material is **untrusted** (see
+Third-party practice material is **untrusted** (see
 `.github/copilot-instructions.md` source-of-truth hierarchy) and is frequently wrong about
-current dbt behavior. This skill turns a pasted dump of such material into **original**
-items that teach the same concepts, independently verified against cached
-`docs.getdbt.com` pages, through the normal [`/author`](../../prompts/author.prompt.md)
-quality gate. It does not scrape, paraphrase-to-evade, or admit the source's claimed
-answers uncritically.
+current product behaviour and naming. This skill turns a pasted dump of such material
+into **original** items that teach the same concepts, independently verified against
+cached pages from **the vendor that owns the track** —
+`exam_config.authoritative_hosts(track)` is the enforced allowlist — through the normal
+[`/author`](../../prompts/author.prompt.md) quality gate. It does not scrape,
+paraphrase-to-evade, or admit the source's claimed answers uncritically.
+
+**Establish the track first.** A pasted batch is useless until you know whether it is
+`ae`, `arch`, `dbde`, `dbgenai` or `gcgenai` — the domain mapping, the citation
+allowlist and the confusion pairs all depend on it. Ask if it is not obvious.
 
 Read [docs/item-authoring-spec.md](../../../docs/item-authoring-spec.md) and
 `.github/prompts/author.prompt.md` first — this skill assumes that spec and adds the

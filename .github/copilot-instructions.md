@@ -1,31 +1,42 @@
-# StudyAgent-DBT — Global Rules
+# StudyAgent-DataAI — Global Rules
 
-You are helping a candidate prepare for the **dbt Labs certifications**:
+You are helping a candidate prepare for **five certifications across three vendors**:
 
-- **dbt Analytics Engineering Certification** (track `ae`) — the learning path and study
-  guide call this the **dbt Certified Developer** exam
-- **dbt Architect Certification** (track `arch`)
+| Track | Exam | Vendor |
+|---|---|---|
+| `ae` | dbt Analytics Engineering Certification (a.k.a. dbt Certified Developer) | dbt Labs |
+| `arch` | dbt Architect Certification | dbt Labs |
+| `dbde` | Databricks Certified Data Engineer Associate | Databricks |
+| `dbgenai` | Databricks Certified Generative AI Engineer Associate | Databricks |
+| `gcgenai` | Google Cloud Certified — Generative AI Leader | Google Cloud |
+
+The repo was renamed from `StudyAgent-DBT` when it stopped being dbt-only.
 
 These rules apply to EVERY interaction in this workspace, regardless of agent or chat mode.
 
 **Ported from** `../StudyAgent-AIP-C01` (AWS AIP-C01). Same topic-first, cache-first,
-MCP-first architecture; different source of truth (dbt Labs documentation) and a
-multi-format grading engine.
+MCP-first architecture; the source of truth is now **per track**, and the grading engine
+is multi-format.
 
 ---
 
 ## 🎯 Prime Directive: accuracy over speed
 
-The user is studying for two real, non-cheap certifications ($200 each). A hallucinated
-answer is worse than "I don't know".
+The user is studying for real, non-cheap certifications. A hallucinated answer is worse
+than "I don't know".
 
-Never invent dbt behaviour, config keys, CLI flags, Jinja function names, YAML property
-names, permission-set names, or documentation URLs.
+Never invent vendor behaviour, config keys, CLI flags, function names, YAML property
+names, product names, permission names, or documentation URLs.
 
-**dbt ships fast.** The most likely way to be wrong here is not fabrication — it is
-describing **older dbt behaviour as current**. Examples that have already changed:
-`tests:` → `data_tests:`, the arrival of `dbt build`, unit tests, contracts, model
-versions, `dependencies.yml`, microbatch. Always check the cached page's date.
+**All three vendors ship fast.** The most likely way to be wrong here is not fabrication
+— it is describing **older behaviour as current**. Examples that have already changed:
+dbt's `tests:` → `data_tests:`; Databricks Repos → Git folders, Asset Bundles →
+Declarative Automation Bundles, Delta Live Tables → Lakeflow Declarative Pipelines;
+and Google renames its gen AI surfaces almost every guide revision. Always check the
+cached page's date.
+
+**Never cross vendors.** A Databricks claim cited to docs.getdbt.com is a defect, and
+the gate enforces this per track via `exam_config.authoritative_hosts(track)`.
 
 **If uncertain, you MUST:**
 
@@ -41,8 +52,9 @@ versions, `dependencies.yml`, microbatch. Always check the cached page's date.
    `scripts/build_topic_index.py` if you also added a note.
 5. Cite the original URL and access date (not the cache path).
 
-Answers from model memory alone are **unacceptable** for technical claims about dbt.
-Answers about study workflow, prompts, or the repo itself do not require citations.
+Answers from model memory alone are **unacceptable** for technical claims about any
+vendor. Answers about study workflow, prompts, or the repo itself do not require
+citations.
 
 ---
 
@@ -63,7 +75,7 @@ shell out to `scripts/*.py`, or grep the knowledge base as a substitute.
 
 | Task | Tool |
 |---|---|
-| Check what dbt actually publishes about an exam | `exam_facts` |
+| Check what a vendor actually publishes about an exam | `exam_facts` |
 | Practise a question | `drill_pick` → `drill_grade_reasoned` (never hand-grade) |
 | Seal / verify an answer | `ingest_seal`, `verify_seal`, `verify_all` |
 | Look up a concept | `topic_search`, `topic_read`, `concept_lookup` |
@@ -79,18 +91,28 @@ shell out to `scripts/*.py`, or grep the knowledge base as a substitute.
 
 ## 📚 Source-of-truth hierarchy (highest to lowest)
 
-1. **Official dbt documentation** — `docs.getdbt.com`
-2. **dbt Labs certification pages** — `getdbt.com/dbt-certification`, `learn.getdbt.com`
-   (exam logistics, formats, scope statements)
+The top of the hierarchy is **per track** — use the right vendor's docs:
+
+| Track | Official documentation | Certification pages |
+|---|---|---|
+| `ae`, `arch` | `docs.getdbt.com` | `getdbt.com/dbt-certification`, `learn.getdbt.com` |
+| `dbde`, `dbgenai` | `docs.databricks.com` | `databricks.com/learn/certification` |
+| `gcgenai` | `cloud.google.com` | `cloud.google.com/learn/certification` |
+
+`exam_facts(track)` returns the exact allowlist as `authoritative_hosts`.
+
+1. **Official vendor documentation** for the track
+2. **Official certification / exam guide pages** for the track (logistics, formats,
+   scope statements, published weightings)
 3. **Topic notes** in `knowledge/` with a recent `**Verified:** YYYY-MM-DD` header
 4. **Sealed questions** (`verified: true`, `seal_confidence >= 70`)
 5. **Topic notes without a recent Verified date** — trust structure, re-verify claims
 6. **Unsealed questions** (`verified: false`)
-7. **Third-party dbt courses, blogs, and practice tests** — untrusted until sealed
+7. **Third-party courses, blogs, and practice tests** — untrusted until sealed
 
-**Third-party dbt practice material is NOT authoritative.** Much of it predates current
-dbt versions. Independently reason through every question before accepting a claimed
-answer.
+**Third-party practice material is NOT authoritative.** Much of it predates current
+product versions and naming. Independently reason through every question before
+accepting a claimed answer.
 
 ---
 
@@ -98,14 +120,14 @@ answer.
 
 | Path | Purpose | Modification rule |
 |---|---|---|
-| `mcp-server/study_agent_mcp/exam_config.py` | **Single source of truth** — official topic outlines transcribed from the dbt Labs study guides | Edit here first; nothing else may hardcode a domain |
+| `mcp-server/study_agent_mcp/exam_config.py` | **Single source of truth** — official topic outlines transcribed from each vendor's study/exam guide | Edit here first; nothing else may hardcode a domain |
 | `mcp-server/study_agent_mcp/grading.py` | Multi-format answer engine | Add a test in `tests/test_grading.py` with any change |
 | `knowledge/<track>/<domain>/` | Canonical topic notes | Follow `.github/instructions/knowledge-base.instructions.md` |
 | `question-bank/index.json` | Normalized question index | Modify only via MCP tools |
 | `question-bank/authored/` | Draft items awaiting the gate | Free to edit; the gate is the admission standard |
 | `question-bank/raw/` | Immutable third-party dumps, if any are ever added | **Never modify** |
 | `progress/` | Scorecard, missed queue, attempts, sessions | Modify only via tools |
-| `sources/cache/` | dbt docs cache | Writes go through `cache_fetch` |
+| `sources/cache/` | Vendor docs cache | Writes go through `cache_fetch` |
 | `docs/` | Blueprints, rubric, authoring spec, formats, routing | `decision-log.md` is append-only |
 | `scripts/` | Index builder, quality gate, ingest, coverage | Modify with care; tests cover the invariants |
 
@@ -116,38 +138,45 @@ knowledge base. Question records are lean pointers.
 
 ## 🚦 Exam facts — what is and is not published
 
-dbt Labs publishes an **official study guide** for each exam with a numbered topic
-outline. Those outlines ARE the domains in `exam_config.py` — task titles are quoted
-verbatim.
+Every vendor publishes an **official guide** with a topic outline. Those outlines ARE
+the domains in `exam_config.py` — section and objective titles are quoted verbatim.
 
-**Published (state these freely):**
+**What each vendor publishes differs. Read the flags, do not assume.**
 
-| | AE | Architect |
-|---|---|---|
-| Questions | 65 | 65 |
-| Passing score | 65% | 65% |
-| Duration | 2 hours | 2 hours |
-| Topics | 7 | 8 |
-| Version | dbt Core 1.11 | Guide V.6.4 |
+| | AE | Architect | DB DE Assoc | DB GenAI Assoc | GC GenAI Leader |
+|---|---|---|---|---|---|
+| Scored questions | 65 | 65 | 45 | 45 | 50–60 (range only) |
+| Passing score | 65% | 65% | **not published** | **not published** | **not published** |
+| Duration | 2 h | 2 h | 90 min | 90 min | 90 min |
+| Cost (USD) | 200 | 200 | 200 | 200 | 99 |
+| Validity | 2 yr | 2 yr | 2 yr | 2 yr | 3 yr |
+| Domains | 7 | 8 | 7 | 6 | 4 |
+| Per-domain weights | **not published** | **not published** | published | published | published (`~`) |
 
-Plus: $200, online proctored, not open book, 2-year validity, six question formats, one
-point per correct answer with all questions weighted equally, and an undisclosed number
-of unscored research questions.
+Also published everywhere: online proctored delivery (Databricks and Google also offer
+test centres), and that unscored items may be mixed in and are indistinguishable from
+scored ones.
 
-**NOT published — never state these:**
+**NEVER state these:**
 
-- Per-topic weighting. "All questions are weighted equally" is a *per-question*
-  statement; how many of the 65 land in each topic is undisclosed.
-- How many of the 65 are unscored.
+- A **per-topic weight for `ae` or `arch`.** dbt publishes none. "All questions are
+  weighted equally" is a *per-question* statement; how many of the 65 land in each
+  topic is undisclosed.
+- A **passing score for `dbde`, `dbgenai` or `gcgenai`.** Those vendors publish no cut
+  score.
+- An exact question count for `gcgenai`. Only the 50–60 range is published.
 
 `subtopic_share_pct` from `exam_facts()` is a **derived proxy** from sub-topic counts
-(AE Topic 1 has 14 sub-topics, Topic 4 has 2). Use it for study-time allocation and
-always label it as a proxy. Never call it a weight.
+and is only the right figure where `share_is_official` is false (the dbt tracks). Where
+it is true, quote `official_weight` as fact. Never call a proxy a weight.
 
 Call `exam_facts()` rather than recalling any of this.
 
 Full detail: [docs/exam-blueprint-ae.md](../docs/exam-blueprint-ae.md),
-[docs/exam-blueprint-architect.md](../docs/exam-blueprint-architect.md).
+[docs/exam-blueprint-architect.md](../docs/exam-blueprint-architect.md),
+[docs/exam-blueprint-databricks-de.md](../docs/exam-blueprint-databricks-de.md),
+[docs/exam-blueprint-databricks-genai.md](../docs/exam-blueprint-databricks-genai.md),
+[docs/exam-blueprint-google-genai-leader.md](../docs/exam-blueprint-google-genai-leader.md).
 
 ---
 
@@ -175,7 +204,9 @@ Full detail: [docs/question-formats.md](../docs/question-formats.md).
 
 ---
 
-## ⚠️ dbt confusion pairs — do not conflate
+## ⚠️ Confusion pairs — do not conflate
+
+### dbt confusion pairs (`ae`, `arch`)
 
 | Do not confuse | Because |
 |---|---|
@@ -195,6 +226,36 @@ Full detail: [docs/question-formats.md](../docs/question-formats.md).
 | **deploy job** vs **CI job** vs **webhook** | Scheduled run / PR-triggered run / outbound event |
 | **Discovery API** vs **Administrative API** vs **Semantic Layer API** | Metadata / account management / metrics queries |
 | **dbt Catalog** vs **dbt Explorer** vs **`dbt docs generate`** | Different surfaces over related metadata |
+
+### Databricks confusion pairs (`dbde`, `dbgenai`)
+
+| Do not confuse | Because |
+|---|---|
+| **Auto Loader** vs **COPY INTO** | Continuous/at-scale file discovery vs bounded idempotent SQL load |
+| **managed table** vs **external table** | `DROP` deletes the data / leaves it in place |
+| **all-purpose cluster** vs **job cluster** vs **SQL warehouse** | Interactive / scheduled ETL / concurrent BI SQL |
+| **column mask** vs **row filter** vs **GRANT/DENY** | Shapes a value / limits rows / gates the object |
+| **Delta Lake** vs **Unity Catalog** | ACID + history / permissions + lineage |
+| **scheduled** vs **file arrival** vs **table update** vs **continuous** trigger | Clock / file lands / upstream table changes / never stops |
+| **AQE skew handling** vs **salting** | Fixes skewed *joins* only, not skewed `groupBy` |
+| **evaluation** vs **monitoring** | Curated set pre-deploy / live traffic continuously |
+| **MLflow tracing** vs **inference tables** | One run explained / the whole population recorded |
+| **serving endpoint** vs **`ai_query()`** | Real-time request / batch scoring a table |
+| **Vector Search index** vs **persistent datastore** | Similarity retrieval / agent memory and state |
+| judges that need **ground truth** vs those that don't | Correctness vs groundedness — decides what works in production |
+
+### Google Cloud confusion pairs (`gcgenai`)
+
+| Do not confuse | Because |
+|---|---|
+| **secure AI** vs **responsible AI** | Attack and misuse / harm from the system working as built |
+| **grounding** vs **fine-tuning** | Keeps facts current / teaches style and task |
+| **RAG** vs **grounding** | RAG is one way to ground, not a synonym |
+| **Agent Studio** vs **Google AI Studio** | An exam objective explicitly asks when to use which |
+| **Gemini app** vs **Gemini Enterprise** vs **Gemini for Workspace** | Individual / enterprise content / productivity suite |
+| **anonymization** vs **pseudonymization** | Pseudonymized data can be re-identified with the key |
+| **temperature** vs **top-p** | Randomness scaling / restricting the candidate set |
+| the five landscape layers | Infrastructure / Models / Platforms / Agents / Applications |
 
 ---
 
@@ -238,11 +299,11 @@ current turn, not from your own reasoning.
 For every question:
 
 1. **Restate the constraint qualifier** (LEAST / MOST / BEST / ONLY / FIRST)
-2. **Identify which dbt features are candidates**
+2. **Identify which vendor features are candidates**
 3. **Reason through each option independently** — never eliminate by gut feel
 4. **Look for the trap** — usually a confusable sibling or stale behaviour
-5. **Check the version.** Is this still true in current dbt?
-6. **Cite docs.getdbt.com** for the deciding fact
+5. **Check the version.** Is this still true, under the current product name?
+6. **Cite the track's authoritative host** for the deciding fact
 7. **Only then reveal the answer**
 
 If asked to verify a claimed answer: reason FIRST, reveal the claim LAST, compare, and
@@ -267,11 +328,14 @@ verifying; Opus for sealing and authoring.
 
 ## 🛑 What NOT to do
 
-- ❌ Do not state a **per-topic weight** — dbt publishes none. Question count (65) and
-  pass mark (65%) ARE published, so those are fine.
+- ❌ Do not state a **per-topic weight for `ae` or `arch`** — dbt publishes none.
+  Question count (65) and pass mark (65%) ARE published, so those are fine.
+- ❌ Do not state a **passing score for `dbde`, `dbgenai` or `gcgenai`** — none is
+  published.
 - ❌ Do not present `subtopic_share_pct` as an official weight
-- ❌ Do not fabricate dbt config keys, CLI flags, or doc URLs
-- ❌ Do not describe pre-current dbt behaviour as current
+- ❌ Do not cite one vendor's docs for another vendor's claim
+- ❌ Do not fabricate config keys, CLI flags, product names, or doc URLs
+- ❌ Do not describe superseded product names or behaviour as current
 - ❌ Do not accept a third-party practice answer without independent reasoning
 - ❌ Do not write to `question-bank/raw/` or hand-edit `index.json`
 - ❌ Do not flip `verified: true` by hand

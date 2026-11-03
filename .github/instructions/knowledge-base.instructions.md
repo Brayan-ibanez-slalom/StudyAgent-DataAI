@@ -6,7 +6,15 @@ applyTo: "knowledge/**"
 
 Notes are the source of truth for this repo. Question records are lean pointers into
 them. A note is worth writing only if it is more accurate than the model's memory — so
-every technical claim must be traceable to `docs.getdbt.com`.
+every technical claim must be traceable to **the vendor that owns the track**:
+
+| Track | Cite |
+|---|---|
+| `ae`, `arch` | `docs.getdbt.com`, `getdbt.com`, `learn.getdbt.com` |
+| `dbde`, `dbgenai` | `docs.databricks.com`, `databricks.com` |
+| `gcgenai` | `cloud.google.com` (plus `services.google.com` for the exam guide PDF) |
+
+`exam_config.authoritative_hosts(track)` is the enforced list.
 
 ## Required header
 
@@ -20,7 +28,7 @@ every technical claim must be traceable to `docs.getdbt.com`.
 
 - `**Domain:**` must name a domain id from `exam_config.py` and at least one task number.
   `briefing.py` parses the task numbers out of this line.
-- `**Verified:**` is the date you last checked the claims against dbt docs.
+- `**Verified:**` is the date you last checked the claims against the vendor's docs.
   `verify_seal(deep=True)` fails a note older than 180 days.
 - `**Concepts:**` is a comma-separated list of lookup keys. `build_topic_index.py`
   harvests them into `knowledge/_concepts.json`, which backs `concept_lookup`.
@@ -43,13 +51,15 @@ not a note.
 
 ## Content rules
 
-- **Cite dbt Labs.** Link `docs.getdbt.com` pages inline as
-  `[title](https://docs.getdbt.com/...)`. `build_topic_index.py` only collects sources on
-  official hosts. A blog restating dbt behaviour is not a source.
+- **Cite the track's vendor.** Link official pages inline as `[title](https://...)`.
+  `build_topic_index.py` only collects sources on official hosts. A blog restating
+  vendor behaviour is not a source, and **another vendor's docs are never a source**
+  for this track's claims.
 - **Cache before you cite.** `cache_check` → `cache_fetch`. An uncached URL makes every
   question sourced to it fail the gate.
-- **Name the version when behaviour changed.** "`data_tests:` replaced `tests:` as the
-  preferred key" is a testable fact and a prime distractor.
+- **Name the version or the rename when behaviour changed.** "`data_tests:` replaced
+  `tests:` as the preferred key" and "Databricks Repos are now Git folders" are both
+  testable facts and prime distractors.
 - **Do not paraphrase config keys, flags, or YAML property names.** Exact spelling is
   exactly what is tested. Use backticks.
 - **Mark uncertainty explicitly** with `> ⚠️ Unverified:` rather than smoothing it over.

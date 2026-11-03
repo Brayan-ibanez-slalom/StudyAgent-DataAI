@@ -160,15 +160,17 @@ def check_source_verifiable(item: dict) -> tuple[bool, str]:
 
 
 def check_source_is_authoritative(item: dict) -> tuple[bool, str]:
-    """dbt behaviour claims must cite dbt Labs, not a blog restating it."""
+    """A behaviour claim must cite the vendor that owns the track, not a blog — and not
+    a different vendor's docs."""
     urls = [str(s) for s in (item.get("sources") or []) if str(s).startswith("http")]
     if not urls:
         return True, "no external URL to judge"
-    off = [u for u in urls
-           if any(h in urlparse(u).netloc for h in exam_config.AUTHORITATIVE_HOSTS)]
-    return bool(off), (f"{len(off)}/{len(urls)} source(s) on {exam_config.AUTHORITATIVE_HOSTS}"
+    hosts = exam_config.hosts_for_domain(item.get("domain") or "")
+    off = [u for u in urls if any(h in urlparse(u).netloc for h in hosts)]
+    return bool(off), (f"{len(off)}/{len(urls)} source(s) on {hosts}"
                        if off else
-                       f"no source on an official dbt Labs host: {[urlparse(u).netloc for u in urls]}")
+                       f"no source on an official host for this track {hosts}: "
+                       f"{[urlparse(u).netloc for u in urls]}")
 
 
 # --------------------------------------------------------------------------- #
