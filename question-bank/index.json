@@ -16574,8 +16574,408 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-074",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A team is sketching a job graph and wants each step to be a first-class task rather than code hidden inside a notebook. One proposed step is a direct call to an external HTTP service, and the team must confirm whether the job UI offers that as its own task type.",
+      "option_texts": {
+        "A": "A REST API call step is offered, and calling a remote endpoint is a supported task type",
+        "B": "A Python wheel step is offered, and running a wheel is a supported task type",
+        "C": "An If/else condition step is offered, and branching is a supported task type",
+        "D": "A SQL step is offered, and running a statement is a supported task type"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Notebook, Python wheel, SQL, Pipeline, dbt, JAR, If/else and For each are task types; a REST API call is not",
+      "drill_rationale": "The task types available include Notebook, Python script, Python wheel, SQL, Pipeline, Ingestion pipeline, Dashboards, dbt, JAR, Spark Submit, Run Job, If/else, and For each.",
+      "decision_hinge": "The task types available include Notebook, Python script, Python wheel, SQL, Pipeline, Ingestion pipeline, Dashboards, dbt, JAR, Spark Submit, Run Job, If/else, and For each.",
+      "plausible_options": {
+        "C": "wants each step to be a first-class task rather than code hidden inside a notebook"
+      },
+      "eliminated_by": {
+        "B": "One proposed step is a direct call to an external HTTP service",
+        "D": "the team must confirm whether the job UI offers that as its own task type"
+      },
+      "distractor_traps": {
+        "B": "T2: scope error - a Python wheel is a genuine task type, so it is not the odd one out",
+        "C": "T3: confusable sibling - If/else is a real control-flow task type and belongs to the list",
+        "D": "T2: scope error - SQL is a genuine task type and does appear in the job UI"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/configure-task"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-075",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "One task in a production job has to stop running for a fortnight while an upstream system is rebuilt. The team wants the task left out of the next runs, but wants its configuration and its past run history preserved so it can come back untouched.",
+      "option_texts": {
+        "A": "Delete the task and rebuild its configuration from a neighbouring task later on",
+        "B": "Disable the task, which skips it at run time while it keeps its configuration",
+        "C": "Set the task dependency to a condition that can never be met in the next runs",
+        "D": "Pause the whole job schedule, then start each run by hand without that task"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Disabling a task skips it at run time without removing it; configuration and run history survive",
+      "drill_rationale": "Disable a task to skip it at run time without removing it from the job; the task keeps its configuration and run history, so you can re-enable it later without rebuilding the task.",
+      "decision_hinge": "Disable a task to skip it at run time without removing it from the job; the task keeps its configuration and run history, so you can re-enable it later without rebuilding the task.",
+      "plausible_options": {
+        "C": "wants the task left out of the next runs"
+      },
+      "eliminated_by": {
+        "A": "wants its configuration and its past run history preserved",
+        "D": "One task in a production job has to stop running for a fortnight"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - deleting the task discards exactly what has to be preserved",
+        "C": "T3: confusable sibling - an unmeetable condition also skips the task, but it edits the graph the team wants untouched",
+        "D": "T2: scope error - pausing the schedule stops every task, not the single one named"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/configure-task"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-076",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A new joiner asks how the platform can offer ACID guarantees over plain files in cloud object storage. The team must describe what the storage layer actually adds on top of the underlying columnar files.",
+      "option_texts": {
+        "A": "It copies every file into a relational database that provides the ACID guarantees",
+        "B": "It replaces Parquet with a proprietary binary container that records each transaction",
+        "C": "It extends Parquet data files with a file-based transaction log for ACID transactions",
+        "D": "It locks the storage account for the duration of each write so writers cannot overlap"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Delta Lake extends Parquet data files with a file-based transaction log that provides ACID transactions",
+      "drill_rationale": "Delta Lake is open source software that extends Parquet data files with a file-based transaction log for ACID transactions.",
+      "decision_hinge": "Delta Lake is open source software that extends Parquet data files with a file-based transaction log for ACID transactions.",
+      "plausible_options": {
+        "B": "what the storage layer actually adds on top of the underlying columnar files"
+      },
+      "eliminated_by": {
+        "A": "how the platform can offer ACID guarantees over plain files in cloud object storage",
+        "D": "The team must describe what the storage layer actually adds"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - no copy into a relational engine takes place",
+        "B": "T3: confusable sibling - the format stays open Parquet, with a log beside it rather than a proprietary container",
+        "D": "T5: common misconception - concurrency comes from the transaction log, not from locking the account"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/index"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-077",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "An engineer runs CREATE TABLE without naming any format, then wonders which on-disk layout the resulting table uses. Nothing in the workspace configuration has been changed from its delivered state.",
+      "option_texts": {
+        "A": "Parquet, because the platform writes plain columnar files until a format is named",
+        "B": "CSV, because an unqualified table falls back to a text layout that any tool can read",
+        "C": "JSON, because the metadata layer stores unqualified tables in a document layout",
+        "D": "Delta, because it is the default format for all operations on the platform"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Delta Lake is the default format for all operations on Databricks",
+      "drill_rationale": "Delta Lake is the default format for all operations on Databricks.",
+      "decision_hinge": "Delta Lake is the default format for all operations on Databricks.",
+      "plausible_options": {
+        "A": "wonders which on-disk layout the resulting table uses"
+      },
+      "eliminated_by": {
+        "B": "runs CREATE TABLE without naming any format",
+        "C": "Nothing in the workspace configuration has been changed from its delivered state"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - Parquet is the underlying file format, but the table default is Delta",
+        "B": "T1: fabricated - no unqualified table falls back to a text layout",
+        "C": "T1: fabricated - table data is never stored in a document layout by default"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/index"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-078",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A retailer's batch pipeline is light for most of the month and very heavy during seasonal peaks. It currently runs on compute with a fixed number of workers sized for the peak, and the finance team has challenged the bill for the quiet weeks.",
+      "option_texts": {
+        "A": "Enable autoscaling with a minimum and maximum, so workers follow the shape of the job",
+        "B": "Keep the fixed size but shorten the schedule so the compute is up for fewer hours",
+        "C": "Size the fixed compute with fewer workers for the quiet weeks and accept slower peaks",
+        "D": "Split the pipeline across two fixed compute resources so each one is smaller"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.2",
+      "blueprint_task_title": "Understand Databricks Platform's compute services, including their characteristics, limitations, and cost models, and select the most suitable option for each workload use case",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Autoscaling moves workers between a minimum and maximum, cutting cost against a statically sized resource",
+      "drill_rationale": "With autoscaling Databricks dynamically reallocates workers to account for the characteristics of your job, and autoscaling can reduce overall costs compared to a statically-sized compute resource.",
+      "decision_hinge": "With autoscaling Databricks dynamically reallocates workers to account for the characteristics of your job, and autoscaling can reduce overall costs compared to a statically-sized compute resource.",
+      "plausible_options": {
+        "B": "the finance team has challenged the bill for the quiet weeks"
+      },
+      "eliminated_by": {
+        "C": "very heavy during seasonal peaks",
+        "D": "runs on compute with a fixed number of workers sized for the peak"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - fewer hours does trim cost, but the resource is still over-provisioned while it runs",
+        "C": "T4: breaks a stated requirement - the peak work still has to finish on time",
+        "D": "T5: common misconception - two fixed resources are still fixed and still mis-sized"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/compute/configure"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-079",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A query writes FROM students JOIN enrolments ON students.id = enrolments.student_id with no further keyword before the word JOIN. A reviewer asks which rows the statement will return.",
+      "option_texts": {
+        "A": "Every row from the left reference, because an unqualified join keeps the left side whole",
+        "B": "Only rows with matching values in both references, because that join-type is the default",
+        "C": "Every row from both references, because an unqualified join forms the full product",
+        "D": "Only rows from the left reference with no match, because the default suppresses matches"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.2",
+      "blueprint_task_title": "Combine DataFrames with operations such as Inner join, left join, broadcast join, multiple keys, cross join, union, and union all",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "INNER is the default join-type, returning rows that have matching values in both table references",
+      "drill_rationale": "INNER returns the rows that have matching values in both table references, and it is the default join-type.",
+      "decision_hinge": "INNER returns the rows that have matching values in both table references, and it is the default join-type.",
+      "plausible_options": {
+        "A": "no further keyword before the word JOIN"
+      },
+      "eliminated_by": {
+        "C": "A reviewer asks which rows the statement will return",
+        "D": "ON students.id = enrolments.student_id"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - that is LEFT OUTER behaviour, which has to be asked for by name",
+        "C": "T5: common misconception - a cross product needs CROSS JOIN and ignores the ON clause",
+        "D": "T1: fabricated - suppressing matched rows is LEFT ANTI, never the default"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-join"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-080",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A silver job has to list the customers that appear in the orders table but are missing from the approved customers table. The output must carry columns from the orders side only, with no duplicate rows introduced by the comparison.",
+      "option_texts": {
+        "A": "A LEFT SEMI join, which returns the left rows that do have a match on the right",
+        "B": "A LEFT OUTER join, which returns all left rows and pads the unmatched ones with nulls",
+        "C": "A LEFT ANTI join, which returns the left rows that have no match on the right",
+        "D": "A CROSS join filtered afterwards, which compares every pair and keeps the misses"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.2",
+      "blueprint_task_title": "Combine DataFrames with operations such as Inner join, left join, broadcast join, multiple keys, cross join, union, and union all",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "LEFT ANTI returns rows from the left reference that have no match in the right one",
+      "drill_rationale": "A LEFT ANTI join returns the values from the left table reference that have no match in the right table reference, and a LEFT SEMI join returns the ones that do match.",
+      "decision_hinge": "A LEFT ANTI join returns the values from the left table reference that have no match in the right table reference, and a LEFT SEMI join returns the ones that do match.",
+      "plausible_options": {
+        "B": "list the customers that appear in the orders table but are missing from the approved customers table"
+      },
+      "eliminated_by": {
+        "A": "The output must carry columns from the orders side only",
+        "D": "with no duplicate rows introduced by the comparison"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - LEFT SEMI is the exact complement and returns the matched rows",
+        "B": "T2: scope error - an outer join returns the matched rows too, padded rather than filtered out",
+        "D": "T5: common misconception - a cross product multiplies rows before any filter runs"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-join"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-081",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch03.json",
+      "stem": "A team new to the platform is choosing the service that will coordinate a nightly chain of notebooks, a SQL statement and a pipeline, with dependencies between them. They want one scheduled workflow rather than three things triggering each other.",
+      "option_texts": {
+        "A": "An external scheduler that drives the workflow by hitting the workspace API per step",
+        "B": "A single notebook that calls the other notebooks in sequence through dbutils",
+        "C": "A SQL warehouse query schedule, which runs each statement at a chosen time",
+        "D": "Lakeflow Jobs, which schedules and orchestrates tasks as part of a larger workflow"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "A job schedules and orchestrates tasks in a workflow, each task being a unit of work with dependencies",
+      "drill_rationale": "In Databricks a job is used to schedule and orchestrate tasks in a workflow, providing orchestration for data processing workloads so that you can coordinate and run multiple tasks as part of a larger workflow.",
+      "decision_hinge": "In Databricks a job is used to schedule and orchestrate tasks in a workflow, providing orchestration for data processing workloads so that you can coordinate and run multiple tasks as part of a larger workflow.",
+      "plausible_options": {
+        "A": "They want one scheduled workflow rather than three things triggering each other"
+      },
+      "eliminated_by": {
+        "B": "a nightly chain of notebooks, a SQL statement and a pipeline",
+        "C": "with dependencies between them"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - an external scheduler can drive the API, but the platform ships the orchestrator",
+        "B": "T2: scope error - a driver notebook hides the dependencies and gives no per-step observability",
+        "C": "T2: scope error - a query schedule runs statements and cannot orchestrate a pipeline task"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/create-run-jobs"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 322,
+  "total": 330,
   "last_updated_at": "2026-11-03"
 }

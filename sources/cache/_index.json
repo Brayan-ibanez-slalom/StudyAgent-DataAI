@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 181,
+  "count": 186,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1449,6 +1449,46 @@
       "title": "Declarative Automation Bundles resources | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "a374ee43e0b1065c6a91f5c1e633077b9c227751df8e72737b11a6da1176f110",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-join",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-join.txt",
+      "title": "JOIN | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "f46c4584c4a8b439f95b0ce1dbbf60c37fd083dbbcd04f792cc45fe22ced5d14",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/configure-task",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/configure-task.txt",
+      "title": "Configure and edit tasks in Lakeflow Jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "6111cd4848ea6aae14bd4e263d061398ed6876b8426a7269209ba3ac265cfcc3",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/index",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta/index.txt",
+      "title": "What is Delta Lake in Databricks? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "8ce9f26276fc7fb62bdaafa64abc72cbfe3c99f902ae570033a7dd5c5755d260",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/create-run-jobs",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/create-run-jobs.txt",
+      "title": "Lakeflow Jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "def00112527c120cfa4842e0350e6d4957349a53da376709ad25cb23a95ad9ff",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/structured-streaming/concepts",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/structured-streaming/concepts.txt",
+      "title": "Structured Streaming concepts | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "f4d7bd03c69899212a35a567581934636e7c4850eee40797ec6b98296eaf8c44",
       "source": "mcp-cache_fetch"
     }
   ]
