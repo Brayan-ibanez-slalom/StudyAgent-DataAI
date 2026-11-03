@@ -15170,8 +15170,562 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-046",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-05-bundle-variables.json",
+      "stem": "Your team uses a Declarative Automation Bundle to deploy a job that queries a warehouse. The job must use a different warehouse id in dev, test, and prod, and the team must promote the same databricks.yml without editing it between deployments.",
+      "option_texts": {
+        "A": "Hard-code each warehouse id in the job resource and add a script that swaps them before deploy",
+        "B": "Declare a warehouse id as a custom variable and set its value per target, so one definition promotes unchanged",
+        "C": "Keep one databricks.yml per environment and point the CI job at the matching file",
+        "D": "Store the warehouse id in a secret scope and read it with spark.conf.set in every notebook"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.2",
+      "blueprint_task_title": "Understand environment-specific configuration using Declarative Automation Bundle (formerly Databricks Asset Bundles) variables and overrides while promoting the same codebase across dev, test, and prod targets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Declare a custom variable and set its value per target; the same configuration file then promotes across dev, test, and prod unchanged",
+      "drill_rationale": "A custom variable is declared in the variables mapping, and you set its value when executing bundle commands, through an environment variable, elsewhere within your bundle configuration files, or in the .databricks/bundle/<target>/variable-overrides.json file.",
+      "decision_hinge": "A custom variable is declared in the variables mapping, and you set its value when executing bundle commands, through an environment variable, elsewhere within your bundle configuration files, or in the .databricks/bundle/<target>/variable-overrides.json file.",
+      "plausible_options": {
+        "C": "must use a different warehouse id in dev, test, and prod"
+      },
+      "eliminated_by": {
+        "A": "the team must promote the same databricks.yml without editing it between deployments",
+        "D": "deploy a job that queries a warehouse"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - a swap script edits the deployed definition instead of promoting it unchanged",
+        "C": "T3: confusable sibling - per-environment files do vary the id, but they stop the team promoting one configuration",
+        "D": "T2: scope error - a secret scope hides a value at run time and does not parameterize a bundle resource"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/bundles/variables"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-047",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-05-bundle-variables.json",
+      "stem": "You are working in a Databricks Git folder and must start feature work on a new branch before the job definition is deployed to production. Your team keeps all feature development on branches cut from main.",
+      "option_texts": {
+        "A": "Open the Lakeflow Jobs UI and add a job-scoped branch that applies to that job alone",
+        "B": "Run a bundle deploy with a branch flag so the CLI creates and checks out the branch",
+        "C": "Add a branch field to databricks.yml and reopen the workspace so the folder picks it up",
+        "D": "Open the Git dialog, click Create Branch, enter a name, select the base branch, and confirm"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.1",
+      "blueprint_task_title": "Manage your code development workflow within the Databricks workspace UI, including creating and switching between branches in Databricks Git folders (formerly Databricks Repos), committing and pushing changes, and creating pull requests using Databricks Git integration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Branches are created from the Git dialog in the workspace UI: Create Branch, name it, pick the base branch",
+      "drill_rationale": "To create a branch, click Create Branch, enter a name for the new branch and select the base branch, then click Create; to check out a different branch, use the branch dropdown in the Git dialog.",
+      "decision_hinge": "To create a branch, click Create Branch, enter a name for the new branch and select the base branch, then click Create; to check out a different branch, use the branch dropdown in the Git dialog.",
+      "plausible_options": {
+        "B": "must start feature work on a new branch before the job definition is deployed to production"
+      },
+      "eliminated_by": {
+        "A": "Your team keeps all feature development on branches cut from main",
+        "C": "You are working in a Databricks Git folder"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - there is no job-scoped branch in the Lakeflow Jobs UI",
+        "B": "T3: confusable sibling - the bundle CLI deploys resources and never manages Git branches for the folder",
+        "C": "T2: scope error - bundle configuration describes resources, not the Git state of the folder"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/repos/git-operations-with-repos"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-048",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-05-bundle-variables.json",
+      "stem": "Your CI pipeline runs a bundle validate that passes, but the deploy then fails because a job references a value that is missing in the target workspace. The pipeline must supply that value at deploy time from the CI secret store, never from a file committed to the repo.",
+      "option_texts": {
+        "A": "Declare it as a bundle variable and export BUNDLE_VAR_<name> with the value before the deploy runs",
+        "B": "Add a deploy hook that writes the value into the target workspace just before the deploy runs",
+        "C": "Commit the value into databricks.yml in encrypted form and decrypt it during the deploy",
+        "D": "Change the job to read the value through spark.conf.get instead of the bundle configuration"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.4",
+      "blueprint_task_title": "Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles (formerly Databricks Asset Bundles) and other workspace assets in automated CI/CD workflows",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Declare the value as a bundle variable and pass it in an environment variable named BUNDLE_VAR_<variable_name> at deploy time",
+      "drill_rationale": "Provide the variable's value by setting an environment variable whose name must start with BUNDLE_VAR_, or provide the value as part of a bundle command such as validate or deploy.",
+      "decision_hinge": "Provide the variable's value by setting an environment variable whose name must start with BUNDLE_VAR_, or provide the value as part of a bundle command such as validate or deploy.",
+      "plausible_options": {
+        "B": "must supply that value at deploy time from the CI secret store"
+      },
+      "eliminated_by": {
+        "C": "never from a file committed to the repo",
+        "D": "a job references a value that is missing in the target workspace"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - a pre-deploy hook can seed a workspace, but the bundle still has no value bound to the variable",
+        "C": "T4: breaks a stated requirement - the value would live in a file committed to the repo",
+        "D": "T2: scope error - reading a Spark conf at run time does not resolve a missing bundle value at deploy time"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/bundles/variables"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-049",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-05-bundle-variables.json",
+      "stem": "A bundle deploys a Lakeflow Declarative Pipeline plus a job that depends on it, to dev, test, and prod. The pipeline must read from a different source catalog in each of the three targets, and the team wants one pipeline resource defined only once.",
+      "option_texts": {
+        "A": "Define three pipeline resources, one per environment, and let the job pick the right one at run time",
+        "B": "Define the catalog in the metastore and have the pipeline look it up while it runs",
+        "C": "Define the pipeline once with its catalog set from a variable reference, then give that variable a value per target",
+        "D": "Define the dev catalog inline and hand-edit the bundle before each later deployment"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.3",
+      "blueprint_task_title": "Deploy Declarative Automation Bundles (formerly Databricks Asset Bundles) to package, configure, and promote Lakeflow Jobs, Lakeflow Declarative Pipelines, and other workspace assets across dev, test, and prod environments",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "One resource definition whose catalog comes from a variable reference, with the variable given a value per target",
+      "drill_rationale": "You can reference a variable elsewhere within your bundle configuration files, and set its value per target in the .databricks/bundle/<target>/variable-overrides.json file.",
+      "decision_hinge": "You can reference a variable elsewhere within your bundle configuration files, and set its value per target in the .databricks/bundle/<target>/variable-overrides.json file.",
+      "plausible_options": {
+        "A": "must read from a different source catalog in each of the three targets"
+      },
+      "eliminated_by": {
+        "B": "A bundle deploys a Lakeflow Declarative Pipeline plus a job that depends on it",
+        "D": "the team wants one pipeline resource defined only once"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - three resources do vary the catalog, but the pipeline is then defined three times",
+        "B": "T2: scope error - the metastore holds the catalog, not the deploy-time choice of which catalog this target reads",
+        "D": "T4: breaks a stated requirement - hand-editing between deployments is exactly what the team ruled out"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/bundles/variables"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-050",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-05-bundle-variables.json",
+      "stem": "A CI stage must prove a Declarative Automation Bundle is syntactically correct and that its resource properties match the object schema. The stage must not create, change, or remove anything in the workspace.",
+      "option_texts": {
+        "A": "Run a bundle validate, which checks the configuration files and reports schema warnings",
+        "B": "Run a bundle deploy with a dry run flag to preview the changes it would apply",
+        "C": "Run a bundle run so the resources execute once and surface any configuration errors",
+        "D": "Run a bundle sync so the files reach the workspace and the schema is checked there"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.4",
+      "blueprint_task_title": "Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles (formerly Databricks Asset Bundles) and other workspace assets in automated CI/CD workflows",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "bundle validate checks that configuration files are syntactically correct and warns on properties missing from the object schema",
+      "drill_rationale": "The bundle validate command validates that bundle configuration files are syntactically correct and outputs warnings if resource properties are defined in the bundle configuration files that are not found in the corresponding object's schema.",
+      "decision_hinge": "The bundle validate command validates that bundle configuration files are syntactically correct and outputs warnings if resource properties are defined in the bundle configuration files that are not found in the corresponding object's schema.",
+      "plausible_options": {
+        "B": "must prove a Declarative Automation Bundle is syntactically correct"
+      },
+      "eliminated_by": {
+        "C": "The stage must not create, change, or remove anything in the workspace",
+        "D": "its resource properties match the object schema"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - a deploy preview also reports problems, but it belongs to the deploy path rather than a check",
+        "C": "T4: breaks a stated requirement - running the resources changes workspace state",
+        "D": "T2: scope error - syncing files moves content to the workspace instead of checking the configuration"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-051",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "The Spark UI shows one task in a groupBy stage reading 50 GB of shuffle data while the median task reads 2 GB. Adaptive Query Execution is on and the stage is an aggregation, not a join. The fix must spread that one hot key over more tasks.",
+      "option_texts": {
+        "A": "Salt the hot key so it spreads over more tasks, then combine the partial results in a second stage",
+        "B": "Raise executor memory so the single long task has enough room to finish sooner",
+        "C": "Lower spark.sql.shuffle.partitions so the stage performs fewer shuffle operations overall",
+        "D": "Turn Adaptive Query Execution off and let the aggregation run as a broadcast instead"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.3",
+      "blueprint_task_title": "Identify common performance bottlenecks such as data skew, shuffling, and disk spilling by interpreting stage-level metrics in the Spark UI",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "AQE splits skewed tasks only for sort merge join and shuffle hash join, so a skewed aggregation needs salting",
+      "drill_rationale": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "decision_hinge": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "plausible_options": {
+        "B": "one task in a groupBy stage reading 50 GB of shuffle data"
+      },
+      "eliminated_by": {
+        "C": "The fix must spread that one hot key over more tasks",
+        "D": "Adaptive Query Execution is on and the stage is an aggregation, not a join"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - more memory lets one oversized task survive but never rebalances the key",
+        "C": "T2: scope error - fewer partitions concentrate the hot key further instead of spreading it",
+        "D": "T1: fabricated - disabling AQE does not turn an aggregation into a broadcast"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/aqe"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false,
+      "retired": true,
+      "retired_at": "2026-11-03",
+      "retired_reason": "Rewritten so the key is not the single longest option: the original key ran 19 words against a 14-word best distractor, making it answerable by picking the longest option. Option lengths are now tied at 15 words.",
+      "superseded_by": "Q-AU-DBXDE-056"
+    },
+    {
+      "id": "Q-AU-DBXDE-052",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "A daily ETL job finished in 45 minutes today after finishing in 12 minutes for the past month. The on-call engineer must first establish how today's duration compares with earlier runs of the same job.",
+      "option_texts": {
+        "A": "Open the task graph to confirm every downstream task was scheduled in the right order",
+        "B": "Open the workspace file browser and compare the input file sizes against yesterday",
+        "C": "Open the job's run history and read how long previous runs of this job took",
+        "D": "Open the Spark UI metrics tab and read stage-level shuffle and memory counters"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.1",
+      "blueprint_task_title": "Identify trends in job performance using the Lakeflow Jobs run history view to compare current execution times against historical baselines",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Run history retains prior runs and their total running time, which is what a baseline comparison needs",
+      "drill_rationale": "Databricks retains run history for 60 days for both jobs and pipelines, and the matrix view displays the run's total duration and the run's state for each run.",
+      "decision_hinge": "Databricks retains run history for 60 days for both jobs and pipelines, and the matrix view displays the run's total duration and the run's state for each run.",
+      "plausible_options": {
+        "D": "A daily ETL job finished in 45 minutes today"
+      },
+      "eliminated_by": {
+        "A": "must first establish how today's duration compares with earlier runs",
+        "B": "after finishing in 12 minutes for the past month"
+      },
+      "distractor_traps": {
+        "A": "T2: scope error - task ordering explains a wrong result, not a slower run against its own history",
+        "B": "T2: scope error - input size is a candidate cause, but it is not where the baseline comparison lives",
+        "D": "T3: confusable sibling - the Spark UI explains why one run was slow, after history establishes that it was"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/monitor"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-053",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "A Lakeflow Job cannot start because its classic compute never reaches a running state. The job definition is unchanged and ran yesterday, so the team must look at the compute lifecycle itself rather than at anything the job code did.",
+      "option_texts": {
+        "A": "Open the Spark UI on that compute and look for out-of-memory errors and failed tasks",
+        "B": "Open the compute Event log tab to read the lifecycle events behind the failed start",
+        "C": "Open the job run history and wait to see whether a later retry eventually succeeds",
+        "D": "Open the job task graph and find the upstream task meant to drive the compute lifecycle"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.5",
+      "blueprint_task_title": "Diagnose cluster startup failures, library conflicts, and out-of-memory issues",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Compute event logs capture lifecycle events such as creation and termination, and are read from the Event log tab",
+      "drill_rationale": "Compute event logs capture compute lifecycle events like creation, termination, and configuration edits, and to view the compute's event log you select the Event log tab on the compute details pages.",
+      "decision_hinge": "Compute event logs capture compute lifecycle events like creation, termination, and configuration edits, and to view the compute's event log you select the Event log tab on the compute details pages.",
+      "plausible_options": {
+        "A": "its classic compute never reaches a running state"
+      },
+      "eliminated_by": {
+        "C": "the team must look at the compute lifecycle itself",
+        "D": "The job definition is unchanged and ran yesterday"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the Spark UI needs a compute that already started, which is the thing that failed",
+        "C": "T2: scope error - waiting on a retry observes the symptom instead of diagnosing the start",
+        "D": "T1: fabricated - no upstream task creates the compute for a job run"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/compute/clusters-manage"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-054",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "A stage spills large amounts of data to disk because each post-shuffle partition is too big to sit in memory. The team is choosing one setting to change first, and the cluster already runs with Adaptive Query Execution enabled.",
+      "option_texts": {
+        "A": "Raise spark.sql.shuffle.partitions so each post-shuffle partition holds less data",
+        "B": "Lower spark.sql.shuffle.partitions so the stage runs fewer, larger shuffle reads",
+        "C": "Shrink the cluster so each post-shuffle partition is packed more tightly in memory",
+        "D": "Switch the table to liquid clustering so the layout removes the spilling"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.3",
+      "blueprint_task_title": "Identify common performance bottlenecks such as data skew, shuffling, and disk spilling by interpreting stage-level metrics in the Spark UI",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Spill means each partition is oversized, so raise the shuffle partition count to put less data in each one",
+      "drill_rationale": "A plan built on wrong estimates might create too many small tasks after a shuffle, or create a few oversized tasks that hold up the whole stage, and AQE picks an optimal number and size of post-shuffle partitions.",
+      "decision_hinge": "A plan built on wrong estimates might create too many small tasks after a shuffle, or create a few oversized tasks that hold up the whole stage, and AQE picks an optimal number and size of post-shuffle partitions.",
+      "plausible_options": {
+        "B": "The team is choosing one setting to change first"
+      },
+      "eliminated_by": {
+        "C": "each post-shuffle partition is too big to sit in memory",
+        "D": "A stage spills large amounts of data to disk"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - fewer partitions is the right move for tiny tasks and the wrong one for oversized tasks",
+        "C": "T1: fabricated - less memory cannot make an oversized partition fit",
+        "D": "T2: scope error - clustering changes the table layout and not the size of a shuffle partition"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/aqe"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-055",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "A large Delta table is updated and queried constantly, and queries filter on customer_id. The team wants a layout that it can re-key later without rewriting the table by hand, and it does not want to maintain fixed partitions.",
+      "option_texts": {
+        "A": "Define a static partition on customer_id so the files are organised by that range",
+        "B": "Turn on predictive optimization so OPTIMIZE and VACUUM run on a managed schedule",
+        "C": "Apply ZORDER BY customer_id and schedule a weekly OPTIMIZE to keep the layout fresh",
+        "D": "Enable liquid clustering on customer_id, which replaces partitioning and ZORDER and can be re-keyed later"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Liquid clustering replaces partitioning and ZORDER, and its clustering keys can be changed at any time",
+      "drill_rationale": "Liquid clustering is a data layout optimization technique that replaces table partitioning and ZORDER, and you can change clustering keys for a table at any time.",
+      "decision_hinge": "Liquid clustering is a data layout optimization technique that replaces table partitioning and ZORDER, and you can change clustering keys for a table at any time.",
+      "plausible_options": {
+        "C": "The team wants a layout that it can re-key later without rewriting the table by hand"
+      },
+      "eliminated_by": {
+        "A": "it does not want to maintain fixed partitions",
+        "B": "queries filter on customer_id"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - a static partition is the fixed partitioning the team ruled out",
+        "B": "T2: scope error - predictive optimization schedules maintenance and does not choose the layout",
+        "C": "T3: confusable sibling - ZORDER does co-locate the column, but changing the ordering means rewriting the layout by hand"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/clustering"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-056",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-06-performance-monitoring.json",
+      "stem": "The Spark UI shows one task in a groupBy stage reading 50 GB of shuffle data while the median task reads 2 GB. Adaptive Query Execution is on and the stage is an aggregation, not a join. The fix must spread that one hot key over more tasks, and the cluster itself is otherwise healthy.",
+      "option_texts": {
+        "A": "Salt the hot key so it spreads over more tasks, then merge the partial results",
+        "B": "Raise executor memory so that the single long task has enough room to finish sooner",
+        "C": "Lower spark.sql.shuffle.partitions so that the stage performs fewer and larger shuffle reads",
+        "D": "Turn Adaptive Query Execution off so that the aggregation runs as a broadcast instead"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.3",
+      "blueprint_task_title": "Identify common performance bottlenecks such as data skew, shuffling, and disk spilling by interpreting stage-level metrics in the Spark UI",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "AQE splits skewed tasks only for sort merge join and shuffle hash join, so a skewed aggregation needs salting",
+      "drill_rationale": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "decision_hinge": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
+      "plausible_options": {
+        "B": "one task in a groupBy stage reading 50 GB of shuffle data"
+      },
+      "eliminated_by": {
+        "C": "The fix must spread that one hot key over more tasks",
+        "D": "Adaptive Query Execution is on and the stage is an aggregation, not a join"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - more memory lets one oversized task survive but never rebalances the key",
+        "C": "T2: scope error - fewer partitions concentrate the hot key further instead of spreading it",
+        "D": "T1: fabricated - disabling AQE does not turn an aggregation into a broadcast"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/optimizations/aqe"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 294,
+  "total": 305,
   "last_updated_at": "2026-11-03"
 }

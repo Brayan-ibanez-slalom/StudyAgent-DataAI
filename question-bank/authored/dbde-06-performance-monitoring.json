@@ -1,60 +1,37 @@
 [
   {
-    "id": "draft-dbde06-001",
+    "id": "draft-dbde06-001-v2",
     "domain": "dbde-06",
     "blueprint_task": "6.3",
     "qtype": "multiple_choice",
     "difficulty_estimate": "L4",
-    "stem": "While reviewing the Spark UI for a production job, you observe that a groupBy aggregation completes quickly on most tasks, but one task runs significantly longer than all others. The Max shuffle read bytes for that task is 50 GB, while the median across all tasks is 2 GB. Adaptive Query Execution is enabled. What is the most likely cause and the correct remediation?",
+    "stem": "The Spark UI shows one task in a groupBy stage reading 50 GB of shuffle data while the median task reads 2 GB. Adaptive Query Execution is on and the stage is an aggregation, not a join. The fix must spread that one hot key over more tasks, and the cluster itself is otherwise healthy.",
     "option_texts": {
-      "A": "Data skew on the groupBy key; salt the key so it distributes across more partitions, then combine partial results in a second stage",
-      "B": "Insufficient memory on the cluster; scale up the cluster to provide more executor memory so the task completes faster",
-      "C": "The shuffle operation is too expensive; lower spark.sql.shuffle.partitions to reduce the number of shuffle operations",
-      "D": "Adaptive Query Execution is not optimizing this workload; disable AQE and use broadcast aggregation instead"
+      "A": "Salt the hot key so it spreads over more tasks, then merge the partial results",
+      "B": "Raise executor memory so that the single long task has enough room to finish sooner",
+      "C": "Lower spark.sql.shuffle.partitions so that the stage performs fewer and larger shuffle reads",
+      "D": "Turn Adaptive Query Execution off so that the aggregation runs as a broadcast instead"
     },
     "drill_answer": "A",
-    "drill_answer_short": "The large difference between one task's shuffle read and the median indicates a single task is processing most of the data\u2014classic data skew. Salting the key spreads the skewed partitions across tasks. AQE does not fix skewed groupBy, only skewed joins.",
-    "decision_hinge": "Task 6.3 requires identifying data skew from stage-level metrics. The seed note explicitly states: Adaptive Query Execution handles skewed joins automatically. It does NOT relieve a skewed groupBy aggregation. Salting is the answer.",
+    "drill_answer_short": "AQE splits skewed tasks only for sort merge join and shuffle hash join, so a skewed aggregation needs salting",
+    "decision_hinge": "AQE dynamically handles skew in sort merge join and shuffle hash join by splitting and replicating skewed tasks into roughly evenly sized tasks.",
     "plausible_options": {
-      "B": "Scaling up adds memory, but does not fix skew; the oversized task still runs alone while new executors idle. Skew is a distribution problem, not a capacity problem.",
-      "C": "Lowering partition count concentrates more rows per partition, worsening skew. More partitions spread the load; fewer partitions concentrate it.",
-      "D": "AQE is enabled and does optimize joins, but the exam guide's answer key explicitly states it does not help with skewed groupBy. Disabling AQE would not help."
-    },
-    "distractor_traps": {
-      "B": {
-        "code": "T5",
-        "description": "Common misconception: scaling up does not fix skew. A skewed task will still run alone on one executor while others remain idle."
-      },
-      "C": {
-        "code": "T5",
-        "description": "Common misconception: lowering spark.sql.shuffle.partitions concentrates more rows per partition, which worsens skew, not improves it."
-      },
-      "D": {
-        "code": "T5",
-        "description": "Common misconception: AQE is designed to optimize skewed joins, not groupBy. The exam guide notes that AQE does not help with skewed aggregations."
-      }
+      "B": "one task in a groupBy stage reading 50 GB of shuffle data"
     },
     "eliminated_by": {
-      "B": {
-        "signal": "one task runs significantly longer than all others",
-        "requires_fact": "Scaling the cluster does not address data skew; the imbalanced task distribution remains a problem even with more memory."
-      },
-      "C": {
-        "signal": "one task runs significantly longer than all others. The Max shuffle read bytes for that task is 50 GB, while the median across all tasks is 2 GB",
-        "requires_fact": "Lower partition counts concentrate data, worsening skew. More partitions spread the load. The solution is to increase partitions or salt the key."
-      },
-      "D": {
-        "signal": "Adaptive Query Execution is enabled",
-        "requires_fact": "AQE optimizes skewed joins automatically but does not help with skewed groupBy operations. The exam guide's answer key confirms salting is required for skewed groupBy."
-      }
+      "C": "The fix must spread that one hot key over more tasks",
+      "D": "Adaptive Query Execution is on and the stage is an aggregation, not a join"
+    },
+    "distractor_traps": {
+      "B": "T5: common misconception - more memory lets one oversized task survive but never rebalances the key",
+      "C": "T2: scope error - fewer partitions concentrate the hot key further instead of spreading it",
+      "D": "T1: fabricated - disabling AQE does not turn an aggregation into a broadcast"
     },
     "sources": [
-      "https://docs.databricks.com/en/optimizations/spark-ui-guide/",
-      "https://docs.databricks.com/en/optimizations/",
-      "https://docs.databricks.com/en/sql/aqe/"
+      "https://docs.databricks.com/aws/en/optimizations/aqe"
     ],
     "topics": [
-      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ]
   },
   {
@@ -63,55 +40,33 @@
     "blueprint_task": "6.1",
     "qtype": "multiple_choice",
     "difficulty_estimate": "L3",
-    "stem": "Your team has a Lakeflow Job that processes daily ETL data. This morning, the job completed in 45 minutes, but yesterday it completed in 12 minutes. There were no code changes. Which Lakeflow Jobs UI view should you check first to identify why today's run was slower?",
+    "stem": "A daily ETL job finished in 45 minutes today after finishing in 12 minutes for the past month. The on-call engineer must first establish how today's duration compares with earlier runs of the same job.",
     "option_texts": {
-      "A": "The run history view to compare today's execution time against historical baselines and identify the performance regression",
-      "B": "The task graph view to see all parallel tasks and verify that all downstream jobs are scheduled correctly",
-      "C": "The Spark UI metrics tab to review stage-level shuffle and memory usage without accessing the cluster",
-      "D": "The workspace file browser to check if the input data files have changed size since yesterday"
+      "A": "Open the task graph to confirm every downstream task was scheduled in the right order",
+      "B": "Open the workspace file browser and compare the input file sizes against yesterday",
+      "C": "Open the job's run history and read how long previous runs of this job took",
+      "D": "Open the Spark UI metrics tab and read stage-level shuffle and memory counters"
     },
-    "drill_answer": "A",
-    "drill_answer_short": "Task 6.1 explicitly requires using the run history view to compare current execution times against historical baselines. This is the first place to spot performance regressions.",
-    "decision_hinge": "Task 6.1 states: Identify trends in job performance using the Lakeflow Jobs run history view to compare current execution times against historical baselines. Run history is the dedicated view for this purpose.",
+    "drill_answer": "C",
+    "drill_answer_short": "Run history retains prior runs and their total running time, which is what a baseline comparison needs",
+    "decision_hinge": "Databricks retains run history for 60 days for both jobs and pipelines, and the matrix view displays the run's total duration and the run's state for each run.",
     "plausible_options": {
-      "B": "The task graph shows the DAG structure and dependencies but does not show per-run timing. Run history shows the actual times over time.",
-      "C": "The Spark UI is for detailed stage-level diagnostics, but you first need to identify which run is slow; run history establishes the baseline and regression.",
-      "D": "Input data size could affect performance, but you would check run history first to confirm the regression, then investigate causes."
-    },
-    "distractor_traps": {
-      "B": {
-        "code": "T2",
-        "description": "Misplaced: the task graph shows the DAG structure, not run timing. Run history is the dedicated view for performance trends."
-      },
-      "C": {
-        "code": "T2",
-        "description": "Misplaced: Spark UI metrics are for deep-dive diagnostics after you know the job is slow. Run history establishes the baseline first."
-      },
-      "D": {
-        "code": "T3",
-        "description": "Confusable sibling: data size could affect performance, but the Lakeflow Jobs UI (not the file browser) is where you compare execution times."
-      }
+      "D": "A daily ETL job finished in 45 minutes today"
     },
     "eliminated_by": {
-      "B": {
-        "signal": "the job completed in 45 minutes, but yesterday it completed in 12 minutes",
-        "requires_fact": "The task graph shows DAG structure and dependencies, not run timing. Run history is the view that shows execution time trends."
-      },
-      "C": {
-        "signal": "identify why today's run was slower",
-        "requires_fact": "The Spark UI shows stage-level metrics for deep diagnosis, but run history is the first place to confirm the performance regression against historical runs."
-      },
-      "D": {
-        "signal": "Which Lakeflow Jobs UI view should you check first",
-        "requires_fact": "The Lakeflow Jobs UI run history view is the correct starting point; the file browser is outside the Jobs UI and does not show run timing."
-      }
+      "A": "must first establish how today's duration compares with earlier runs",
+      "B": "after finishing in 12 minutes for the past month"
+    },
+    "distractor_traps": {
+      "A": "T2: scope error - task ordering explains a wrong result, not a slower run against its own history",
+      "B": "T2: scope error - input size is a candidate cause, but it is not where the baseline comparison lives",
+      "D": "T3: confusable sibling - the Spark UI explains why one run was slow, after history establishes that it was"
     },
     "sources": [
-      "https://docs.databricks.com/en/compute/lakeflow/monitor-jobs/",
-      "https://docs.databricks.com/en/compute/jobs/"
+      "https://docs.databricks.com/aws/en/jobs/monitor"
     ],
     "topics": [
-      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ]
   },
   {
@@ -120,55 +75,33 @@
     "blueprint_task": "6.5",
     "qtype": "multiple_choice",
     "difficulty_estimate": "L3",
-    "stem": "You attempt to launch a Lakeflow Job on a cluster, but the cluster fails to start. The job configuration is correct and has run successfully before. Where should you check to diagnose the cluster startup failure?",
+    "stem": "A Lakeflow Job cannot start because its classic compute never reaches a running state. The job definition is unchanged and ran yesterday, so the team must look at the compute lifecycle itself rather than at anything the job code did.",
     "option_texts": {
-      "A": "Review the cluster event log to identify initialization script errors, driver or library conflicts, or infrastructure issues",
-      "B": "Open the Spark UI on the cluster to check for out-of-memory errors or task failures",
-      "C": "Check the job's run history to see if it eventually succeeded after retrying",
-      "D": "Review the Lakeflow Job DAG to identify if an upstream dependency failed to create the cluster"
+      "A": "Open the Spark UI on that compute and look for out-of-memory errors and failed tasks",
+      "B": "Open the compute Event log tab to read the lifecycle events behind the failed start",
+      "C": "Open the job run history and wait to see whether a later retry eventually succeeds",
+      "D": "Open the job task graph and find the upstream task meant to drive the compute lifecycle"
     },
-    "drill_answer": "A",
-    "drill_answer_short": "Cluster startup failures are infrastructure or initialization problems, not Spark runtime problems. The cluster event log shows startup errors, init-script failures, and library conflicts.",
-    "decision_hinge": "Task 6.5 requires diagnosing cluster startup failures. The seed note explicitly states: A cluster that will not start is an infrastructure or init-script problem; look at the cluster event log, not the Spark UI.",
+    "drill_answer": "B",
+    "drill_answer_short": "Compute event logs capture lifecycle events such as creation and termination, and are read from the Event log tab",
+    "decision_hinge": "Compute event logs capture compute lifecycle events like creation, termination, and configuration edits, and to view the compute's event log you select the Event log tab on the compute details pages.",
     "plausible_options": {
-      "B": "The Spark UI is for runtime diagnostics after the cluster has started. If the cluster fails to start, there is no Spark UI to view.",
-      "C": "Run history might show retries, but does not explain why the cluster failed to start. The event log has the diagnosis.",
-      "D": "The job DAG shows task dependencies, not cluster initialization. A cluster that will not start is an infrastructure issue, not a DAG issue."
-    },
-    "distractor_traps": {
-      "B": {
-        "code": "T5",
-        "description": "Common misconception: the Spark UI is not available until the cluster has started and is running. Startup failures occur before Spark starts."
-      },
-      "C": {
-        "code": "T2",
-        "description": "Misplaced: run history shows whether the job succeeded eventually, but the diagnostic data is in the cluster event log."
-      },
-      "D": {
-        "code": "T3",
-        "description": "Confusable sibling: the job DAG shows task dependencies, but cluster startup is an infrastructure concern, not a task dependency issue."
-      }
+      "A": "its classic compute never reaches a running state"
     },
     "eliminated_by": {
-      "B": {
-        "signal": "the cluster fails to start",
-        "requires_fact": "The Spark UI is only available after the cluster has started successfully. Startup failures are infrastructure issues visible in the event log."
-      },
-      "C": {
-        "signal": "the cluster fails to start",
-        "requires_fact": "Run history shows outcomes, but cluster startup failures are diagnosed via the cluster event log, not job history."
-      },
-      "D": {
-        "signal": "the cluster fails to start",
-        "requires_fact": "Cluster startup is an infrastructure operation, not a job task. The DAG shows task dependencies after the cluster is ready."
-      }
+      "C": "the team must look at the compute lifecycle itself",
+      "D": "The job definition is unchanged and ran yesterday"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - the Spark UI needs a compute that already started, which is the thing that failed",
+      "C": "T2: scope error - waiting on a retry observes the symptom instead of diagnosing the start",
+      "D": "T1: fabricated - no upstream task creates the compute for a job run"
     },
     "sources": [
-      "https://docs.databricks.com/en/compute/clusters/",
-      "https://docs.databricks.com/en/compute/lakeflow/monitor-jobs/"
+      "https://docs.databricks.com/aws/en/compute/clusters-manage"
     ],
     "topics": [
-      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ]
   },
   {
@@ -176,57 +109,34 @@
     "domain": "dbde-06",
     "blueprint_task": "6.3",
     "qtype": "multiple_choice",
-    "difficulty_estimate": "L3",
-    "stem": "A stage in your Spark job shows high spill-to-disk metrics, indicating that data is being written to disk because partitions are too large to fit in memory. Which approach correctly reduces spilling for this workload?",
+    "difficulty_estimate": "L4",
+    "stem": "A stage spills large amounts of data to disk because each post-shuffle partition is too big to sit in memory. The team is choosing one setting to change first, and the cluster already runs with Adaptive Query Execution enabled.",
     "option_texts": {
-      "A": "Increase spark.sql.shuffle.partitions to create more partitions so each partition is smaller and fits in memory",
-      "B": "Reduce spark.sql.shuffle.partitions to combine fewer partitions and reduce shuffle overhead",
-      "C": "Scale down the cluster to force more efficient packing of data in memory",
-      "D": "Enable Predictive Optimization to automatically reduce spilling without configuration changes"
+      "A": "Raise spark.sql.shuffle.partitions so each post-shuffle partition holds less data",
+      "B": "Lower spark.sql.shuffle.partitions so the stage runs fewer, larger shuffle reads",
+      "C": "Shrink the cluster so each post-shuffle partition is packed more tightly in memory",
+      "D": "Switch the table to liquid clustering so the layout removes the spilling"
     },
     "drill_answer": "A",
-    "drill_answer_short": "High spill-to-disk means partitions are too large for memory. More partitions distribute the data across more tasks, so each partition is smaller and fits in memory.",
-    "decision_hinge": "Task 6.3 requires identifying spill as a partition-size problem and fixing it. The seed note states: Large spill-to-disk metrics on a stage = Partitions too large for memory = More partitions, more memory, or less data per task.",
+    "drill_answer_short": "Spill means each partition is oversized, so raise the shuffle partition count to put less data in each one",
+    "decision_hinge": "A plan built on wrong estimates might create too many small tasks after a shuffle, or create a few oversized tasks that hold up the whole stage, and AQE picks an optimal number and size of post-shuffle partitions.",
     "plausible_options": {
-      "B": "Fewer partitions concentrates more data per partition, which worsens spilling. The fix is to increase partitions, not decrease them.",
-      "C": "Scaling down removes memory, which worsens spilling. The problem is too much data per partition; scaling down makes it worse.",
-      "D": "Predictive Optimization optimizes storage and maintenance, not memory management during query execution. It does not reduce spilling."
-    },
-    "distractor_traps": {
-      "B": {
-        "code": "T5",
-        "description": "Common misconception: reducing partitions concentrates more data per partition, which increases spilling, not reduces it."
-      },
-      "C": {
-        "code": "T5",
-        "description": "Common misconception: removing memory makes the problem worse. The issue is data-per-partition; less memory means more spilling."
-      },
-      "D": {
-        "code": "T3",
-        "description": "Confusable sibling: Predictive Optimization manages table layout and maintenance. Spilling is a query execution memory problem, not a storage optimization."
-      }
+      "B": "The team is choosing one setting to change first"
     },
     "eliminated_by": {
-      "B": {
-        "signal": "partitions are too large to fit in memory",
-        "requires_fact": "Fewer partitions concentrates more data per partition, worsening spilling. More partitions spread the load."
-      },
-      "C": {
-        "signal": "partitions are too large to fit in memory",
-        "requires_fact": "Scaling down removes memory, which worsens the problem. The solution is to add memory or reduce partition size."
-      },
-      "D": {
-        "signal": "high spill-to-disk metrics",
-        "requires_fact": "Predictive Optimization manages table maintenance and layout, not query-execution memory management or spilling."
-      }
+      "C": "each post-shuffle partition is too big to sit in memory",
+      "D": "A stage spills large amounts of data to disk"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - fewer partitions is the right move for tiny tasks and the wrong one for oversized tasks",
+      "C": "T1: fabricated - less memory cannot make an oversized partition fit",
+      "D": "T2: scope error - clustering changes the table layout and not the size of a shuffle partition"
     },
     "sources": [
-      "https://docs.databricks.com/en/optimizations/spark-ui-guide/",
-      "https://docs.databricks.com/en/optimizations/",
-      "https://docs.databricks.com/en/optimizations/liquid-clustering/"
+      "https://docs.databricks.com/aws/en/optimizations/aqe"
     ],
     "topics": [
-      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ]
   },
   {
@@ -234,57 +144,34 @@
     "domain": "dbde-06",
     "blueprint_task": "6.4",
     "qtype": "multiple_choice",
-    "difficulty_estimate": "L3",
-    "stem": "Your team manages a large Delta table in Databricks that is frequently updated and queried. The table has a natural order by customer_id, but queries are accessing random pages of the table, causing performance issues. You want to use a feature that automatically optimizes the table layout without requiring manual partitioning or explicit maintenance jobs. Which feature is best suited for this use case?",
+    "difficulty_estimate": "L4",
+    "stem": "A large Delta table is updated and queried constantly, and queries filter on customer_id. The team wants a layout that it can re-key later without rewriting the table by hand, and it does not want to maintain fixed partitions.",
     "option_texts": {
-      "A": "Liquid clustering with customer_id as the clustering key to automatically optimize table layout and allow dynamic column changes",
-      "B": "Create a static partition by customer_id in the table schema to enforce range-based data organization",
-      "C": "Use Predictive Optimization to automatically run OPTIMIZE and VACUUM on a schedule managed by Databricks",
-      "D": "Enable Z-ordering on customer_id and run OPTIMIZE manually once per week to maintain table layout"
+      "A": "Define a static partition on customer_id so the files are organised by that range",
+      "B": "Turn on predictive optimization so OPTIMIZE and VACUUM run on a managed schedule",
+      "C": "Apply ZORDER BY customer_id and schedule a weekly OPTIMIZE to keep the layout fresh",
+      "D": "Enable liquid clustering on customer_id, which replaces partitioning and ZORDER and can be re-keyed later"
     },
-    "drill_answer": "A",
-    "drill_answer_short": "Liquid clustering automatically optimizes table layout based on a clustering key, eliminating the need for manual partitioning or scheduled maintenance. It also allows changing the clustering key later without rewriting the table.",
-    "decision_hinge": "Task 6.4 requires understanding Liquid Clustering. The seed note states: Liquid clustering replaces fixed partitioning and Z-ordering with a clustering key you can change later without rewriting the table layout by hand.",
+    "drill_answer": "D",
+    "drill_answer_short": "Liquid clustering replaces partitioning and ZORDER, and its clustering keys can be changed at any time",
+    "decision_hinge": "Liquid clustering is a data layout optimization technique that replaces table partitioning and ZORDER, and you can change clustering keys for a table at any time.",
     "plausible_options": {
-      "B": "Static partitioning would organize data but requires manual schema changes to modify the partition scheme and cannot dynamically adjust to query patterns.",
-      "C": "Predictive Optimization manages when to run OPTIMIZE/VACUUM but does not change the table layout. Liquid clustering changes how data is physically organized.",
-      "D": "Z-ordering improves locality but requires manual OPTIMIZE runs and cannot be easily changed. Liquid clustering is more flexible and automatic."
-    },
-    "distractor_traps": {
-      "B": {
-        "code": "T3",
-        "description": "Confusable sibling: partitioning and clustering are different approaches. Static partitions cannot adapt dynamically to query patterns."
-      },
-      "C": {
-        "code": "T2",
-        "description": "Misplaced: Predictive Optimization manages maintenance scheduling, not table layout optimization. Liquid clustering changes the physical organization."
-      },
-      "D": {
-        "code": "T7",
-        "description": "Outdated behavior: Z-ordering is an older approach. Liquid clustering is the modern feature that replaces fixed partitioning and Z-ordering."
-      }
+      "C": "The team wants a layout that it can re-key later without rewriting the table by hand"
     },
     "eliminated_by": {
-      "B": {
-        "signal": "without requiring manual partitioning",
-        "requires_fact": "Static partitioning requires manual schema changes to adjust; liquid clustering is dynamic and does not require schema changes."
-      },
-      "C": {
-        "signal": "automatically optimizes the table layout",
-        "requires_fact": "Predictive Optimization manages when to run OPTIMIZE/VACUUM; liquid clustering changes table layout. They address different optimization aspects."
-      },
-      "D": {
-        "signal": "without requiring manual partitioning or explicit maintenance jobs",
-        "requires_fact": "Z-ordering requires manual OPTIMIZE runs; liquid clustering is automatic. Liquid clustering also allows changing the key later without rewriting."
-      }
+      "A": "it does not want to maintain fixed partitions",
+      "B": "queries filter on customer_id"
+    },
+    "distractor_traps": {
+      "A": "T4: breaks a stated requirement - a static partition is the fixed partitioning the team ruled out",
+      "B": "T2: scope error - predictive optimization schedules maintenance and does not choose the layout",
+      "C": "T3: confusable sibling - ZORDER does co-locate the column, but changing the ordering means rewriting the layout by hand"
     },
     "sources": [
-      "https://docs.databricks.com/en/delta/clustering",
-      "https://docs.databricks.com/en/optimizations/",
-      "https://docs.databricks.com/en/optimizations/predictive-optimization/"
+      "https://docs.databricks.com/aws/en/delta/clustering"
     ],
     "topics": [
-      "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
     ]
   }
 ]

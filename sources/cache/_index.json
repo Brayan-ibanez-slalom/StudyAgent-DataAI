@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 162,
+  "count": 171,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1297,6 +1297,78 @@
       "title": "Work with joins on Databricks | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "95a039fc1cac4de2c18d787d762315bdb59c31e08de6cdeb5034e527e4b85469",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/repos/git-operations-with-repos",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/repos/git-operations-with-repos.txt",
+      "title": "Create and manage Git folders | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "e1e2cb75bbf24b19c6ccc5b7ab2eeeb0f74135dd725d177fef17aed581b553bd",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dev-tools/bundles/settings",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dev-tools/bundles/settings.txt",
+      "title": "Declarative Automation Bundles configuration | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "514066c2508ca25b032ced6f5641114b0b18f80d6a982759a963c943580501dd",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dev-tools/bundles/variables",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dev-tools/bundles/variables.txt",
+      "title": "Substitutions and variables in Declarative Automation Bundles | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "63377da79169c072f7bc4f662965bc8d1fa9e3af7aa6c5b2b03512c764366483",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dev-tools/cli/bundle-commands.txt",
+      "title": "bundle command group | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "a4cc4de4b4e9da22060319929bd43414b9a23ecc9978fa478a2057f4c2ce6806",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/clustering",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta/clustering.txt",
+      "title": "Use liquid clustering for tables | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "634598ba1b86508cdb05dfcd63339b34a0e605256d25cf65ca8eb4d0414cbe43",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/user/queries/query-profile",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/user/queries/query-profile.txt",
+      "title": "Query profile | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "5c1e647363ded61e93ac9334948b8961d57ce6eacfdbbf643dc8df32293d9ce6",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/optimizations/spark-ui-guide",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/optimizations/spark-ui-guide.txt",
+      "title": "Diagnose cost and performance issues using the Spark UI | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "fb64b29bead2f3e53a71bf39ffca40dee9560f45bf0cc6cb02abcc3c988ffafe",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/run-now",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/run-now.txt",
+      "title": "Trigger a single job run | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "f8e9086e62e026566edd156753ca1bdf2363a5ea0f351c3768edac0cb9288fd6",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/clusters-manage",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/clusters-manage.txt",
+      "title": "Manage classic compute | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "8258a2027b28da197ae35f7277f1ee91cbdaa28061bb587e1eba17f7066ce67e",
       "source": "mcp-cache_fetch"
     }
   ]
