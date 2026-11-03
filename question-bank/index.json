@@ -13860,8 +13860,538 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-021",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "An Auto Loader stream ingests JSON files with cloudFiles.schemaEvolutionMode left at its default. A producer adds a new field to the payload. The team must predict what happens on the next micro-batch, and what they have to do to resume processing without editing the schema by hand.",
+      "option_texts": {
+        "A": "The stream fails once the new columns are added to the schema, then a restart resumes",
+        "B": "The stream keeps running and the new field is silently discarded from every record",
+        "C": "The stream keeps running and the new field is captured in the rescued data column",
+        "D": "The stream fails and the new columns are rejected, so the schema must be edited by hand"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "addNewColumns adds the column then fails the stream; restarting picks up the new schema",
+      "drill_rationale": "With addNewColumns, the default mode, the stream fails with an UnknownFieldException after Auto Loader adds the new columns to the schema.",
+      "decision_hinge": "With addNewColumns, the default mode, the stream fails with an UnknownFieldException after Auto Loader adds the new columns to the schema.",
+      "plausible_options": {
+        "C": "what they have to do to resume processing"
+      },
+      "eliminated_by": {
+        "B": {
+          "signal": "cloudFiles.schemaEvolutionMode left at its default",
+          "requires_fact": "The schemaLocation option enables schema inference and evolution, and Auto Loader adds the new columns to the schema rather than discarding them."
+        },
+        "D": "without editing the schema by hand"
+      },
+      "distractor_traps": {
+        "B": "T1: fabricated — no evolution mode silently drops a newly seen field",
+        "C": "T3: confusable sibling — that is the rescue mode behaviour, not the default",
+        "D": "T4: breaks a stated requirement — the stem rules out hand-editing the schema"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-022",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A streaming ingestion pipeline must never fail when a producer introduces an unexpected field, because the on-call rotation cannot absorb overnight restarts. The team still wants those unexpected fields retained somewhere so an analyst can inspect them the following morning rather than losing them.",
+      "option_texts": {
+        "A": "Set the evolution mode to addNewColumns so each unexpected field joins the schema",
+        "B": "Set the evolution mode to rescue so unexpected fields land in the rescued data column",
+        "C": "Set the evolution mode to none so the schema is fixed and unexpected fields are dropped",
+        "D": "Set the evolution mode to failOnNewColumns so the team is alerted to unexpected fields"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "rescue keeps the stream alive and puts unexpected fields in the rescued data column",
+      "drill_rationale": "In the case of a mismatch, Auto Loader rescues the column by placing the data in the rescued data column.",
+      "decision_hinge": "In the case of a mismatch, Auto Loader rescues the column by placing the data in the rescued data column.",
+      "plausible_options": {
+        "C": "must never fail when a producer introduces an unexpected field"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "the on-call rotation cannot absorb overnight restarts",
+          "requires_fact": "With addNewColumns the stream fails with an UnknownFieldException after Auto Loader adds the new columns to the schema."
+        },
+        "D": "the on-call rotation cannot absorb overnight restarts"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — it does capture the field, but it stops the stream to do it",
+        "C": "T3: confusable sibling — a fixed schema also keeps the stream alive, but it drops the fields instead of retaining them",
+        "D": "T4: breaks a stated requirement — failing on new columns is exactly the overnight restart being avoided"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-023",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "An engineer wants an Auto Loader stream to infer the schema of incoming JSON and to keep tracking how that schema changes over time. They are reviewing which single option has to be present for inference and evolution to be enabled at all, before tuning anything else about the behaviour.",
+      "option_texts": {
+        "A": "cloudFiles.inferColumnTypes, asking Auto Loader to pick specific column types",
+        "B": "cloudFiles.schemaEvolutionMode, selecting how schema changes should be handled",
+        "C": "cloudFiles.schemaLocation, giving Auto Loader a path to track schema changes",
+        "D": "mergeSchema, letting the Delta write accept a changed schema on each commit"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.3",
+      "blueprint_task_title": "Use Auto Loader with schema enforcement and schema evolution in batch modes (for example, directory listing or file notification) to land data into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "The schemaLocation option is what enables schema inference and evolution",
+      "drill_rationale": "The schemaLocation option enables schema inference and evolution, and Auto Loader uses schemaLocation to track schema changes to the input data over time.",
+      "decision_hinge": "The schemaLocation option enables schema inference and evolution, and Auto Loader uses schemaLocation to track schema changes to the input data over time.",
+      "plausible_options": {
+        "B": "keep tracking how that schema changes over time"
+      },
+      "eliminated_by": {
+        "A": "which single option has to be present for inference and evolution to be enabled",
+        "D": {
+          "signal": "to infer the schema of incoming JSON",
+          "requires_fact": "Auto Loader uses the schemaLocation option to track schema changes to the input data over time on the read side."
+        }
+      },
+      "distractor_traps": {
+        "A": "T8: scope error — type inference refines the inferred types rather than enabling inference",
+        "B": "T3: confusable sibling — evolution mode shapes the behaviour but does not switch inference on",
+        "D": "T2: wrong layer — mergeSchema is a write-side Delta option, not an Auto Loader read option"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-024",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A team is standing up its first Auto Loader stream over a storage container receiving a moderate daily volume at irregular times. They want the simplest possible setup and have been told they may not provision any queue or notification services in the cloud account for this project.",
+      "option_texts": {
+        "A": "File notification mode, which leverages notification and queue services in the account",
+        "B": "A custom stream tracking processed file names in a side table the team maintains",
+        "C": "A scheduled COPY INTO statement rerun every minute against the storage container",
+        "D": "Directory listing mode, which identifies new files by listing the input directory"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.6",
+      "blueprint_task_title": "Prioritize between Auto Loader, Lakeflow Connect (standard and managed connectors), partner connectors, and other ingestion methods based on technical requirements such as data volume, ingestion frequency, data types, and governance needs with Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Directory listing is the default and needs no cloud notification or queue services",
+      "drill_rationale": "Auto Loader uses directory listing mode by default, and in directory listing mode Auto Loader identifies new files by listing the input directory.",
+      "decision_hinge": "Auto Loader uses directory listing mode by default, and in directory listing mode Auto Loader identifies new files by listing the input directory.",
+      "plausible_options": {
+        "C": "They want the simplest possible setup"
+      },
+      "eliminated_by": {
+        "A": "may not provision any queue or notification services in the cloud account",
+        "B": {
+          "signal": "receiving a moderate daily volume at irregular times",
+          "requires_fact": "Auto Loader supports two modes for detecting new files, directory listing and file notification, and uses directory listing mode by default."
+        }
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement — this mode needs exactly the cloud services the team may not provision",
+        "B": "T7: over-engineering — Auto Loader already tracks processed files without a hand-built side table",
+        "C": "T3: confusable sibling — COPY INTO is a real idempotent loader, but polling it every minute is not the simplest setup"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-detection-modes"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-025",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A container has accumulated millions of objects and now receives a hundred thousand new files a day. The existing Auto Loader stream has grown slow and the cloud bill is dominated by storage list operations. The team can provision cloud services and wants new files detected without repeatedly enumerating the directory.",
+      "option_texts": {
+        "A": "Switch to file notification mode, which uses notification and queue services",
+        "B": "Keep directory listing mode but shorten the interval between listing passes",
+        "C": "Keep directory listing mode and raise the cluster size so listing finishes faster",
+        "D": "Replace the stream with COPY INTO, which skips loaded files without cloud services"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.6",
+      "blueprint_task_title": "Prioritize between Auto Loader, Lakeflow Connect (standard and managed connectors), partner connectors, and other ingestion methods based on technical requirements such as data volume, ingestion frequency, data types, and governance needs with Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "File notification mode detects files via cloud notifications instead of listing",
+      "drill_rationale": "File notification mode leverages file notification and queue services in your cloud infrastructure account, rather than identifying new files by listing the input directory.",
+      "decision_hinge": "File notification mode leverages file notification and queue services in your cloud infrastructure account, rather than identifying new files by listing the input directory.",
+      "plausible_options": {
+        "D": "receives a hundred thousand new files a day"
+      },
+      "eliminated_by": {
+        "B": "wants new files detected without repeatedly enumerating the directory",
+        "C": {
+          "signal": "the cloud bill is dominated by storage list operations",
+          "requires_fact": "In directory listing mode Auto Loader identifies new files by listing the input directory, so the number of list operations does not fall with more compute."
+        }
+      },
+      "distractor_traps": {
+        "B": "T4: breaks a stated requirement — more frequent listing is more enumeration, not less",
+        "C": "T5: right diagnosis, wrong symptom — the bottleneck is storage API calls, not cluster capacity",
+        "D": "T3: confusable sibling — COPY INTO is genuinely idempotent, but it still discovers files by listing them"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-detection-modes"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-026",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A failed pipeline run left a target table holding partial results from a set of CSV files loaded with COPY INTO. The team has corrected the transformation and now needs every file in the source location processed again, including the ones COPY INTO already recorded as loaded on the earlier run.",
+      "option_texts": {
+        "A": "Add COPY_OPTIONS with mergeSchema set to true so the load is repeated",
+        "B": "Add COPY_OPTIONS with force set to true so loaded files are read again",
+        "C": "Add FORMAT_OPTIONS with modifiedAfter so older files are included again",
+        "D": "Drop and recreate the target table so COPY INTO forgets what it loaded"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.2",
+      "blueprint_task_title": "Use the COPY INTO command to incrementally load files from cloud object storage (ADLS/S3/GCS) into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "force defaults to false; setting it true reloads files already recorded as loaded",
+      "drill_rationale": "COPY INTO is a retryable and idempotent operation, files in the source location that have already been loaded are skipped, and force is a boolean option defaulting to false.",
+      "decision_hinge": "COPY INTO is a retryable and idempotent operation, files in the source location that have already been loaded are skipped, and force is a boolean option defaulting to false.",
+      "plausible_options": {
+        "D": "needs every file in the source location processed again"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "The team has corrected the transformation",
+          "requires_fact": "Files in the source location that have already been loaded are skipped by COPY INTO unless force is set."
+        },
+        "C": "including the ones COPY INTO already recorded as loaded on the earlier run"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — a real COPY INTO option, but one that governs schema rather than reload behaviour",
+        "C": "T8: scope error — a modification-time filter narrows which files are considered, it does not clear the loaded record",
+        "D": "T7: over-engineering — destroying the table to reset bookkeeping when an option already exists for it"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/delta-copy-into"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-027",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A nightly SQL job runs the same COPY INTO statement against a cloud storage location that accumulates files through the day. An auditor asks what stops yesterday's files being counted twice when the identical statement runs again tonight against that same location.",
+      "option_texts": {
+        "A": "COPY INTO compares every row against the target and merges on a primary key",
+        "B": "COPY INTO truncates the target table before loading that same location again",
+        "C": "COPY INTO skips files in the source location that have already been loaded",
+        "D": "COPY INTO requires a modifiedAfter filter, without which the statement is rejected"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.2",
+      "blueprint_task_title": "Use the COPY INTO command to incrementally load files from cloud object storage (ADLS/S3/GCS) into Unity Catalog-governed tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "COPY INTO is idempotent — already-loaded files in the source location are skipped",
+      "drill_rationale": "COPY INTO is a retryable and idempotent operation, and files in the source location that have already been loaded are skipped.",
+      "decision_hinge": "COPY INTO is a retryable and idempotent operation, and files in the source location that have already been loaded are skipped.",
+      "plausible_options": {
+        "A": "what stops yesterday's files being counted twice"
+      },
+      "eliminated_by": {
+        "B": "a cloud storage location that accumulates files through the day",
+        "D": {
+          "signal": "runs the same COPY INTO statement against a cloud storage location",
+          "requires_fact": "COPY INTO is a retryable and idempotent operation that skips files already loaded, without requiring an additional filter."
+        }
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — row-level deduplication is a real pattern, but it belongs to MERGE rather than COPY INTO",
+        "B": "T4: breaks a stated requirement — truncating would discard the accumulated history the job is building",
+        "D": "T1: fabricated — no modification-time filter is required for the statement to run"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/delta-copy-into"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-028",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A JSON file has been uploaded to a volume named source_files, which lives in the schema events inside the catalog analytics. An engineer wants to query that file directly from SQL and has to write the governed path to it correctly on the first attempt.",
+      "option_texts": {
+        "A": "dbfs:/FileStore/analytics/events/source_files/transactions.json",
+        "B": "/Volumes/source_files/events/analytics/transactions.json",
+        "C": "/Volumes/events/analytics/source_files/transactions.json",
+        "D": "/Volumes/analytics/events/source_files/transactions.json"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.1",
+      "blueprint_task_title": "Enable and detail data ingestion patterns, including batch, streaming, and incremental loading, and import data from sources such as local files, Lakeflow Connect standard connectors, and Lakeflow Connect managed connectors",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Volume paths follow /Volumes/<catalog>/<schema>/<volume>/<file>",
+      "drill_rationale": "Unity Catalog volumes are accessed through a path of the form /Volumes/catalog name/schema name/volume name, following the same three-level namespace as tables.",
+      "decision_hinge": "Unity Catalog volumes are accessed through a path of the form /Volumes/catalog name/schema name/volume name, following the same three-level namespace as tables.",
+      "plausible_options": {
+        "B": "has to write the governed path to it correctly on the first attempt"
+      },
+      "eliminated_by": {
+        "A": "An engineer wants to query that file directly from SQL",
+        "C": {
+          "signal": "a volume named source_files, which lives in the schema events inside the catalog analytics",
+          "requires_fact": "A volume path places the catalog name first, then the schema name, then the volume name."
+        }
+      },
+      "distractor_traps": {
+        "A": "T6: stale behaviour — the legacy DBFS root path predates governed volumes",
+        "B": "T3: confusable sibling — the right three names in the path, ordered backwards",
+        "C": "T3: confusable sibling — catalog and schema transposed in an otherwise correct path"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/volumes/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-029",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "A team must consume clickstream events from a topic on a remote broker and begin reading only from the newest offsets rather than replaying history. They are writing the reader now and need the option names that identify the broker, name the topic, and set the starting position.",
+      "option_texts": {
+        "A": "format kafka, with kafka.bootstrap.servers, subscribe, and startingOffsets",
+        "B": "format kafka, with kafka.broker.list, topic.name, and offset.reset.policy",
+        "C": "format cloudFiles, with cloudFiles.format kafka and cloudFiles.subscribe",
+        "D": "a readStream.kafka helper taking the broker, the topic, and the offset order"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.5",
+      "blueprint_task_title": "Use JDBC/ODBC or REST clients in notebooks to land data into cloud storage or directly into Unity Catalog-governed tables, usually orchestrated and scheduled with Lakeflow Jobs",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "kafka.bootstrap.servers, subscribe and startingOffsets configure the Kafka reader",
+      "drill_rationale": "Databricks reads Kafka with format kafka, using kafka.bootstrap.servers for the broker, subscribe for the topic, and startingOffsets to set where reading begins.",
+      "decision_hinge": "Databricks reads Kafka with format kafka, using kafka.bootstrap.servers for the broker, subscribe for the topic, and startingOffsets to set where reading begins.",
+      "plausible_options": {
+        "B": "need the option names that identify the broker, name the topic, and set the starting position"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "consume clickstream events from a topic on a remote broker",
+          "requires_fact": "Databricks connects to Apache Kafka using the kafka format with the kafka.bootstrap.servers and subscribe options."
+        },
+        "D": "They are writing the reader now"
+      },
+      "distractor_traps": {
+        "B": "T6: stale behaviour — broker.list style names belong to an older Kafka client, not the current Spark reader options",
+        "C": "T2: wrong layer — cloudFiles is the Auto Loader source for cloud object storage, not for a broker",
+        "D": "T1: fabricated — there is no readStream.kafka positional helper on the reader"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/connect/streaming/kafka"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-030",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde02-ingestion-batch01.json",
+      "stem": "An engineer assumes a streaming table can read continuously from a relational database over a plain JDBC connection, the way one reads from a broker topic. They are about to design a near real-time pipeline on that assumption and want it checked before any code is written.",
+      "option_texts": {
+        "A": "The assumption holds, because a streaming table turns any connection into a stream",
+        "B": "The assumption fails, because a plain JDBC connection supports batch reads rather than streaming",
+        "C": "The assumption holds, because the database is polled on an interval and emits each changed row",
+        "D": "The assumption fails, because relational sources can only be read after an export to files"
+      },
+      "domain": "dbde-02",
+      "track": "dbde",
+      "blueprint_task": "2.5",
+      "blueprint_task_title": "Use JDBC/ODBC or REST clients in notebooks to land data into cloud storage or directly into Unity Catalog-governed tables, usually orchestrated and scheduled with Lakeflow Jobs",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Plain JDBC is a batch source; continuous capture needs a managed connector instead",
+      "drill_rationale": "Databricks queries external databases using JDBC through the JDBC data source, which reads a table or query as a batch rather than as a continuous stream.",
+      "decision_hinge": "Databricks queries external databases using JDBC through the JDBC data source, which reads a table or query as a batch rather than as a continuous stream.",
+      "plausible_options": {
+        "C": "They are about to design a near real-time pipeline on that assumption"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "a streaming table can read continuously from a relational database",
+          "requires_fact": "Databricks reads external databases with the JDBC data source, which loads a table or query rather than subscribing to changes."
+        },
+        "D": "want it checked before any code is written"
+      },
+      "distractor_traps": {
+        "C": "T3: confusable sibling — polling is a real pattern, but it is not what a plain JDBC read does on its own",
+        "A": "T1: fabricated — declaring a table streaming does not grant a batch source streaming semantics",
+        "D": "T8: scope error — an export is one workaround, not the reason the assumption fails"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/connect/external-systems/jdbc"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/02-data-ingestion-and-loading/ingestion-options.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 269,
+  "total": 279,
   "last_updated_at": "2026-11-03"
 }

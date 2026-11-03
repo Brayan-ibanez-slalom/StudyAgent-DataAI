@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 131,
+  "count": 140,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1049,6 +1049,78 @@
       "title": "Monitor Lakeflow Jobs | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "c379f92156a1b66eb4c52c507b34c185274381508eb2de79e357b7c923213cce",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/delta-copy-into",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/delta-copy-into.txt",
+      "title": "COPY INTO | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "c551e996c2989117a797d6c0c905d1e6142063c43aee6bb1459be638f63df4d5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/volumes/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/volumes.txt",
+      "title": "What are Unity Catalog volumes? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "492656f451f2d64358c7b5e5ee76741a64f5d5ceb3a14b4cba48ba09d281a425",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-detection-modes",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/file-detection-modes.txt",
+      "title": "Compare Auto Loader file detection modes | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "4995a40de669bf426ef07ed4facd9eba9c6c64fa245c225b7dd7bbbea56ab6c5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/schema.txt",
+      "title": "Configure schema inference and evolution in Auto Loader | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ad3fd8d8ed43629107aa358be945239c80b8b292976a5b32e3f46005e606a4d0",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/connect/streaming/kafka",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/connect/streaming/kafka.txt",
+      "title": "Connect to Apache Kafka | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "bdd71629bdb2e96f988e7e2a5b7867a615b6221f7e9c492264e11b00d4d3e761",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/options",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/options.txt",
+      "title": "Spark API options reference | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "55576e6adc5c8909522b9c222dcfb0bf0dd1c3197499490b26c7f7ba6f552aa8",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/semi-structured/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/semi-structured.txt",
+      "title": "Model semi-structured data | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "2fca3569eee0be9316563358062b6ce10a4551306346f06260e63ffb8c261dbc",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/connect/external-systems/jdbc",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/connect/external-systems/jdbc.txt",
+      "title": "Query databases using JDBC | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "caa709c319e64d952c2cb89536fbcbd010f921f0697fb96f2da8a8f20c384754",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/file-upload/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/file-upload.txt",
+      "title": "Work with files in Unity Catalog volumes | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b076f323e217903f9a2878651d7468869867fcdfa29b45003ea5adb839a46971",
       "source": "mcp-cache_fetch"
     }
   ]
