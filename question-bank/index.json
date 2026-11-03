@@ -19874,8 +19874,258 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-140",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch15.json",
+      "stem": "A long task with a dozen settings has to be duplicated so a near-identical variant can sit beside it in the same graph. The team would rather not retype its settings or re-wire what it waits on.",
+      "option_texts": {
+        "A": "Clone the task, which copies all of its configurations including upstream dependencies",
+        "B": "Export the job to JSON, edit the copy by hand, and import the whole job back",
+        "C": "Add a fresh task and point it at the same notebook, then set the rest by hand",
+        "D": "Duplicate the entire job, because a task cannot be copied inside one graph"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Cloning a task copies all of its configurations, including its upstream dependencies",
+      "drill_rationale": "Clone tasks to copy all the configurations of an existing task, including upstream dependencies.",
+      "decision_hinge": "Clone tasks to copy all the configurations of an existing task, including upstream dependencies.",
+      "plausible_options": {
+        "B": "would rather not retype its settings or re-wire what it waits on"
+      },
+      "eliminated_by": {
+        "C": "has to be duplicated so a near-identical variant can sit beside it in the same graph",
+        "D": "A long task with a dozen settings"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - a JSON round trip does copy the settings, at the cost of editing the whole job by hand",
+        "C": "T4: breaks a stated requirement - the settings would all be retyped",
+        "D": "T1: fabricated - a task can be cloned within its own graph"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/configure-task"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-141",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch15.json",
+      "stem": "Two teams each own a job, and the second must begin only once the first has finished. Neither team wants its steps copied into the other's graph, and both want to keep owning their own job.",
+      "option_texts": {
+        "A": "Copy the first job's steps into the second graph so one run covers the whole chain",
+        "B": "Add a Run Job step to the second graph, which is one of the available task types",
+        "C": "Have the first job write a marker file that the second one polls for on a schedule",
+        "D": "Merge both into a single job, because cross-job ordering is not expressible"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Run Job is a task type, so one job can invoke another without duplicating its steps",
+      "drill_rationale": "The task types available include Notebook, Python script, Python wheel, SQL, Pipeline, Dashboards, dbt, JAR, Spark Submit, Run Job, If/else, and For each.",
+      "decision_hinge": "The task types available include Notebook, Python script, Python wheel, SQL, Pipeline, Dashboards, dbt, JAR, Spark Submit, Run Job, If/else, and For each.",
+      "plausible_options": {
+        "C": "the second must begin only once the first has finished"
+      },
+      "eliminated_by": {
+        "A": "Neither team wants its steps copied into the other's graph",
+        "D": "both want to keep owning their own job"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement - copying the steps is what both teams ruled out",
+        "C": "T3: confusable sibling - polling does order the work, but it reinvents a shipped task type",
+        "D": "T1: fabricated - cross-job ordering is expressible with a Run Job task"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/configure-task"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-142",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch15.json",
+      "stem": "A multi-task job finishes inside its window but nobody can say which step eats the time, or which steps genuinely overlap. The team wants one view that shows both of those at once before they start tuning.",
+      "option_texts": {
+        "A": "The matrix view, which colours each run by the state it finished in",
+        "B": "The compute event log, which records the lifecycle of the cluster behind the run",
+        "C": "The timeline view, which shows long-running tasks and how they overlap",
+        "D": "The job configuration page, which lists declared dependencies rather than real overlap"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.1",
+      "blueprint_task_title": "Identify trends in job performance using the Lakeflow Jobs run history view to compare current execution times against historical baselines",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "The timeline view identifies tasks taking a long time and shows dependencies and overlap",
+      "drill_rationale": "Jobs have a timeline view to identify tasks that are taking a long time to complete and to understand dependencies and overlap, to help debug and optimize these jobs.",
+      "decision_hinge": "Jobs have a timeline view to identify tasks that are taking a long time to complete and to understand dependencies and overlap, to help debug and optimize these jobs.",
+      "plausible_options": {
+        "A": "nobody can say which step eats the time"
+      },
+      "eliminated_by": {
+        "B": "A multi-task job finishes inside its window",
+        "D": "one view that shows both of those at once before they start tuning"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - the matrix compares runs to each other rather than tasks within a run",
+        "B": "T2: scope error - the event log explains the compute, not the shape of the task graph",
+        "D": "T5: common misconception - declared dependencies are not the same as observed overlap"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/monitor"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-143",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch15.json",
+      "stem": "A short-lived project is being wound up and someone proposes running the command that removes everything the bundle put into the workspace. The reviewer wants the risk stated plainly before anyone types it.",
+      "option_texts": {
+        "A": "It archives the deployed resources so a later deploy can restore them",
+        "B": "It removes the local project files but leaves the deployed resources running",
+        "C": "It detaches the resources from the bundle while leaving them in the workspace",
+        "D": "It permanently deletes the previously-deployed jobs, pipelines and artifacts"
+      },
+      "domain": "dbde-05",
+      "track": "dbde",
+      "blueprint_task": "5.4",
+      "blueprint_task_title": "Understand the Databricks CLI to validate, deploy, and manage Declarative Automation Bundles (formerly Databricks Asset Bundles) and other workspace assets in automated CI/CD workflows",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "bundle destroy permanently deletes a bundle's previously-deployed jobs, pipelines and artifacts, and cannot be undone",
+      "drill_rationale": "Destroying a bundle permanently deletes a bundle's previously-deployed jobs, pipelines, and artifacts, and this action cannot be undone.",
+      "decision_hinge": "Destroying a bundle permanently deletes a bundle's previously-deployed jobs, pipelines, and artifacts, and this action cannot be undone.",
+      "plausible_options": {
+        "C": "the command that removes everything the bundle put into the workspace"
+      },
+      "eliminated_by": {
+        "A": "The reviewer wants the risk stated plainly before anyone types it",
+        "B": "A short-lived project is being wound up"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - nothing is archived and the action cannot be undone",
+        "B": "T3: confusable sibling - the command acts on the deployed side, not on local files",
+        "C": "T5: common misconception - the resources are deleted rather than merely unlinked"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dev-tools/cli/bundle-commands"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/05-implementing-ci-cd/bundles-and-git.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-144",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src-batch15.json",
+      "stem": "An administrator is reasoning about how far a grant made at the very top of the hierarchy reaches. A colleague assumes anything granted there lands on every object underneath it without exception.",
+      "option_texts": {
+        "A": "The colleague is wrong, since most privileges at that level do not follow inheritance",
+        "B": "The colleague is right, since every privilege at that level reaches all objects below",
+        "C": "The colleague is wrong, since no privilege may be granted at that level at all",
+        "D": "The colleague is right, provided each catalog underneath opts into inheritance"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "One metastore-level privilege inherits down to all objects, unlike other metastore-level privileges which do not follow inheritance",
+      "drill_rationale": "This privilege inherits down to all objects in the metastore, unlike other metastore-level privileges, which don't follow privilege inheritance.",
+      "decision_hinge": "This privilege inherits down to all objects in the metastore, unlike other metastore-level privileges, which don't follow privilege inheritance.",
+      "plausible_options": {
+        "B": "how far a grant made at the very top of the hierarchy reaches"
+      },
+      "eliminated_by": {
+        "C": "A colleague assumes anything granted there lands on every object underneath it",
+        "D": "how far a grant made at the very top of the hierarchy reaches"
+      },
+      "distractor_traps": {
+        "B": "T5: common misconception - inheritance from the metastore level is the exception, not the rule",
+        "C": "T1: fabricated - privileges can be granted at that level",
+        "D": "T1: fabricated - there is no per-catalog opt-in for inheritance"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/manage-privileges/privileges"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 388,
+  "total": 393,
   "last_updated_at": "2026-11-03"
 }
