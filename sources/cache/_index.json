@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "count": 107,
-  "updated_at": "2026-11-01",
+  "count": 131,
+  "updated_at": "2026-11-03",
   "entries": [
     {
       "url": "https://docs.getdbt.com/docs/build/incremental-models",
@@ -857,6 +857,198 @@
       "title": "on-run-start & on-run-end | dbt Developer Hub",
       "fetched_at": "2026-11-01",
       "sha256": "b8c655db227195052af6d3ca5630e4c13fab83c4f5d461b9a0cb6e2701e1547e",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/lakehouse-architecture/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/lakehouse-architecture.txt",
+      "title": "Introduction to the Databricks well-architected framework | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "780d3ae9d9a05f1f707ce454453d32ff314c9c76ca684c64a98e51b32cd80d27",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute.txt",
+      "title": "Compute | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "51b4f07577201f2384d5a5a48e6ed4e883b337bb6abfbe034e626ded31021089",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/data-governance/unity-catalog/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/data-governance/unity-catalog.txt",
+      "title": "What is Unity Catalog? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ffa5aec5b570f08584661afc923e280cc826c79278ee3a36543a6f0ef93e472c",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/sql-warehouse/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/sql-warehouse.txt",
+      "title": "Connect to a SQL warehouse | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "78caece1ad473eef3884a7bca9bc29cb284862a7837ea73000e6a4c9701f330e",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta.txt",
+      "title": "What is Delta Lake in Databricks? | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "8ce9f26276fc7fb62bdaafa64abc72cbfe3c99f902ae570033a7dd5c5755d260",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/getting-started/overview",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/getting-started/overview.txt",
+      "title": "High-level architecture | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "8d70909207b7d4df352008c59636e8ba08f885e07433222d9dc5d4c132c99f7d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/serverless/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/serverless.txt",
+      "title": "Connect to serverless compute | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "1a8b5f91f802f96d67c94fd1ae8f98cbc970b1101ccd7cda70d50ad81f3d51c0",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql.txt",
+      "title": "Data warehousing on Databricks | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "4e87e1520575e2fd06db2dfbf7f0cda85d33696f435ba477bafe653ad7682159",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/cluster-config-best-practices",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/cluster-config-best-practices.txt",
+      "title": "Classic compute configuration best practices | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ba444d997703172a83290227cfb15148b80410aa0e245d7242680d37cec24380",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/configure",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/configure.txt",
+      "title": "Compute configuration reference | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "88452edbbab71ae5d4bd994f82cdd3d74a454ab40a9ec354d3edac442208b3c5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/compute/access-mode-limitations",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/compute/access-mode-limitations.txt",
+      "title": "Standard compute requirements and limitations | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "37bc586ec421cc22a42b7b1abf8f7a43b37fd16cf43eb009148e2853022e1c63",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/history",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta/history.txt",
+      "title": "Work with table history | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "90099fd886ec4c9aab195ce4fc7a93f2618c2db93ccac5159de99c04d53de179",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/parameters",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/parameters.txt",
+      "title": "Parameterize jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "1012df1679c62167206a397670a492df8475dd6254dadb2698be3af8e3cfdba4",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/run-if",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/run-if.txt",
+      "title": "Configure task dependencies | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "812a1b8d5115c7774246cebdabd6333e452ca4414a6bfb2b4d42478a56c8a5b1",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/triggers",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/triggers.txt",
+      "title": "Automate jobs with schedules and triggers | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "07ba2de76e679ab7651ff4f850a5fe87d2c9ca76013d105ea388d344d6464d18",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs.txt",
+      "title": "Lakeflow Jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "def00112527c120cfa4842e0350e6d4957349a53da376709ad25cb23a95ad9ff",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/task-values",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/task-values.txt",
+      "title": "Use task values to pass information between tasks | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b72fee0427d9e5d53dd59dbf787cfbf02c91cbb126073c0b399008a276db4509",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/admin/sql/warehouse-types",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/admin/sql/warehouse-types.txt",
+      "title": "SQL warehouse types | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "d8a0f45ecbfef1e385d09785f2d125db84a661613c097361be2fee28e22b6c12",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/notifications",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/notifications.txt",
+      "title": "Add notifications on a job | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "c8ad84c22e5888db59ac357577ba703da795ec219bb67f80f9844985966cd8cc",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/repair-job-failures",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/repair-job-failures.txt",
+      "title": "Troubleshoot and repair job failures | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "514c1d4e9c7d8a70ba19d0ba4efd66926e6fe5518394ba1ca8519fbfbbdea98d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/compute",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/compute.txt",
+      "title": "Configure compute for jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ea3f0ee44e5a86a33351e9a7c76e99ea920ed303448666b71a5c0a1be24a76e6",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/conditional-tasks",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/conditional-tasks.txt",
+      "title": "Configure task dependencies | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "812a1b8d5115c7774246cebdabd6333e452ca4414a6bfb2b4d42478a56c8a5b1",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/for-each",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/for-each.txt",
+      "title": "Use a For each task to run another task in a loop | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "acea18b811282c87c05910dfa1342fdc3afca57ba50c5c85bed529c6af251b3c",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/jobs/monitor",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/jobs/monitor.txt",
+      "title": "Monitor Lakeflow Jobs | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "c379f92156a1b66eb4c52c507b34c185274381508eb2de79e357b7c923213cce",
       "source": "mcp-cache_fetch"
     }
   ]

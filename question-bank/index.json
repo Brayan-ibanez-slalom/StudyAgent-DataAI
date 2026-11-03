@@ -12813,8 +12813,532 @@
       "sealed_at": "2026-10-25",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-001",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A compliance reviewer asks where customer data is actually processed when a scheduled job runs in a Databricks workspace that uses classic compute rather than serverless. The reviewer needs to name the cloud account that holds those processing resources, and has already confirmed that the workspace web application is not in scope for this control.",
+      "option_texts": {
+        "A": "In the classic compute plane, which runs inside the customer's own cloud account",
+        "B": "In the control plane, which Databricks manages outside the classic compute plane",
+        "C": "In the serverless compute plane, which Databricks runs in its own cloud account",
+        "D": "In the Unity Catalog metastore, which governs the customer tables the job reads"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Classic compute resources run in the customer's own cloud account, in the classic compute plane",
+      "drill_rationale": "For classic Databricks compute, the compute resources are in your cloud account in what is called the classic compute plane; the control plane is located in the Databricks account.",
+      "decision_hinge": "For classic Databricks compute, the compute resources are in your cloud account in what is called the classic compute plane; the control plane is located in the Databricks account.",
+      "plausible_options": {
+        "C": "needs to name the cloud account that holds those processing resources"
+      },
+      "eliminated_by": {
+        "B": "the workspace web application is not in scope for this control",
+        "D": {
+          "signal": "where customer data is actually processed",
+          "requires_fact": "Unity Catalog metastores are the central governance system for data assets such as tables and models; the compute plane is where data is processed."
+        }
+      },
+      "distractor_traps": {
+        "B": "T2: wrong layer — the control plane holds backend services and the web application, which the stem puts out of scope, not the processing resources",
+        "C": "T3: confusable sibling — serverless compute is also a compute plane that processes data, but it runs in the Databricks account rather than the customer's",
+        "D": "T2: wrong layer — a metastore governs data assets rather than executing the workload"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/getting-started/overview"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-002",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "An engineer inspecting a Delta table's directory on cloud storage finds a _delta_log folder sitting alongside the table's data files. An auditor wants to know which format the commit history itself is written in, separate from the format holding the table rows.",
+      "option_texts": {
+        "A": "Data files in JSON and the transaction log in Parquet",
+        "B": "Data files in Parquet and the transaction log in JSON",
+        "C": "Data files in Parquet and the transaction log also in Parquet",
+        "D": "Data files in Parquet and the transaction log in XML"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Delta stores rows as Parquet data files and the commit history as JSON in _delta_log",
+      "drill_rationale": "Delta Lake builds on standard formats: table data is stored in Parquet data files, and the transaction log is written as JSON.",
+      "decision_hinge": "Delta Lake builds on standard formats: table data is stored in Parquet data files, and the transaction log is written as JSON.",
+      "plausible_options": {
+        "A": "separate from the format holding the table rows"
+      },
+      "eliminated_by": {
+        "C": "which format the commit history itself is written in",
+        "D": {
+          "signal": "finds a _delta_log folder sitting alongside the table's data files",
+          "requires_fact": "Delta Lake extends Parquet data files with a file-based transaction log for ACID transactions and scalable metadata handling."
+        }
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — the two real formats are named, but swapped between the data files and the log",
+        "C": "T4: breaks a stated requirement — the auditor asked for the log format separate from the row format, and this names one format for both",
+        "D": "T1: fabricated — Delta Lake does not write any part of a table in XML"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-003",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A security questionnaire asks a platform team to state where notebook source files and SQL queries are persisted for a classic Databricks workspace. The team must distinguish those workspace assets from the backend services Databricks runs, and the assets must remain available after every cluster has terminated.",
+      "option_texts": {
+        "A": "In the control plane, next to the backend services that run the workspace web application",
+        "B": "In the Unity Catalog metastore, next to the governed tables and volumes it already tracks",
+        "C": "In workspace storage, which for classic workspaces sits in the customer's cloud account",
+        "D": "In the cluster file system of the classic compute resource that last opened them"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Notebooks and SQL queries are workspace file system data, held in workspace storage",
+      "drill_rationale": "The workspace file system stores assets users create through the UI — notebooks, SQL queries and dashboards, alerts, and libraries — in workspace storage, and for a classic workspace that storage bucket is in the customer's cloud account.",
+      "decision_hinge": "The workspace file system stores assets users create through the UI — notebooks, SQL queries and dashboards, alerts, and libraries — in workspace storage, and for a classic workspace that storage bucket is in the customer's cloud account.",
+      "plausible_options": {
+        "A": "distinguish those workspace assets from the backend services Databricks runs"
+      },
+      "eliminated_by": {
+        "B": {
+          "signal": "where notebook source files and SQL queries are persisted",
+          "requires_fact": "Workspace file system data is separate from a customer's own data objects such as Unity Catalog tables and volumes."
+        },
+        "D": "the assets must remain available after every cluster has terminated"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — the control plane really does host the backend services and the web application, but not the workspace file assets themselves",
+        "B": "T2: wrong layer — Unity Catalog governs data objects, not the notebooks and queries users author",
+        "D": "T4: breaks a stated requirement — cluster storage disappears when the compute resource terminates"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/getting-started/overview"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-004",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A platform architect is documenting how data assets are addressed after several regional workspaces were attached to one metastore. Two teams currently use the same table name in different projects, so the documented addressing scheme has to keep those two tables distinct without renaming either one.",
+      "option_texts": {
+        "A": "A two-level schema and table name, scoped to each attached workspace separately",
+        "B": "A four-level namespace of metastore, catalog, schema, and object per workspace",
+        "C": "A storage path under the workspace bucket that each attached workspace resolves",
+        "D": "A three-level namespace of catalog, schema, and object managed by Unity Catalog"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Unity Catalog addresses data through a three-level catalog.schema.object namespace",
+      "drill_rationale": "In a Unity Catalog metastore you organize data under a three-level namespace of catalog name, schema name, and object name.",
+      "decision_hinge": "In a Unity Catalog metastore you organize data under a three-level namespace of catalog name, schema name, and object name.",
+      "plausible_options": {
+        "B": "keep those two tables distinct without renaming either one"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "Two teams currently use the same table name in different projects",
+          "requires_fact": "Data and AI assets such as tables, views, volumes, functions, and models follow a three-level namespace in Unity Catalog."
+        },
+        "C": "several regional workspaces were attached to one metastore"
+      },
+      "distractor_traps": {
+        "A": "T6: stale behaviour — the two-level namespace is the legacy Hive metastore model that Unity Catalog replaced",
+        "B": "T8: scope error — the metastore is the container that holds catalogs, not a fourth part of an object's name",
+        "C": "T2: wrong layer — Unity Catalog addresses governed objects by name rather than by storage path"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/data-governance/unity-catalog/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-005",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "An engineer must produce an audit trail for a governed Delta table showing every operation applied over the past month, including when each change committed and which principal issued it. A snapshot of the rows as they looked last Tuesday would not satisfy the auditor, who wants the operations themselves.",
+      "option_texts": {
+        "A": "DESCRIBE HISTORY on the table, which lists each operation with its timestamp",
+        "B": "DESCRIBE DETAIL on the table, which reports its current state on storage",
+        "C": "DESCRIBE EXTENDED on the table, which reports schema rather than operation history",
+        "D": "SELECT with VERSION AS OF, which reads the table at an earlier version"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "DESCRIBE HISTORY returns the operation log — timestamp, operation, and user per commit",
+      "drill_rationale": "DESCRIBE HISTORY returns an ordered list of a Delta table's operations with the timestamp, operation type, and the user or principal that ran each one.",
+      "decision_hinge": "DESCRIBE HISTORY returns an ordered list of a Delta table's operations with the timestamp, operation type, and the user or principal that ran each one.",
+      "plausible_options": {
+        "B": "showing every operation applied over the past month"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "including when each change committed and which principal issued it",
+          "requires_fact": "DESCRIBE EXTENDED returns a table's schema and extended metadata, not a list of commits."
+        },
+        "D": "A snapshot of the rows as they looked last Tuesday would not satisfy the auditor"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling — DESCRIBE DETAIL describes the table as it stands now rather than the sequence of commits that produced it",
+        "C": "T3: confusable sibling — another DESCRIBE variant, but one that reports structure instead of operations",
+        "D": "T4: breaks a stated requirement — time travel returns row snapshots, which the stem rules out"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/history"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-006",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A team is deciding how much custom tooling it still needs after standardising on Delta tables in Unity Catalog. They want to know which guarantees come from the table format itself, so they can delete the home-grown scripts that currently duplicate them. Select TWO capabilities Delta Lake provides natively.",
+      "option_texts": {
+        "A": "Rejecting a write whose columns do not conform to the target table schema",
+        "B": "Adding new optional columns to a table without rewriting it by hand",
+        "C": "Removing every superseded version automatically at the end of each write",
+        "D": "Replacing the underlying cloud object storage the table files live on",
+        "E": "Encrypting each column with a separate customer-supplied key on write"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.1",
+      "blueprint_task_title": "Understand the core components of the Databricks Platform, such as its architecture, Delta Lake, and Unity Catalog",
+      "qtype": "multiple_response",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A,B",
+      "drill_answer_short": "Schema enforcement rejects non-conforming writes; schema evolution adds new columns",
+      "drill_rationale": "Delta Lake provides schema enforcement, which rejects writes that do not match the table schema, and schema evolution, which lets new columns be added without recreating the table.",
+      "decision_hinge": "Delta Lake provides schema enforcement, which rejects writes that do not match the table schema, and schema evolution, which lets new columns be added without recreating the table.",
+      "plausible_options": {
+        "C": "delete the home-grown scripts that currently duplicate them"
+      },
+      "eliminated_by": {
+        "D": {
+          "signal": "which guarantees come from the table format itself",
+          "requires_fact": "Delta Lake is the optimized storage layer that provides the foundation for tables in a lakehouse on Databricks."
+        },
+        "E": "standardising on Delta tables in Unity Catalog"
+      },
+      "distractor_traps": {
+        "C": "T3: confusable sibling — Delta does retain superseded versions to support time travel, and only removes files when VACUUM is run",
+        "D": "T2: wrong layer — object storage is the substrate Delta writes onto, not something it supplies",
+        "E": "T1: fabricated — per-column customer-key encryption is not a native Delta table capability"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-007",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "Twenty analysts run unpredictable ad hoc SQL against curated Delta tables throughout the working day. The team wants queries to start without waiting for infrastructure to spin up, wants concurrent users isolated from each other, and wants to stop paying for capacity during the quiet hours between bursts.",
+      "option_texts": {
+        "A": "An all-purpose compute resource with a fixed number of worker nodes attached",
+        "B": "A serverless SQL warehouse, which starts instantly and scales with demand",
+        "C": "A job compute resource sized for the heaviest scheduled overnight workload",
+        "D": "A single-node compute resource shared by all of the analysts at once"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.2",
+      "blueprint_task_title": "Understand Databricks Platform's compute services, including their characteristics, limitations, and cost models, and select the most suitable option for each workload use case",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Serverless SQL warehouses give instant startup and elastic scaling for concurrent SQL",
+      "drill_rationale": "A serverless SQL warehouse provides instant and elastic compute that eliminates waiting for infrastructure and avoids over-provisioning during usage spikes, with intelligent workload management handling scaling.",
+      "decision_hinge": "A serverless SQL warehouse provides instant and elastic compute that eliminates waiting for infrastructure and avoids over-provisioning during usage spikes, with intelligent workload management handling scaling.",
+      "plausible_options": {
+        "A": "wants concurrent users isolated from each other"
+      },
+      "eliminated_by": {
+        "C": "unpredictable ad hoc SQL against curated Delta tables throughout the working day",
+        "D": "stop paying for capacity during the quiet hours between bursts"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — all-purpose compute does serve interactive users, but a fixed worker count cannot release capacity between bursts",
+        "C": "T2: wrong layer — job compute exists to run scheduled workloads, not interactive analyst queries",
+        "D": "T4: breaks a stated requirement — one shared node cannot isolate twenty concurrent users"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/admin/sql/warehouse-types",
+        "https://docs.databricks.com/aws/en/compute/sql-warehouse/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-008",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "An architect is designing a hybrid platform whose SQL layer must reach databases that stay inside the enterprise's own custom-defined network, including systems hosted on-premises. Compliance will not allow the query compute layer to sit outside that network, and the team still wants Photon and Predictive IO.",
+      "option_texts": {
+        "A": "A serverless SQL warehouse, whose compute layer Databricks runs for the customer",
+        "B": "A classic SQL warehouse, which omits Predictive IO and gives entry-level speed",
+        "C": "A pro SQL warehouse, whose compute layer stays inside the customer's own account",
+        "D": "A serverless job compute resource, which Databricks provisions inside its account"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.2",
+      "blueprint_task_title": "Understand Databricks Platform's compute services, including their characteristics, limitations, and cost models, and select the most suitable option for each workload use case",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "Pro SQL warehouses keep compute in the customer account, for custom networks and on-prem federation",
+      "drill_rationale": "Use a pro SQL warehouse when you have custom-defined networking and want to connect to databases in your network in the cloud or on-premises for federation or a hybrid architecture; its compute layer exists in your own account rather than the Databricks account.",
+      "decision_hinge": "Use a pro SQL warehouse when you have custom-defined networking and want to connect to databases in your network in the cloud or on-premises for federation or a hybrid architecture; its compute layer exists in your own account rather than the Databricks account.",
+      "plausible_options": {
+        "A": "the team still wants Photon and Predictive IO"
+      },
+      "eliminated_by": {
+        "B": "the team still wants Photon and Predictive IO",
+        "D": {
+          "signal": "designing a hybrid platform whose SQL layer must reach databases",
+          "requires_fact": "Serverless compute resources run in a serverless compute plane inside the Databricks account rather than inside the customer's custom-defined network."
+        }
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — serverless warehouses support both performance features, but run their compute layer outside the customer's network",
+        "B": "T3: confusable sibling — a classic warehouse does keep compute in the customer account, but it does not support Predictive IO",
+        "D": "T2: wrong layer — job compute runs scheduled workloads rather than serving the SQL layer"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/admin/sql/warehouse-types"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-009",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A nightly ETL pipeline currently runs on an all-purpose compute resource whose auto-termination is set to six hours. The pipeline finishes somewhere between one and three hours depending on volume, and the team wants to cut spend without changing when the pipeline is triggered or how large it can scale.",
+      "option_texts": {
+        "A": "Shorten the auto-termination window on the existing all-purpose compute resource",
+        "B": "Leave the resource running continuously so that startup time is never paid again",
+        "C": "Replace the worker nodes with smaller instance types for the nightly pipeline",
+        "D": "Move the pipeline onto job compute, which terminates when the run ends"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.2",
+      "blueprint_task_title": "Understand Databricks Platform's compute services, including their characteristics, limitations, and cost models, and select the most suitable option for each workload use case",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Job compute is billed at a lower rate and is torn down the moment the run finishes",
+      "drill_rationale": "Databricks does not recommend configuring tasks with classic all-purpose compute for production jobs; classic jobs compute is configured with the same settings as all-purpose compute.",
+      "decision_hinge": "Databricks does not recommend configuring tasks with classic all-purpose compute for production jobs; classic jobs compute is configured with the same settings as all-purpose compute.",
+      "plausible_options": {
+        "A": "the team wants to cut spend without changing when the pipeline is triggered"
+      },
+      "eliminated_by": {
+        "B": "finishes somewhere between one and three hours depending on volume",
+        "C": "or how large it can scale"
+      },
+      "distractor_traps": {
+        "A": "T8: scope error — a shorter window trims idle time but still pays the all-purpose rate and still idles after every run",
+        "B": "T5: right diagnosis, wrong symptom — startup time is not what is costing the team money here",
+        "C": "T4: breaks a stated requirement — smaller workers cap how large the pipeline can scale"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/compute",
+        "https://docs.databricks.com/aws/en/compute/"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-010",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde01-platform-batch01.json",
+      "stem": "A platform team wants to adopt spot instances to lower compute spend, but only where an unexpected reclaim by the cloud provider would not breach a commitment. They need to nominate one workload to start with, knowing that any interrupted run has to be safe to simply start again.",
+      "option_texts": {
+        "A": "An overnight batch transformation that is idempotent and configured to retry",
+        "B": "A streaming pipeline carrying a contractual end-to-end latency commitment",
+        "C": "An interactive session where analysts explore data together during the day",
+        "D": "A transactional serving workload fielding many concurrent user requests"
+      },
+      "domain": "dbde-01",
+      "track": "dbde",
+      "blueprint_task": "1.2",
+      "blueprint_task_title": "Understand Databricks Platform's compute services, including their characteristics, limitations, and cost models, and select the most suitable option for each workload use case",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Spot fits fault-tolerant, retryable batch work where an interruption costs only a rerun",
+      "drill_rationale": "Configure spot instances for workloads that have lax latency requirements to optimize costs.",
+      "decision_hinge": "Configure spot instances for workloads that have lax latency requirements to optimize costs.",
+      "plausible_options": {
+        "C": "wants to adopt spot instances to lower compute spend"
+      },
+      "eliminated_by": {
+        "B": "where an unexpected reclaim by the cloud provider would not breach a commitment",
+        "D": "any interrupted run has to be safe to simply start again"
+      },
+      "distractor_traps": {
+        "B": "T4: breaks a stated requirement — a latency commitment is exactly the kind of promise a reclaim would breach",
+        "C": "T3: confusable sibling — interactive sessions do tolerate restarts technically, but losing a session mid-exploration disrupts the analysts rather than retrying cleanly",
+        "D": "T2: wrong layer — a serving workload needs continuous availability rather than cheap interruptible capacity"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/compute/cluster-config-best-practices"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/01-databricks-intelligence-platform/platform-and-compute.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 249,
-  "last_updated_at": "2026-10-25"
+  "total": 259,
+  "last_updated_at": "2026-11-03"
 }
