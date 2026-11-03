@@ -86,11 +86,11 @@
     "stem": "A microbatch model named `sessions` joins a large time-series model, `page_views`, to a small dimension model, `customers`. `page_views` configures `event_time`; `customers` does not. Warehouse spend for the daily run is far higher than the team expected, and they must reduce it without changing the join. What accounts for the cost?",
     "option_texts": {
       "A": "dbt collapses to a single batch because one parent lacks `event_time`",
-      "B": "dbt cannot auto-filter `customers`, so each batch fully scans it",
+      "B": "dbt rebuilds `customers` before each batch because it has no `partition_by`",
       "C": "dbt runs every batch concurrently by default, multiplying peak warehouse load",
-      "D": "dbt rebuilds `customers` before each batch because it has no `partition_by`"
+      "D": "dbt cannot auto-filter `customers`, so each batch fully scans it"
     },
-    "drill_answer": "B",
+    "drill_answer": "D",
     "drill_answer_short": "An upstream model without event_time is not filtered, so every batch full-scans it",
     "decision_hinge": "For incremental microbatch models, if your upstream models don't have event_time configured, dbt cannot automatically filter them during batch processing and will perform full table scans on every batch run.",
     "sources": [
@@ -104,15 +104,15 @@
         "signal": "`page_views` configures `event_time`; `customers` does not",
         "requires_fact": "When dbt runs a microbatch model it will split the processing into multiple queries (or batches), based on the event_time and batch_size you configure."
       },
-      "D": {
+      "B": {
         "signal": "joins a large time-series model, `page_views`, to a small dimension model, `customers`",
         "requires_fact": "event_time differs from partition_by, which groups rows into partitions."
       }
     },
     "distractor_traps": {
       "A": "T1: dbt does not collapse to one batch when a parent lacks event_time — it simply stops filtering that parent",
-      "C": "T5: right symptom family, wrong cause — concurrency affects peak load, not the volume each batch scans",
-      "D": "T3: partition_by groups rows into partitions; event_time defines the time range dbt filters on"
+      "B": "T3: partition_by groups rows into partitions; event_time defines the time range dbt filters on",
+      "C": "T5: right symptom family, wrong cause — concurrency affects peak load, not the volume each batch scans"
     },
     "topics": [
       "ae/01-developing-and-optimizing-models/microbatch"
@@ -295,18 +295,18 @@
     "stem": "A project installs two dbt Hub packages and one private Git package whose specification uses a Jinja-rendered access token. The team wants to adopt cross-project references, which requires `dependencies.yml`, and must keep the private package installable. Which arrangement works?",
     "option_texts": {
       "A": "Declare everything in `packages.yml`, which also accepts cross-project refs",
-      "B": "Declare the hub packages and cross-project refs in `dependencies.yml`, keeping the private package in `packages.yml`",
-      "C": "Declare all three packages and the cross-project refs in `dependencies.yml`",
+      "B": "Declare all three packages and the cross-project refs in `dependencies.yml`",
+      "C": "Declare the hub packages and cross-project refs in `dependencies.yml`, keeping the private package in `packages.yml`",
       "D": "Declare the private package in `dependencies.yml` and leave the two hub packages in `packages.yml`"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Split them: dependencies.yml cannot hold a private package, because it does not render Jinja",
     "decision_hinge": "Private packages are not supported in dependencies.yml because they intentionally don't support Jinja rendering or conditional configuration.",
     "sources": [
       "https://docs.getdbt.com/docs/build/packages"
     ],
     "plausible_options": {
-      "C": "The team wants to adopt cross-project references, which requires `dependencies.yml`"
+      "B": "The team wants to adopt cross-project references, which requires `dependencies.yml`"
     },
     "eliminated_by": {
       "A": {
@@ -320,7 +320,7 @@
     },
     "distractor_traps": {
       "A": "T3: packages.yml handles package dependencies only — cross-project refs need dependencies.yml",
-      "C": "T6: treats dependencies.yml as a drop-in rename of packages.yml, which breaks the private package",
+      "B": "T6: treats dependencies.yml as a drop-in rename of packages.yml, which breaks the private package",
       "D": "T8: scope error — it puts exactly the one package that cannot live in dependencies.yml there"
     },
     "topics": [
@@ -336,11 +336,11 @@
     "stem": "In a project run with `dbt build`, `model_b` depends on `model_a`. A `unique` test on `model_a` starts failing on a data issue the team cannot fix today, and `model_b` must keep building on schedule while the failure stays visible in the logs. What should the team change?",
     "option_texts": {
       "A": "Set the `unique` test's `store_failures` config to `true`",
-      "B": "Run `dbt build --exclude model_a` on the schedule",
-      "C": "Set the `unique` test's severity to `warn`",
+      "B": "Set the `unique` test's severity to `warn`",
+      "C": "Run `dbt build --exclude model_a` on the schedule",
       "D": "Split the schedule into `dbt run` followed by `dbt test`"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "Set the test's severity to warn so it no longer blocks downstream models",
     "decision_hinge": "Tests on upstream resources will block downstream resources from running, and a test failure will cause those downstream resources to skip entirely. Don't want a test to cause skipping? Adjust its severity or thresholds to warn instead of error.",
     "sources": [
@@ -355,14 +355,14 @@
         "signal": "a data issue the team cannot fix today",
         "requires_fact": "When true, store_failures saves all records that failed the test, in a new table with the name of the test."
       },
-      "B": {
+      "C": {
         "signal": "`model_b` depends on `model_a`",
         "requires_fact": "The build task supports standard selection syntax (--select, --exclude), as well as a --resource-type flag that offers a final filter."
       }
     },
     "distractor_traps": {
       "A": "T2: store_failures persists the failing rows for inspection but does not stop the test from blocking downstream models",
-      "B": "T4: excluding model_a stops building the very upstream model model_b depends on",
+      "C": "T4: excluding model_a stops building the very upstream model model_b depends on",
       "D": "T7: over-engineering — abandoning dbt build loses DAG-order execution to work around one test"
     },
     "topics": [

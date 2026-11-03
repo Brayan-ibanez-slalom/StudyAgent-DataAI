@@ -8,15 +8,15 @@
     "stem": "Your team uses a Declarative Automation Bundle to deploy a job that queries a warehouse. The job must use a different warehouse id in dev, test, and prod, and the team must promote the same databricks.yml without editing it between deployments.",
     "option_texts": {
       "A": "Hard-code each warehouse id in the job resource and add a script that swaps them before deploy",
-      "B": "Declare a warehouse id as a custom variable and set its value per target, so one definition promotes unchanged",
-      "C": "Keep one databricks.yml per environment and point the CI job at the matching file",
+      "B": "Keep one databricks.yml per environment and point the CI job at the matching file",
+      "C": "Declare a warehouse id as a custom variable and set its value per target, so one definition promotes unchanged",
       "D": "Store the warehouse id in a secret scope and read it with spark.conf.set in every notebook"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Declare a custom variable and set its value per target; the same configuration file then promotes across dev, test, and prod unchanged",
     "decision_hinge": "A custom variable is declared in the variables mapping, and you set its value when executing bundle commands, through an environment variable, elsewhere within your bundle configuration files, or in the .databricks/bundle/<target>/variable-overrides.json file.",
     "plausible_options": {
-      "C": "must use a different warehouse id in dev, test, and prod"
+      "B": "must use a different warehouse id in dev, test, and prod"
     },
     "eliminated_by": {
       "A": "the team must promote the same databricks.yml without editing it between deployments",
@@ -24,7 +24,7 @@
     },
     "distractor_traps": {
       "A": "T4: breaks a stated requirement - a swap script edits the deployed definition instead of promoting it unchanged",
-      "C": "T3: confusable sibling - per-environment files do vary the id, but they stop the team promoting one configuration",
+      "B": "T3: confusable sibling - per-environment files do vary the id, but they stop the team promoting one configuration",
       "D": "T2: scope error - a secret scope hides a value at run time and does not parameterize a bundle resource"
     },
     "sources": [
@@ -77,23 +77,23 @@
     "difficulty_estimate": "L4",
     "stem": "Your CI pipeline runs a bundle validate that passes, but the deploy then fails because a job references a value that is missing in the target workspace. The pipeline must supply that value at deploy time from the CI secret store, never from a file committed to the repo.",
     "option_texts": {
-      "A": "Declare it as a bundle variable and export BUNDLE_VAR_<name> with the value before the deploy runs",
-      "B": "Add a deploy hook that writes the value into the target workspace just before the deploy runs",
+      "A": "Add a deploy hook that writes the value into the target workspace just before the deploy runs",
+      "B": "Declare it as a bundle variable and export BUNDLE_VAR_<name> with the value before the deploy runs",
       "C": "Commit the value into databricks.yml in encrypted form and decrypt it during the deploy",
       "D": "Change the job to read the value through spark.conf.get instead of the bundle configuration"
     },
-    "drill_answer": "A",
+    "drill_answer": "B",
     "drill_answer_short": "Declare the value as a bundle variable and pass it in an environment variable named BUNDLE_VAR_<variable_name> at deploy time",
     "decision_hinge": "Provide the variable's value by setting an environment variable whose name must start with BUNDLE_VAR_, or provide the value as part of a bundle command such as validate or deploy.",
     "plausible_options": {
-      "B": "must supply that value at deploy time from the CI secret store"
+      "A": "must supply that value at deploy time from the CI secret store"
     },
     "eliminated_by": {
       "C": "never from a file committed to the repo",
       "D": "a job references a value that is missing in the target workspace"
     },
     "distractor_traps": {
-      "B": "T3: confusable sibling - a pre-deploy hook can seed a workspace, but the bundle still has no value bound to the variable",
+      "A": "T3: confusable sibling - a pre-deploy hook can seed a workspace, but the bundle still has no value bound to the variable",
       "C": "T4: breaks a stated requirement - the value would live in a file committed to the repo",
       "D": "T2: scope error - reading a Spark conf at run time does not resolve a missing bundle value at deploy time"
     },
@@ -114,10 +114,10 @@
     "option_texts": {
       "A": "Define three pipeline resources, one per environment, and let the job pick the right one at run time",
       "B": "Define the catalog in the metastore and have the pipeline look it up while it runs",
-      "C": "Define the pipeline once with its catalog set from a variable reference, then give that variable a value per target",
-      "D": "Define the dev catalog inline and hand-edit the bundle before each later deployment"
+      "C": "Define the dev catalog inline and hand-edit the bundle before each later deployment",
+      "D": "Define the pipeline once with its catalog set from a variable reference, then give that variable a value per target"
     },
-    "drill_answer": "C",
+    "drill_answer": "D",
     "drill_answer_short": "One resource definition whose catalog comes from a variable reference, with the variable given a value per target",
     "decision_hinge": "You can reference a variable elsewhere within your bundle configuration files, and set its value per target in the .databricks/bundle/<target>/variable-overrides.json file.",
     "plausible_options": {
@@ -125,12 +125,12 @@
     },
     "eliminated_by": {
       "B": "A bundle deploys a Lakeflow Declarative Pipeline plus a job that depends on it",
-      "D": "the team wants one pipeline resource defined only once"
+      "C": "the team wants one pipeline resource defined only once"
     },
     "distractor_traps": {
       "A": "T3: confusable sibling - three resources do vary the catalog, but the pipeline is then defined three times",
       "B": "T2: scope error - the metastore holds the catalog, not the deploy-time choice of which catalog this target reads",
-      "D": "T4: breaks a stated requirement - hand-editing between deployments is exactly what the team ruled out"
+      "C": "T4: breaks a stated requirement - hand-editing between deployments is exactly what the team ruled out"
     },
     "sources": [
       "https://docs.databricks.com/aws/en/dev-tools/bundles/variables"
@@ -147,24 +147,24 @@
     "difficulty_estimate": "L3",
     "stem": "A CI stage must prove a Declarative Automation Bundle is syntactically correct and that its resource properties match the object schema. The stage must not create, change, or remove anything in the workspace.",
     "option_texts": {
-      "A": "Run a bundle validate, which checks the configuration files and reports schema warnings",
+      "A": "Run a bundle run so the resources execute once and surface any configuration errors",
       "B": "Run a bundle deploy with a dry run flag to preview the changes it would apply",
-      "C": "Run a bundle run so the resources execute once and surface any configuration errors",
+      "C": "Run a bundle validate, which checks the configuration files and reports schema warnings",
       "D": "Run a bundle sync so the files reach the workspace and the schema is checked there"
     },
-    "drill_answer": "A",
+    "drill_answer": "C",
     "drill_answer_short": "bundle validate checks that configuration files are syntactically correct and warns on properties missing from the object schema",
     "decision_hinge": "The bundle validate command validates that bundle configuration files are syntactically correct and outputs warnings if resource properties are defined in the bundle configuration files that are not found in the corresponding object's schema.",
     "plausible_options": {
       "B": "must prove a Declarative Automation Bundle is syntactically correct"
     },
     "eliminated_by": {
-      "C": "The stage must not create, change, or remove anything in the workspace",
+      "A": "The stage must not create, change, or remove anything in the workspace",
       "D": "its resource properties match the object schema"
     },
     "distractor_traps": {
+      "A": "T4: breaks a stated requirement - running the resources changes workspace state",
       "B": "T3: confusable sibling - a deploy preview also reports problems, but it belongs to the deploy path rather than a check",
-      "C": "T4: breaks a stated requirement - running the resources changes workspace state",
       "D": "T2: scope error - syncing files moves content to the workspace instead of checking the configuration"
     },
     "sources": [

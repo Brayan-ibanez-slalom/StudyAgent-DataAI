@@ -1,0 +1,247 @@
+[
+  {
+    "id": "draft-dbde05-dev-mode-pauses-schedules",
+    "domain": "dbde-05",
+    "blueprint_task": "5.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A team deploys the same bundle to a dev target and later to a prod target. After the dev deployment the scheduled job never fires on its own, although the job exists and runs fine when started by hand. The team must explain the difference the target's mode made.",
+    "option_texts": {
+      "A": "Development mode pauses all schedules and triggers on the deployed resources",
+      "B": "Development mode omits the schedule mapping, so the deployed job carries no schedule",
+      "C": "Development mode marks the job read-only until a production deployment promotes it",
+      "D": "Development mode needs a cluster id, and the schedule waits until one is supplied"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Deploying a target in development mode pauses all schedules and triggers on deployed resources",
+    "decision_hinge": "Deploying a target in development mode pauses all schedules and triggers on deployed resources such as jobs, and to unpause an individual job you set the pause_status to UNPAUSED.",
+    "plausible_options": {
+      "C": "the scheduled job never fires on its own"
+    },
+    "eliminated_by": {
+      "B": "the job exists and runs fine when started by hand",
+      "D": "The team must explain the difference the target's mode made"
+    },
+    "distractor_traps": {
+      "B": "T5: common misconception - the schedule is deployed intact and simply left paused",
+      "C": "T3: confusable sibling - the job is editable and runnable, only its triggers are paused",
+      "D": "T1: fabricated - a cluster id is optional in development mode and unrelated to scheduling"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/deployment-modes"
+    ],
+    "topics": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ]
+  },
+  {
+    "id": "draft-dbde05-dev-mode-name-prefix",
+    "domain": "dbde-05",
+    "blueprint_task": "5.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "After a dev deployment of a bundle, the team finds the job listed in the workspace under a name that is not the one written in databricks.yml. Nothing in the configuration sets a name override, and the same bundle deployed to prod shows the plain name.",
+    "option_texts": {
+      "A": "Development mode appends the target name to every deployed resource name",
+      "B": "Development mode prepends a dev prefix carrying the deploying user's short name",
+      "C": "Development mode renames each resource to its resource key instead of its display name",
+      "D": "The workspace adds the owner to a name whenever two jobs would otherwise collide"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "Development mode prepends [dev <short_name>] to deployed resource names and tags them with a dev tag",
+    "decision_hinge": "Deploying in development mode prepends all resources that are not deployed as files or notebooks with the prefix dev and the current user short_name, and tags each deployed job and pipeline with a dev Databricks tag.",
+    "plausible_options": {
+      "A": "a name that is not the one written in databricks.yml"
+    },
+    "eliminated_by": {
+      "C": "Nothing in the configuration sets a name override",
+      "D": "the same bundle deployed to prod shows the plain name"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - the marker is a prepended dev prefix, not an appended target name",
+      "C": "T1: fabricated - the resource key is not substituted for the display name",
+      "D": "T5: common misconception - the rename comes from the deployment mode, not from collision handling"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dev-tools/bundles/deployment-modes"
+    ],
+    "topics": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ]
+  },
+  {
+    "id": "draft-dbde05-commit-and-push",
+    "domain": "dbde-05",
+    "blueprint_task": "5.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "An engineer has edited several notebooks inside a Databricks Git folder and the folder UI highlights the edits. Those edits now have to reach the remote repository so a colleague can open a pull request against them.",
+    "option_texts": {
+      "A": "Re-run a bundle deploy, which writes the notebooks back to the remote repository",
+      "B": "Click Pull in the Git dialog, which synchronises the folder with the remote",
+      "C": "Add a commit message in the Git dialog and click Commit and Push",
+      "D": "Export the notebooks as source files and attach them to the pull request"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "Add a required commit message in the Git folder UI, then Commit & Push to send the changes to the remote",
+    "decision_hinge": "When you make changes to existing notebooks or files the Git folder UI highlights the changes; you add a required commit message for the changes and click Commit and Push.",
+    "plausible_options": {
+      "B": "Those edits now have to reach the remote repository"
+    },
+    "eliminated_by": {
+      "A": "the folder UI highlights the edits",
+      "D": "so a colleague can open a pull request against them"
+    },
+    "distractor_traps": {
+      "A": "T2: scope error - a bundle deploy sends resources to a workspace, never to a Git remote",
+      "B": "T3: confusable sibling - Pull brings remote commits down, it does not publish local edits",
+      "D": "T5: common misconception - a pull request is opened from a pushed branch, not from attached files"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/repos/git-operations-with-repos"
+    ],
+    "topics": [
+      "dbde/05-implementing-ci-cd/bundles-and-git"
+    ]
+  },
+  {
+    "id": "draft-dbde02-managed-connector-database-cdc",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A financial services firm has to bring account rows from an on-premises PostgreSQL database into Databricks every night, and wants the ingest to carry across row-level inserts, updates and deletes rather than reload the whole table.",
+    "option_texts": {
+      "A": "Use a streaming read on the database table so each change arrives as a micro-batch",
+      "B": "Use Auto Loader against the database, since it discovers new rows the same way it discovers files",
+      "C": "Use COPY INTO against the database endpoint so each night's rows append idempotently",
+      "D": "Use a Lakeflow Connect managed connector, which reads relational databases using change data capture"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "Lakeflow Connect managed connectors ingest from relational databases such as PostgreSQL using change data capture",
+    "decision_hinge": "Lakeflow Connect managed connectors ingest data from relational databases including MySQL, PostgreSQL, and SQL Server using change data capture.",
+    "plausible_options": {
+      "A": "wants the ingest to carry across row-level inserts, updates and deletes"
+    },
+    "eliminated_by": {
+      "B": "bring account rows from an on-premises PostgreSQL database into Databricks",
+      "C": "rather than reload the whole table"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - a streaming read sounds incremental, but the managed connector is what supplies change data capture",
+      "B": "T2: scope error - Auto Loader discovers files in cloud object storage, not rows in a database",
+      "C": "T1: fabricated - COPY INTO loads files from a storage location, not from a database endpoint"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-managed-connector-saas",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "An analytics team has to land Salesforce and Workday records in Unity Catalog on a schedule. They would rather not build and operate their own extraction code against either vendor API.",
+    "option_texts": {
+      "A": "A custom connector written against each vendor API and run as a notebook task",
+      "B": "A Lakeflow Connect managed connector, which covers enterprise SaaS applications",
+      "C": "An Auto Loader stream pointed at an export folder each vendor writes nightly",
+      "D": "A federated query that reads each vendor system live at report time"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "Managed connectors cover SaaS applications including Salesforce, HubSpot, Jira and Workday",
+    "decision_hinge": "Managed connectors ingest data from enterprise SaaS applications including Salesforce, HubSpot, Jira, and Workday, and community or custom connectors exist for sources without a built-in option.",
+    "plausible_options": {
+      "C": "land Salesforce and Workday records in Unity Catalog on a schedule"
+    },
+    "eliminated_by": {
+      "A": "would rather not build and operate their own extraction code",
+      "D": "records in Unity Catalog on a schedule"
+    },
+    "distractor_traps": {
+      "A": "T4: breaks a stated requirement - the team explicitly does not want to own extraction code",
+      "C": "T3: confusable sibling - that works only if the vendors already export files, which is extra operating burden",
+      "D": "T2: scope error - federation queries in place rather than landing records on a schedule"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-volume-upload-size-limit",
+    "domain": "dbde-02",
+    "blueprint_task": "2.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "An engineer tries to put an 8 GB archive into a Unity Catalog volume using the Add data page in the workspace, and the upload is refused. The same volume already holds much smaller files that arrived the same way.",
+    "option_texts": {
+      "A": "The archive format is unsupported, because the upload page accepts only structured data files",
+      "B": "Volumes cap any single file at 5 GB regardless of how the file is written",
+      "C": "The upload UI caps a single file at 5 GB, so a larger file needs another route",
+      "D": "The volume is managed, and managed volumes reject files above a fixed size"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "Uploading through the UI is limited to 5 GB per file; larger files must use a different upload route",
+    "decision_hinge": "You can upload files of any format to a volume, but when you upload files to a volume through the UI there is a 5 GB file size limit, and to upload files larger than 5 GB you use another method.",
+    "plausible_options": {
+      "B": "the upload is refused"
+    },
+    "eliminated_by": {
+      "A": "tries to put an 8 GB archive into a Unity Catalog volume",
+      "D": "already holds much smaller files that arrived the same way"
+    },
+    "distractor_traps": {
+      "A": "T1: fabricated - a volume accepts structured, semi-structured and unstructured files alike",
+      "B": "T3: confusable sibling - the 5 GB ceiling belongs to the UI path, not to volumes themselves",
+      "D": "T1: fabricated - no size rule distinguishes managed volumes from others"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/file-upload"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-connection-securable-credentials",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A team is standing up a managed ingestion pipeline and must decide where the source endpoint and its authentication details belong. Nothing secret may sit in the pipeline configuration that the team commits to source control.",
+    "option_texts": {
+      "A": "In a notebook widget where the operator types the authentication details each run",
+      "B": "In the pipeline configuration, encrypted so the committed file reveals nothing",
+      "C": "In a cluster environment variable holding the endpoint, read when the pipeline starts",
+      "D": "In a connection, a securable object holding the endpoint and authentication credentials"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "A connection is the securable object that stores the source endpoint and credentials, so the pipeline config holds none",
+    "decision_hinge": "A connection is a securable object that stores the source endpoint and authentication credentials for your source, and the managed connector uses this connection to authenticate without requiring credentials in your pipeline configuration.",
+    "plausible_options": {
+      "C": "must decide where the source endpoint and its authentication details belong"
+    },
+    "eliminated_by": {
+      "A": "standing up a managed ingestion pipeline",
+      "B": "Nothing secret may sit in the pipeline configuration"
+    },
+    "distractor_traps": {
+      "A": "T2: scope error - a managed pipeline runs on a schedule with no operator to type a value",
+      "B": "T4: breaks a stated requirement - the secret still travels in the committed configuration",
+      "C": "T3: confusable sibling - an environment variable keeps it out of the file but outside Unity Catalog governance"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  }
+]

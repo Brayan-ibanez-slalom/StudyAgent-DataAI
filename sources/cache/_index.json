@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 177,
+  "count": 181,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1417,6 +1417,38 @@
       "title": "ALTER TABLE | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "96c25c01b556684cfcc7788488934a346bebf876fc8207d9c7e4bca48565bc7e",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/lakeflow-connect.txt",
+      "title": "Lakeflow Connect connector concepts | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "d375d0b0bf2ac46252dd6022846303cbf97e3ce97d6d8ed6139fcb213536e3df",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dev-tools/bundles/deployment-modes",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dev-tools/bundles/deployment-modes.txt",
+      "title": "Declarative Automation Bundles deployment modes | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ec886e375955b485658c4655cf45658e75ca5ab98ef1e4e9eee97271b205a433",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/file-upload",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/file-upload.txt",
+      "title": "Work with files in Unity Catalog volumes | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b076f323e217903f9a2878651d7468869867fcdfa29b45003ea5adb839a46971",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dev-tools/bundles/resources",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dev-tools/bundles/resources.txt",
+      "title": "Declarative Automation Bundles resources | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "a374ee43e0b1065c6a91f5c1e633077b9c227751df8e72737b11a6da1176f110",
       "source": "mcp-cache_fetch"
     }
   ]

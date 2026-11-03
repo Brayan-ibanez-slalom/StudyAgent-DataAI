@@ -190,11 +190,11 @@
     "stem": "A pull request edits only the `tags` value on one model and a column-level `meta` value on another. A Slim CI job selects `state:modified` against the production manifest and builds nothing. The team must explain the empty run. Why did nothing build?",
     "option_texts": {
       "A": "The comparison manifest was stale, so both edits look unchanged",
-      "B": "dbt treats `tags` and `meta` as metadata only, so neither counts",
-      "C": "Column-level YAML edits never participate in state comparison at all",
+      "B": "Column-level YAML edits never participate in state comparison at all",
+      "C": "dbt treats `tags` and `meta` as metadata only, so neither counts",
       "D": "`persist_docs` is disabled, so YAML-only edits are all ignored"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "tags and meta are metadata-only and deliberately do not trigger state:modified",
     "decision_hinge": "dbt treats tags and meta as metadata-only fields, not modifications, at both the resource and column level. Changing a tags or meta value doesn't trigger state:modified, because these fields don't affect how dbt materializes the resource.",
     "sources": [
@@ -209,14 +209,14 @@
         "signal": "A pull request edits only the `tags` value on one model",
         "requires_fact": "state:new means there is no node with the same unique_id in the comparison manifest."
       },
-      "C": {
+      "B": {
         "signal": "a column-level `meta` value on another",
         "requires_fact": "description is treated as a modification, but only when persist_docs is enabled, at relation or column level."
       }
     },
     "distractor_traps": {
       "A": "T5: a stale manifest is a real failure mode, but it would also hide genuine code changes",
-      "C": "T1: column-level edits do participate — a column description counts when persist_docs is on",
+      "B": "T1: column-level edits do participate — a column description counts when persist_docs is on",
       "D": "T3: persist_docs governs descriptions specifically, not every YAML-only edit"
     },
     "topics": [
@@ -232,11 +232,11 @@
     "stem": "A 4 MiB seed file has several rows corrected, with no rename. The CI job runs `--select state:modified --state prod` and the seed is not rebuilt. The team must get the corrected rows into the warehouse on this run. What explains the behaviour?",
     "option_texts": {
       "A": "dbt hashes seed contents at every size, so the hash must be unchanged",
-      "B": "dbt excludes seeds from state comparison and only ever compares models",
-      "C": "dbt compares only the seed's file path above 1 MiB, so edits are invisible",
+      "B": "dbt compares only the seed's file path above 1 MiB, so edits are invisible",
+      "C": "dbt excludes seeds from state comparison and only ever compares models",
       "D": "dbt needs `--full-refresh` before any seed is eligible for state selection"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "Above 1 MiB dbt falls back to comparing the seed's file path, not its contents",
     "decision_hinge": "dbt stores a file hash of seed files that are under 1 MiB in size. If a seed file is over 1 MiB in size, dbt cannot compare its contents and will raise a warning as such. Instead, dbt will use only the seed's file path to detect changes.",
     "sources": [
@@ -247,7 +247,7 @@
       "A": "A 4 MiB seed file has several rows corrected, with no rename"
     },
     "eliminated_by": {
-      "B": {
+      "C": {
         "signal": "The CI job runs `--select state:modified --state prod` and the seed is not rebuilt",
         "requires_fact": "If the contents of these seeds is modified, the seed will be included in state:modified."
       },
@@ -258,7 +258,7 @@
     },
     "distractor_traps": {
       "A": "T8: scope error — content hashing is real, but it only applies below the 1 MiB limit",
-      "B": "T1: seeds are covered by state comparison; it is the size that changes the method",
+      "C": "T1: seeds are covered by state comparison; it is the size that changes the method",
       "D": "T2: full-refresh governs rebuild behaviour, not eligibility for state selection"
     },
     "topics": [

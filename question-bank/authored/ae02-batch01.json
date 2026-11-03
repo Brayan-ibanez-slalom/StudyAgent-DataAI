@@ -49,11 +49,11 @@
     "stem": "A team adds a `not_null` constraint to a column in a model's YAML, but dbt never submits it to the platform. The model is materialized as `view`, its `contract` is `enforced: true`, and `data_type` is declared for every column. The team must get the constraint applied at the platform level. What is blocking it?",
     "option_texts": {
       "A": "The YAML declares `data_type` but the contract is not enforced",
-      "B": "The model is a `view`, and constraints need `table` or `incremental`",
-      "C": "The model has no `unique` constraint to anchor the `not_null` one",
+      "B": "The model has no `unique` constraint to anchor the `not_null` one",
+      "C": "The model is a `view`, and constraints need `table` or `incremental`",
       "D": "The platform treats `not_null` as definable but not enforced"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Constraints only work on table and incremental models, never on a view",
     "decision_hinge": "Constraints only work on table and incremental models. Constraints are never applied on ephemeral models or those materialized as view.",
     "sources": [
@@ -67,14 +67,14 @@
         "signal": "its `contract` is `enforced: true`",
         "requires_fact": "To use constraints, your model must declare and enforce a contract. This means you need to explicitly define the data_type for every column in your model's schema configuration."
       },
-      "C": {
+      "B": {
         "signal": "A team adds a `not_null` constraint to a column in a model's YAML",
         "requires_fact": "The structure of a constraint is: type (required): one of not_null, unique, primary_key, foreign_key, check, custom."
       }
     },
     "distractor_traps": {
       "A": "T5: right prerequisite, wrong symptom — the stem already states the contract is enforced",
-      "C": "T1: there is no rule that a not_null constraint must be anchored by a unique constraint",
+      "B": "T1: there is no rule that a not_null constraint must be anchored by a unique constraint",
       "D": "T3: definable-but-not-enforced is a real platform category, but it would not stop dbt submitting the constraint"
     },
     "topics": [
@@ -112,11 +112,11 @@
     "stem": "A Snowflake project defines a `primary_key` constraint for documentation purposes. Every run logs a warning that the constraint is not enforced, and the team must silence that warning without removing the constraint or changing the platform. What should they set?",
     "option_texts": {
       "A": "Set `warn_unsupported: False` on the constraint",
-      "B": "Set `severity: warn` on the constraint",
-      "C": "Set `warn_unenforced: False` on the constraint",
+      "B": "Set `warn_unenforced: False` on the constraint",
+      "C": "Set `severity: warn` on the constraint",
       "D": "Set `enforced: false` on the model's contract"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "warn_unenforced: False — the platform supports the constraint but does not enforce it",
     "decision_hinge": "Set warn_unenforced to False to skip warnings for constraints that are supported by your platform but not enforced, like primary_key in Snowflake.",
     "sources": [
@@ -127,7 +127,7 @@
       "A": "Every run logs a warning that the constraint is not enforced"
     },
     "eliminated_by": {
-      "B": {
+      "C": {
         "signal": "the team must silence that warning without removing the constraint or changing the platform",
         "requires_fact": "Adjust its severity or thresholds to warn instead of error."
       },
@@ -138,7 +138,7 @@
     },
     "distractor_traps": {
       "A": "T3: warn_unsupported silences constraints the platform cannot define at all, such as check in Redshift",
-      "B": "T2: severity belongs to tests, not to platform constraints",
+      "C": "T2: severity belongs to tests, not to platform constraints",
       "D": "T4: disabling the contract removes the constraint's prerequisite, which the stem forbids"
     },
     "topics": [
@@ -154,18 +154,18 @@
     "stem": "A versioned model `dim_customers` has `latest_version: 2`, with `v1`, `v2`, and a newly added `v3`. A downstream model uses `ref('dim_customers')` with no version pin, and the team must know which relation it will read. Which version does that ref resolve to?",
     "option_texts": {
       "A": "Version 1, the oldest one still inside its deprecation window",
-      "B": "Version 2, because it is named by `latest_version`",
-      "C": "Version 3, because a new version overrides `latest_version`",
+      "B": "Version 3, because a new version overrides `latest_version`",
+      "C": "Version 2, because it is named by `latest_version`",
       "D": "Version 3, because prerelease versions take precedence"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "v2 — an unpinned ref resolves to whatever latest_version names",
     "decision_hinge": "Because v2 is the latest version, it gets some special treatment: it can be defined in a file without a suffix, and ref('dim_customers') will resolve to v2 if a version pin is not specified.",
     "sources": [
       "https://docs.getdbt.com/docs/collaborate/govern/model-versions"
     ],
     "plausible_options": {
-      "C": "with `v1`, `v2`, and a newly added `v3`"
+      "B": "with `v1`, `v2`, and a newly added `v3`"
     },
     "eliminated_by": {
       "A": {
@@ -179,7 +179,7 @@
     },
     "distractor_traps": {
       "A": "T5: v1 stays buildable inside its migration window, but that never makes it the default",
-      "C": "T3: the highest number is the prerelease; latest_version is what decides",
+      "B": "T3: the highest number is the prerelease; latest_version is what decides",
       "D": "T1: dbt gives prerelease versions no precedence — it logs that one exists and keeps resolving to latest"
     },
     "topics": [

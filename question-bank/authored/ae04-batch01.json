@@ -49,11 +49,11 @@
     "stem": "An analyst must validate a change to a mart by pointing an external BI dashboard at the modified tables before the pull request merges. The team wants the approach with the LEAST warehouse spend that still satisfies the dashboard. Which approach should they choose?",
     "option_texts": {
       "A": "Run the build with `--defer --state`, since deferral is cheaper than cloning",
-      "B": "Run `dbt clone --state`, since the dashboard needs real warehouse objects",
-      "C": "Run a full `dbt build` of the whole project into a personal warehouse schema",
+      "B": "Run a full `dbt build` of the whole project into a personal warehouse schema",
+      "C": "Run `dbt clone --state`, since the dashboard needs real warehouse objects",
       "D": "Run `dbt compile` and hand the compiled SQL to the dashboard owner"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "Only clone creates real objects an external tool can query",
     "decision_hinge": "Unlike deferral, dbt clone requires some compute and creation of additional objects in your data warehouse. In many cases, deferral is a cheaper and simpler alternative to dbt clone. However, by creating actual data warehouse objects, dbt clone allows you to test out your code changes on downstream dependencies.",
     "sources": [
@@ -63,7 +63,7 @@
     ],
     "plausible_options": {
       "A": "The team wants the approach with the LEAST warehouse spend that still satisfies the dashboard",
-      "C": "must validate a change to a mart by pointing an external BI dashboard at the modified tables"
+      "B": "must validate a change to a mart by pointing an external BI dashboard at the modified tables"
     },
     "eliminated_by": {
       "D": {
@@ -73,7 +73,7 @@
     },
     "distractor_traps": {
       "A": "T3: confusable sibling — deferral redirects refs inside dbt, so no object appears for an external tool",
-      "C": "T7: over-engineering — it produces real objects but rebuilds the entire project to do it",
+      "B": "T7: over-engineering — it produces real objects but rebuilds the entire project to do it",
       "D": "T2: compiled SQL is text, not a relation a dashboard can point at"
     },
     "topics": [
@@ -153,11 +153,11 @@
     "stem": "A nightly job dies immediately with a warehouse permission error, before any node executes. An on-call engineer runs `dbt retry` and sees nothing execute. The engineer must get the job's nodes built tonight. What is going on, and what should they do?",
     "option_texts": {
       "A": "Retry skipped nodes that succeeded earlier, so pass `--full-refresh` as well",
-      "B": "Retry reuses stale state, so delete `target/` and run `dbt retry` again",
-      "C": "Retry found no recorded nodes, so check `run_results.json` and re-run the full job",
+      "B": "Retry found no recorded nodes, so check `run_results.json` and re-run the full job",
+      "C": "Retry reuses stale state, so delete `target/` and run `dbt retry` again",
       "D": "Retry treated the permission error as a warning, so add `--warn-error` and retry"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "With no nodes executed there is nothing to retry from — re-run the full job",
     "decision_hinge": "If no nodes are executed before the failure, for example if a run failed early due to a warehouse connection or permission errors, retry won't run anything since there are no recorded nodes to retry from. In these cases, we recommend checking your run_results.json file and manually re-running the full job so the nodes build.",
     "sources": [
@@ -165,7 +165,7 @@
       "https://docs.getdbt.com/reference/global-configs/warnings"
     ],
     "plausible_options": {
-      "B": "An on-call engineer runs `dbt retry` and sees nothing execute"
+      "C": "An on-call engineer runs `dbt retry` and sees nothing execute"
     },
     "eliminated_by": {
       "A": {
@@ -179,7 +179,7 @@
     },
     "distractor_traps": {
       "A": "T5: right that nothing ran, wrong cause — a full refresh does not create nodes to retry from",
-      "B": "T5: right that artifacts are involved, wrong direction — deleting target discards what retry reads",
+      "C": "T5: right that artifacts are involved, wrong direction — deleting target discards what retry reads",
       "D": "T2: warn-error changes what counts as a failure; a permission error was already an error"
     },
     "topics": [

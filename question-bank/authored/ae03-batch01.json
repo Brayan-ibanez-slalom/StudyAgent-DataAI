@@ -51,11 +51,11 @@
     "stem": "A scheduled job is defined as `dbt deps`, then `dbt compile`, then `dbt build`. The job owner must reduce total runtime without losing any validation the job currently performs. Which step can be removed?",
     "option_texts": {
       "A": "`dbt deps`, since packages are cached between runs anyway",
-      "B": "`dbt build`, since `dbt compile` already writes the objects",
-      "C": "`dbt compile`, since building commands handle compilation themselves",
+      "B": "`dbt compile`, since building commands handle compilation themselves",
+      "C": "`dbt build`, since `dbt compile` already writes the objects",
       "D": "None of them, since each step validates something the next relies on"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "dbt compile is not a prerequisite of dbt run or other building commands",
     "decision_hinge": "dbt compile is not a pre-requisite of dbt run, or other building commands. Those commands will handle compilation themselves.",
     "sources": [
@@ -71,14 +71,14 @@
         "signal": "A scheduled job is defined as `dbt deps`, then `dbt compile`, then `dbt build`",
         "requires_fact": "deps downloads dependencies for a project."
       },
-      "B": {
+      "C": {
         "signal": "without losing any validation the job currently performs",
         "requires_fact": "The dbt build command will run models, test tests, snapshot snapshots, and seed seeds in DAG order, for selected resources or an entire project."
       }
     },
     "distractor_traps": {
       "A": "T1: dbt does not cache installed packages across scheduled runs in the way this claims",
-      "B": "T3: compile renders SQL but never materializes it; build is what creates the objects",
+      "C": "T3: compile renders SQL but never materializes it; build is what creates the objects",
       "D": "T7: over-engineering — it defends a step the docs explicitly call unnecessary"
     },
     "topics": [
@@ -199,11 +199,11 @@
     "stem": "A team wants to run every resource whose `materialized` value is `incremental`, and separately to run every resource whose `description` mentions finance. They must use dbt's built-in selection rather than scripting. Which of these is possible?",
     "option_texts": {
       "A": "Both, because every YAML key is exposed to the selection syntax",
-      "B": "Only the `materialized` one, because selection reads configs and not properties",
-      "C": "Only the `description` one, because selection reads properties and not configs",
+      "B": "Only the `description` one, because selection reads properties and not configs",
+      "C": "Only the `materialized` one, because selection reads configs and not properties",
       "D": "Neither, because `materialized` and `description` are both plain properties"
     },
-    "drill_answer": "B",
+    "drill_answer": "C",
     "drill_answer_short": "The config: selection method reads config values, not non-config properties",
     "decision_hinge": "You can select resources based on their config values using the config: selection method, but not the values of non-config properties.",
     "sources": [
@@ -214,7 +214,7 @@
       "A": "They must use dbt's built-in selection rather than scripting"
     },
     "eliminated_by": {
-      "C": {
+      "B": {
         "signal": "run every resource whose `materialized` value is `incremental`",
         "requires_fact": "Configs are a special kind of property, set in properties.yml under a config property, via a config() macro in .sql files, or for many resources at once in dbt_project.yml."
       },
@@ -225,7 +225,7 @@
     },
     "distractor_traps": {
       "A": "T5: right instinct that YAML drives selection, wrong about which YAML keys are exposed",
-      "C": "T3: inverted — properties describe resources, configs are what selection can read",
+      "B": "T3: inverted — properties describe resources, configs are what selection can read",
       "D": "T8: scope error — it treats a config as though it were an ordinary property"
     },
     "topics": [
@@ -303,11 +303,11 @@
     "stem": "A team reviews how their CI jobs use the warehouse. Every pull request must build into an isolated location that does not linger after the PR closes, and reviewers must be able to find that location in the run details. Where does a dbt CI job build?",
     "option_texts": {
       "A": "In the production schema, behind a transaction that is rolled back",
-      "B": "In the developer's personal target schema from their credentials",
-      "C": "In a temporary schema named `dbt_cloud_pr_<job_id>_<pr_id>`",
+      "B": "In a temporary schema named `dbt_cloud_pr_<job_id>_<pr_id>`",
+      "C": "In the developer's personal target schema from their credentials",
       "D": "In a permanent `ci` schema that later runs overwrite in place"
     },
-    "drill_answer": "C",
+    "drill_answer": "B",
     "drill_answer_short": "A temporary schema unique to the PR, dropped when the PR closes or merges",
     "decision_hinge": "dbt builds and tests models affected by the code change in a temporary schema, unique to the PR. The unique schema name follows the naming convention dbt_cloud_pr_<job_id>_<pr_id>.",
     "sources": [
@@ -321,14 +321,14 @@
         "signal": "reviewers must be able to find that location in the run details",
         "requires_fact": "dbt deletes the temporary schema from your data warehouse when you close or merge the pull request."
       },
-      "B": {
+      "C": {
         "signal": "A team reviews how their CI jobs use the warehouse",
         "requires_fact": "When you run a CI job, only the modified data assets in your pull request and their downstream dependencies are built and tested in a staging schema."
       }
     },
     "distractor_traps": {
       "A": "T1: dbt does not build CI changes into production behind a rollback",
-      "B": "T2: personal target schemas belong to development environments, not CI jobs",
+      "C": "T2: personal target schemas belong to development environments, not CI jobs",
       "D": "T3: a shared permanent schema is not isolated per PR and is never dropped"
     },
     "topics": [
