@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 214,
+  "count": 219,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1713,6 +1713,46 @@
       "title": "Manage privileges in Unity Catalog | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "5c748080c322de55378d03d91ca5279eb231379747e086f368d237e02cdbbc09",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-hints",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-hints.txt",
+      "title": "Hints | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "ec4c2417f733bbc6c24e4b18ddb853526351a5034fca8ab0d461eb9aaff2c089",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/optimizations/range-join",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/optimizations/range-join.txt",
+      "title": "Range join optimization | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "8df3b672805cc3fe996cffb40b7a1df927275bc0de40b4850316254ed42c4216",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/pipeline-mode",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/pipeline-mode.txt",
+      "title": "Triggered vs. continuous pipeline mode | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "4b2a36429b76bcdb8958b0723d03340fa7508a003f99f3b994eacd673309e125",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/updates",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/updates.txt",
+      "title": "Run a pipeline update | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "cb968ab71440b885c9a2934eecf2110d995ecef8d4724551b0b2dbcca4a7b182",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/expectation-patterns",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/expectation-patterns.txt",
+      "title": "Expectation recommendations and advanced patterns | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b373454b2cb3e251e8692389439402d2b79adb8a8d29e1b02d561f9e093f8a9f",
       "source": "mcp-cache_fetch"
     }
   ]

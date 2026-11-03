@@ -1,0 +1,177 @@
+[
+  {
+    "id": "draft-dbde03-triggered-vs-continuous-mode",
+    "domain": "dbde-03",
+    "blueprint_task": "3.6",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A pipeline populates reporting tables that the business reads each morning, and the platform team wants the compute released once the night's data is through. They are choosing between the two execution modes the pipeline offers.",
+    "option_texts": {
+      "A": "Triggered mode, which refreshes the data available at the start and then stops",
+      "B": "Continuous mode, which refreshes everything once and then releases its compute",
+      "C": "Triggered mode, which keeps the tables fresh as each new record arrives",
+      "D": "Continuous mode, which is the only mode that can be started on a schedule"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Triggered mode refreshes the data available when the update started and then stops; continuous keeps tables fresh",
+    "decision_hinge": "Triggered mode refreshes available data and stops, while continuous mode keeps tables fresh as new data arrives, and in triggered mode the system stops after refreshing all tables based on the data available when the update started.",
+    "plausible_options": {
+      "B": "wants the compute released once the night's data is through"
+    },
+    "eliminated_by": {
+      "C": "populates reporting tables that the business reads each morning",
+      "D": "choosing between the two execution modes the pipeline offers"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - the described behaviour is right but it belongs to the other mode",
+      "C": "T3: confusable sibling - staying fresh per arrival is continuous, not triggered",
+      "D": "T1: fabricated - a triggered pipeline is the one normally run on a schedule"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dlt/pipeline-mode"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-continuous-monitors-dependencies",
+    "domain": "dbde-03",
+    "blueprint_task": "3.6",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A pipeline left running without stopping reads from several upstream Delta tables that change only a few times a day. Finance expects the bill to track the work actually done rather than the hours the pipeline is up.",
+    "option_texts": {
+      "A": "It recomputes on a fixed interval whatever the upstream tables have done",
+      "B": "It monitors the dependent tables and updates only when their contents have changed",
+      "C": "It recomputes continuously, so the bill does follow the hours rather than the work",
+      "D": "It pauses itself between upstream changes and has to be restarted by an operator"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "In continuous mode pipelines monitor dependent Delta tables and update only when their contents change",
+    "decision_hinge": "To avoid unnecessary processing in continuous execution mode, pipelines automatically monitor dependent Delta tables and perform an update only when the contents of those dependent tables have changed.",
+    "plausible_options": {
+      "C": "Finance expects the bill to track the work actually done"
+    },
+    "eliminated_by": {
+      "A": "reads from several upstream Delta tables that change only a few times a day",
+      "D": "A pipeline left running without stopping"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - a fixed interval is how a scheduled refresh behaves, not continuous mode",
+      "C": "T5: common misconception - the mode exists with dependency monitoring precisely to avoid that",
+      "D": "T1: fabricated - a continuous pipeline does not pause itself awaiting an operator"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dlt/pipeline-mode"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde06-full-refresh-clears-checkpoints",
+    "domain": "dbde-06",
+    "blueprint_task": "6.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A bug was found in a transformation that has been running for weeks, and the corrected logic must be applied to every record ever ingested, not just the ones arriving next. The team is weighing what the heavier refresh option actually does.",
+    "option_texts": {
+      "A": "It truncates the targets but leaves the checkpoints, so only new records are read",
+      "B": "It replays the recorded history of the target without returning to the source",
+      "C": "It clears the checkpoints from flows and reprocesses all records from the source",
+      "D": "It re-runs only the flows whose source code changed since the previous update"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "A full refresh clears checkpoints from flows and reprocesses all records from the data source",
+    "decision_hinge": "A full refresh clears checkpoints from flows and reprocesses all records from the data source.",
+    "plausible_options": {
+      "B": "the corrected logic must be applied to every record ever ingested"
+    },
+    "eliminated_by": {
+      "A": "not just the ones arriving next",
+      "D": "A bug was found in a transformation that has been running for weeks"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - leaving the checkpoints is what makes an ordinary refresh incremental",
+      "B": "T3: confusable sibling - replaying target history sounds complete but never revisits the source records",
+      "D": "T2: scope error - selecting changed flows is a scope choice, not a reprocessing one"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dlt/updates"
+    ],
+    "topics": [
+      "dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics"
+    ]
+  },
+  {
+    "id": "draft-dbde03-partitioning-hints",
+    "domain": "dbde-03",
+    "blueprint_task": "3.5",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A query writes out far more small files than the team wants, and they would rather state the partition count in the statement than change a cluster-wide setting. They are looking for the hint that reduces the number of output partitions.",
+    "option_texts": {
+      "A": "A CACHE hint, which holds the result until the partition count settles",
+      "B": "A BROADCAST hint, which collapses the output onto one executor",
+      "C": "A SKEW hint, which rebalances the output into a smaller number of partitions",
+      "D": "A COALESCE hint, which asks for a specified number of partitions"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "COALESCE and REPARTITION are partitioning hints that set the number of output partitions for a statement",
+    "decision_hinge": "The partitioning hints COALESCE, REPARTITION, and REPARTITION_BY_RANGE take a partition number and correspond to the coalesce, repartition, and repartitionByRange operations.",
+    "plausible_options": {
+      "C": "they would rather state the partition count in the statement"
+    },
+    "eliminated_by": {
+      "A": "the hint that reduces the number of output partitions",
+      "B": "writes out far more small files than the team wants"
+    },
+    "distractor_traps": {
+      "A": "T1: fabricated - caching does not set an output partition count",
+      "B": "T2: scope error - a broadcast hint shapes a join, not the number of output partitions",
+      "C": "T3: confusable sibling - skew handling rebalances work but is not a partition-count hint"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-hints"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-quarantine-invalid-records",
+    "domain": "dbde-03",
+    "blueprint_task": "3.7",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A stewardship team wants the rows that fail validation kept somewhere they can be inspected and corrected, while the clean rows carry on downstream. Dropping the bad rows outright would lose the evidence they need.",
+    "option_texts": {
+      "A": "Flag each row against the rules and route the flagged ones to a quarantine table",
+      "B": "Drop the bad rows and read the dropped count from the dataset metrics afterwards",
+      "C": "Fail the update on the first bad row, so the records stay in the source for review",
+      "D": "Warn only, so the bad rows land in the target mixed in with the clean ones"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "The quarantine pattern flags records against the rules and routes invalid ones to a separate table for inspection",
+    "decision_hinge": "To quarantine invalid records you define quarantine rules and add an is_quarantined flag, then route those records to a separate quarantine table rather than dropping them.",
+    "plausible_options": {
+      "B": "wants the rows that fail validation kept somewhere they can be inspected"
+    },
+    "eliminated_by": {
+      "C": "while the clean rows carry on downstream",
+      "D": "Dropping the bad rows outright would lose the evidence they need"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - the count is recorded, but the rows themselves are gone",
+      "C": "T4: breaks a stated requirement - stopping the update halts the clean rows too",
+      "D": "T2: scope error - warning keeps the rows but mixes them into the clean output"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dlt/expectation-patterns"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  }
+]
