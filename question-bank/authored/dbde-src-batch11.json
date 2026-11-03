@@ -1,0 +1,177 @@
+[
+  {
+    "id": "draft-dbde02-gateway-plus-pipeline",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A bank must pull change data from a database that sits inside its own data centre, using the platform's managed connector rather than bespoke code. The team is working out how many pipeline objects the standard pattern asks them to create.",
+    "option_texts": {
+      "A": "Two, an ingestion gateway plus an ingestion pipeline that references the gateway",
+      "B": "One, a single ingestion pipeline that reaches the database directly",
+      "C": "Two, a landing job that exports files plus a pipeline that reads them",
+      "D": "Three, one per medallion layer, each reading the database in turn"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Gateway-based CDC uses two objects: an ingestion gateway, then an ingestion pipeline referencing the gateway id",
+    "decision_hinge": "Standard CDC is gateway-based and uses two pipelines, an ingestion gateway and an ingestion pipeline: you create a gateway, then create an ingestion pipeline that references the gateway id.",
+    "plausible_options": {
+      "B": "using the platform's managed connector rather than bespoke code"
+    },
+    "eliminated_by": {
+      "C": "must pull change data from a database that sits inside its own data centre",
+      "D": "working out how many pipeline objects the standard pattern asks them to create"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - a single pipeline is the shape for sources that need no gateway",
+      "C": "T2: scope error - an export-and-read design is the bespoke code the bank is avoiding",
+      "D": "T1: fabricated - the medallion layers are not one ingestion object each"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-gateway-runs-continuously",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A team schedules its gateway-based ingestion to refresh every six hours and is budgeting the compute. They have to state how the gateway component behaves between those refreshes and who looks after its staging area.",
+    "option_texts": {
+      "A": "It starts with each refresh and leaves its staging area for the team to clear",
+      "B": "It runs continuously and manages its staging volume internally",
+      "C": "It runs continuously but needs the team to prune its staging area by hand",
+      "D": "It runs only once at setup, after which the pipeline reaches the source alone"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "The gateway runs continuously and manages the staging volume internally",
+    "decision_hinge": "In gateway mode the gateway runs continuously, and the gateway manages the staging volume internally.",
+    "plausible_options": {
+      "A": "budgeting the compute"
+    },
+    "eliminated_by": {
+      "C": "who looks after its staging area",
+      "D": "schedules its gateway-based ingestion to refresh every six hours"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - the refresh cadence belongs to the pipeline, not to the gateway's lifetime",
+      "C": "T5: common misconception - the staging volume is managed for you rather than pruned by hand",
+      "D": "T1: fabricated - the gateway is not a one-off setup step"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-copy-into-placeholder-schema",
+    "domain": "dbde-02",
+    "blueprint_task": "2.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A team wants to load a folder of files without first writing out every column and type by hand. They would rather the load statement work the shape out from the files themselves on the first run.",
+    "option_texts": {
+      "A": "Declare the full column list first, since a load statement cannot work a shape out",
+      "B": "Load into a single string column, then split it into typed columns afterwards",
+      "C": "Create an empty placeholder table and let the load infer the shape from the files",
+      "D": "Register the folder as an external table, which carries the shape with it"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "Create an empty placeholder Delta table so COPY INTO infers the schema from the source files",
+    "decision_hinge": "You can create empty placeholder Delta tables so that the schema is inferred during a COPY INTO operation, which supports target table schema inference, mapping, merging, and evolution.",
+    "plausible_options": {
+      "B": "work the shape out from the files themselves on the first run"
+    },
+    "eliminated_by": {
+      "A": "without first writing out every column and type by hand",
+      "D": "A team wants to load a folder of files"
+    },
+    "distractor_traps": {
+      "A": "T1: fabricated - the load statement does support schema inference",
+      "B": "T2: scope error - a string landing table defers the typing instead of inferring it",
+      "D": "T3: confusable sibling - an external table does carry a schema, but it is not a load of the files"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/copy-into"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde02-streaming-table-primary-ingest",
+    "domain": "dbde-02",
+    "blueprint_task": "2.1",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A pipeline has to take records from cloud object storage and from a message bus, appending each new record as it arrives. The team is picking which dataset kind the ingest step should declare.",
+    "option_texts": {
+      "A": "A materialized view, a dataset that recomputes its result on each pipeline refresh",
+      "B": "A temporary view, which holds the arriving records for the next step to read",
+      "C": "An external table, which points at the arriving files where they already sit",
+      "D": "A streaming table, the primary dataset type for ingestion in a pipeline"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "Streaming tables are the primary dataset type for ingestion, from object storage via Auto Loader or from message buses",
+    "decision_hinge": "Streaming tables are useful for ingesting data from cloud object storage using Auto Loader or from message buses like Kafka, and they are the primary dataset type for ingestion.",
+    "plausible_options": {
+      "A": "records from cloud object storage and from a message bus"
+    },
+    "eliminated_by": {
+      "B": "appending each new record as it arrives",
+      "C": "picking which dataset kind the ingest step should declare"
+    },
+    "distractor_traps": {
+      "A": "T3: confusable sibling - a materialized view recomputes a result rather than appending arrivals",
+      "B": "T2: scope error - a temporary view holds no data between pipeline steps",
+      "C": "T5: common misconception - an external table cannot consume a message bus"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/dlt/load"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde07-who-can-grant",
+    "domain": "dbde-07",
+    "blueprint_task": "7.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A table's owner has left and a squad now needs a colleague granted read on that table. No one in the squad owns the table itself, and they are working out who is entitled to make the grant.",
+    "option_texts": {
+      "A": "The owner of the catalog or schema that contains the table may also grant",
+      "B": "Anyone holding read on the table, since a privilege may be passed along",
+      "C": "Only a workspace administrator, because ownership has lapsed with the departure",
+      "D": "Nobody until the table is recreated, because grants follow the original owner"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "Privileges can be granted by the object's owner or by the owner of the catalog or schema containing it",
+    "decision_hinge": "Privileges can be granted by the owner of the object, or by the owner of the catalog or schema that contains the object.",
+    "plausible_options": {
+      "C": "No one in the squad owns the table itself"
+    },
+    "eliminated_by": {
+      "B": "a colleague granted read on that table",
+      "D": "they are working out who is entitled to make the grant"
+    },
+    "distractor_traps": {
+      "B": "T1: fabricated - holding a privilege does not confer the right to pass it on",
+      "C": "T3: confusable sibling - admins do hold wide rights, but the containing owner is the entitled party here",
+      "D": "T5: common misconception - grants do not die with the original owner"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/catalog-explorer/manage-permissions"
+    ],
+    "topics": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ]
+  }
+]

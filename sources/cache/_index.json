@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 209,
+  "count": 214,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1673,6 +1673,46 @@
       "title": "What is Catalog Explorer? | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "a272aeb3f452e9d95cb91c2fe1cb1c9b05052eed5a8ff3b826b7da87e751cfac",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/lakeflow-connect/sql-server-overview.txt",
+      "title": "Microsoft SQL Server ingestion connector | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "3150d2b306a5696f6549fa7012c9d4daabb1f89c6de56419f95ba3a8020f1e28",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/copy-into",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/copy-into.txt",
+      "title": "Get started using COPY INTO to load data | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "024e8bcaee9adef645a0f811d90d968fac9c13f5f2a6c8b6a2373e83a29fc601",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/load",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/load.txt",
+      "title": "Load data in pipelines | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "30a994fa36338ad45d6d274ea0b3489529ca55e8eb062427cdcb522a496585b2",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/dlt/index",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/dlt/index.txt",
+      "title": "Spark Declarative Pipelines on Lakeflow | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "11000d71ed7a81aa688245b2c2f31bd2c8c282b99e0ba860a94233a1548630e6",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/catalog-explorer/manage-permissions",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/catalog-explorer/manage-permissions.txt",
+      "title": "Manage privileges in Unity Catalog | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "5c748080c322de55378d03d91ca5279eb231379747e086f368d237e02cdbbc09",
       "source": "mcp-cache_fetch"
     }
   ]
