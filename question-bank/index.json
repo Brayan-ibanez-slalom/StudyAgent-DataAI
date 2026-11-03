@@ -15724,8 +15724,508 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-057",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A SQL pipeline validates transaction rows where a numeric column sometimes carries a stray currency symbol, as in the literal '100$'. The team must keep the query running and land a null for those rows rather than have the statement fail.",
+      "option_texts": {
+        "A": "CAST returns a null for the malformed literal and the query keeps running",
+        "B": "TRY_CAST returns a null for the malformed literal instead of raising an invalid data error",
+        "C": "CAST silently truncates the malformed literal to 100 and the query keeps running",
+        "D": "Both functions raise an error, so the rows must be filtered in a WHERE clause first"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.1",
+      "blueprint_task_title": "Implement data cleaning by reading bronze tables with PySpark/SQL, cleaning nulls, standardizing data types, and writing to new silver tables",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "try_cast returns NULL for input that is invalid for the target type, where cast raises the error",
+      "drill_rationale": "try_cast returns NULL instead of an invalid data error, while cast returns an error when the input is invalid for the target type.",
+      "decision_hinge": "try_cast returns NULL instead of an invalid data error, while cast returns an error when the input is invalid for the target type.",
+      "plausible_options": {
+        "A": "keep the query running and land a null for those rows"
+      },
+      "eliminated_by": {
+        "C": "a numeric column sometimes carries a stray currency symbol",
+        "D": "rather than have the statement fail"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - cast is the function that raises on invalid input, try_cast is the one that returns null",
+        "C": "T1: fabricated - cast does not truncate a malformed literal to its leading digits",
+        "D": "T5: common misconception - try_cast exists precisely so the statement does not have to fail"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/functions/try_cast"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-058",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A data engineer wants a relational object that joins two tables for ad hoc work in the current notebook session only. Nothing should persist once the session ends, and no other user should be able to see the object.",
+      "option_texts": {
+        "A": "CREATE VIEW, because a standard view exists only for the connection that defined it",
+        "B": "CREATE TEMPORARY VIEW, because such views are visible only to the session that created them",
+        "C": "CREATE GLOBAL TEMPORARY VIEW, so the object lives in a cluster-wide temporary schema",
+        "D": "CREATE TABLE, then DROP TABLE at the end of the notebook session"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "A TEMPORARY view is visible only to the creating session and is dropped when that session ends",
+      "drill_rationale": "TEMPORARY views are visible only to the session that created them and are dropped when the session ends.",
+      "decision_hinge": "TEMPORARY views are visible only to the session that created them and are dropped when the session ends.",
+      "plausible_options": {
+        "C": "Nothing should persist once the session ends"
+      },
+      "eliminated_by": {
+        "A": "joins two tables for ad hoc work in the current notebook session only",
+        "D": "no other user should be able to see the object"
+      },
+      "distractor_traps": {
+        "A": "T1: fabricated - a standard view is a persistent catalog object, not a connection-scoped one",
+        "C": "T3: confusable sibling - a global temporary view is deliberately shared, which breaks the privacy requirement",
+        "D": "T2: scope error - a real table persists in the metastore for as long as it exists"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-view"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-059",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "An existing Delta table named transactions was created without any column constraints. The team must now guarantee that transaction_id and transaction_date never hold a null, without recreating the table.",
+      "option_texts": {
+        "A": "Run ALTER TABLE ... ALTER COLUMN to add the NOT NULL constraint after creation",
+        "B": "Run ALTER TABLE ... ADD CONSTRAINT with a CHECK expression testing each column for a null",
+        "C": "Recreate the table with the constraint declared in the schema and reload the rows",
+        "D": "Set a table property that rejects nulls on write for the two named columns"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.7",
+      "blueprint_task_title": "Apply data quality checks and validation rules to ensure reliable Silver and Gold datasets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "NOT NULL is declared in the schema at creation; to add it afterwards use ALTER TABLE ALTER COLUMN",
+      "drill_rationale": "When you create a table you specify NOT NULL constraints in the schema, and to drop or add NOT NULL constraints after creation you use the ALTER TABLE ALTER COLUMN command.",
+      "decision_hinge": "When you create a table you specify NOT NULL constraints in the schema, and to drop or add NOT NULL constraints after creation you use the ALTER TABLE ALTER COLUMN command.",
+      "plausible_options": {
+        "B": "guarantee that transaction_id and transaction_date never hold a null"
+      },
+      "eliminated_by": {
+        "C": "without recreating the table",
+        "D": "was created without any column constraints"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - a CHECK constraint can test for a null, but NOT NULL is the declared constraint the team asked for",
+        "C": "T4: breaks a stated requirement - the table must not be recreated",
+        "D": "T1: fabricated - no table property turns null rejection on for named columns"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/constraints"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-060",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A silver table declares a primary key on customer_id. A later load inserts two rows carrying the same customer_id and the write succeeds. The team must explain why the declaration did not block the duplicate.",
+      "option_texts": {
+        "A": "A primary key on Databricks is informational only and is not enforced on write",
+        "B": "A primary key is enforced only when the table also carries a CHECK constraint",
+        "C": "A primary key is enforced, but the duplicate landed because the write bypassed the constraint",
+        "D": "A primary key is enforced only on a managed table, and this one is external"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.7",
+      "blueprint_task_title": "Apply data quality checks and validation rules to ensure reliable Silver and Gold datasets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Primary key, foreign key and unique constraints are informational only and are not enforced",
+      "drill_rationale": "Primary key, foreign key, and unique constraints are informational only and aren't enforced, while enforced constraints verify data integrity before adding rows to a table.",
+      "decision_hinge": "Primary key, foreign key, and unique constraints are informational only and aren't enforced, while enforced constraints verify data integrity before adding rows to a table.",
+      "plausible_options": {
+        "C": "inserts two rows carrying the same customer_id and the write succeeds"
+      },
+      "eliminated_by": {
+        "B": "The team must explain why the declaration did not block the duplicate",
+        "D": "A silver table declares a primary key on customer_id"
+      },
+      "distractor_traps": {
+        "B": "T1: fabricated - a CHECK constraint does not switch on primary key enforcement",
+        "C": "T5: common misconception - there is no enforcement to bypass, the constraint is informational",
+        "D": "T3: confusable sibling - managed and external tables differ in storage, not in constraint enforcement"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/constraints"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-061",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A silver table must reject any row whose order_amount is negative, and the rule has to live on the table itself so every writer is bound by it. The team does not want the rule expressed only inside one pipeline's query.",
+      "option_texts": {
+        "A": "Add a CHECK constraint, whose boolean expression must be true for each input row",
+        "B": "Add a NOT NULL constraint on order_amount so the column refuses the bad values",
+        "C": "Add a pipeline expectation that drops the offending rows as they flow through",
+        "D": "Add a primary key on order_amount so a negative value cannot be written twice"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.7",
+      "blueprint_task_title": "Apply data quality checks and validation rules to ensure reliable Silver and Gold datasets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "A CHECK constraint holds a boolean expression that must be true for every input row, and it lives on the table",
+      "drill_rationale": "A CHECK constraint indicates that a specified boolean expression must be true for each input row, and when a constraint is violated the transaction fails with an error.",
+      "decision_hinge": "A CHECK constraint indicates that a specified boolean expression must be true for each input row, and when a constraint is violated the transaction fails with an error.",
+      "plausible_options": {
+        "C": "must reject any row whose order_amount is negative"
+      },
+      "eliminated_by": {
+        "B": "the rule has to live on the table itself so every writer is bound by it",
+        "D": "The team does not want the rule expressed only inside one pipeline's query"
+      },
+      "distractor_traps": {
+        "B": "T2: scope error - NOT NULL rejects a missing value, not a negative one",
+        "C": "T3: confusable sibling - an expectation does enforce quality, but only inside the pipeline that declares it",
+        "D": "T1: fabricated - a primary key is informational and says nothing about sign"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/tables/constraints"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-062",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A Delta table has accumulated many data files that no version of the table references any more, and cloud storage cost has grown. The team must delete those files while keeping the table queryable at its current version.",
+      "option_texts": {
+        "A": "Run OPTIMIZE, which compacts small files and deletes the ones left behind",
+        "B": "Run VACUUM, which removes data files no longer referenced and older than the retention threshold",
+        "C": "Run DELETE on the table, which clears the files the table stopped referencing",
+        "D": "Run CLEAN, which purges stale data files from the table directory"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "vacuum removes data files no longer referenced by a table that are older than the retention threshold",
+      "drill_rationale": "Running vacuum removes data files no longer referenced by a table that are older than the retention threshold, and deleting unused data files reduces cloud storage costs.",
+      "decision_hinge": "Running vacuum removes data files no longer referenced by a table that are older than the retention threshold, and deleting unused data files reduces cloud storage costs.",
+      "plausible_options": {
+        "A": "must delete those files while keeping the table queryable at its current version"
+      },
+      "eliminated_by": {
+        "C": "no version of the table references any more",
+        "D": "cloud storage cost has grown"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - OPTIMIZE compacts the layout but leaves the superseded files on storage",
+        "C": "T5: common misconception - DELETE removes rows and adds new versions, it does not purge files",
+        "D": "T1: fabricated - there is no CLEAN command for a Delta table"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/vacuum"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-063",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "An engineer runs vacuum on a Delta table with the default retention threshold, then tries to read a version of the table from two months ago for an audit. The read fails, and the team must understand what the maintenance command changed.",
+      "option_texts": {
+        "A": "The vacuum run rewrote the table history, so the audit versions left DESCRIBE HISTORY",
+        "B": "The ability to query table versions older than the retention period is lost after vacuum",
+        "C": "The table became a managed table, so the retention settings moved with its storage",
+        "D": "The audit version is intact and simply needs a timestamp rather than a version number"
+      },
+      "domain": "dbde-06",
+      "track": "dbde",
+      "blueprint_task": "6.4",
+      "blueprint_task_title": "Understand the features of Liquid Clustering and predictive optimization",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Once vacuum runs, versions older than the retention period can no longer be queried",
+      "drill_rationale": "The ability to query table versions older than the retention period is lost after running vacuum.",
+      "decision_hinge": "The ability to query table versions older than the retention period is lost after running vacuum.",
+      "plausible_options": {
+        "D": "tries to read a version of the table from two months ago for an audit"
+      },
+      "eliminated_by": {
+        "A": "the team must understand what the maintenance command changed",
+        "C": "runs vacuum on a Delta table with the default retention threshold"
+      },
+      "distractor_traps": {
+        "A": "T5: common misconception - the vacuum run removes data files rather than rewriting history entries",
+        "C": "T1: fabricated - vacuum does not convert a table to managed storage",
+        "D": "T3: confusable sibling - either addressing form fails once the underlying files are gone"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/delta/vacuum"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/06-troubleshooting-monitoring-and-optimization/performance-and-diagnostics.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-064",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A team keeps a large external table in Unity Catalog and now wants Databricks to manage its storage and lifecycle. The conversion must happen in place on the existing table rather than through a rebuild.",
+      "option_texts": {
+        "A": "Use ALTER TABLE ... SET MANAGED, choosing MOVE or COPY for the underlying files",
+        "B": "Use ALTER TABLE ... UNSET MANAGED to hand storage control over to Databricks",
+        "C": "Use CREATE TABLE AS SELECT into a managed table and then drop the external one",
+        "D": "Use ALTER TABLE ... SET LOCATION to point the table at a managed storage path"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.1",
+      "blueprint_task_title": "Differentiate between managed and external tables in Unity Catalog and perform basic operations (create, modify, delete, and convert between managed and external tables) on them",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "ALTER TABLE SET MANAGED, with MOVE or COPY, converts an existing external table in place",
+      "drill_rationale": "The ALTER TABLE SET MANAGED clause, with MOVE or COPY, converts an existing table to a managed table, and UNSET MANAGED is the clause that reverses it.",
+      "decision_hinge": "The ALTER TABLE SET MANAGED clause, with MOVE or COPY, converts an existing table to a managed table, and UNSET MANAGED is the clause that reverses it.",
+      "plausible_options": {
+        "C": "wants Databricks to manage its storage and lifecycle"
+      },
+      "eliminated_by": {
+        "B": "keeps a large external table in Unity Catalog",
+        "D": "must happen in place on the existing table rather than through a rebuild"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - UNSET MANAGED runs the conversion in the opposite direction",
+        "C": "T2: scope error - a rebuild produces a managed table but replaces the object instead of converting it",
+        "D": "T2: scope error - SET LOCATION repoints an external table and does not change who manages it"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-alter-table"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-065",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A gold view's defining query must change, and a dozen analyst groups already hold SELECT on it. The team must apply the new query without having to re-grant anything afterwards.",
+      "option_texts": {
+        "A": "Run DROP VIEW then CREATE VIEW, and re-apply the grants from a saved script",
+        "B": "Run CREATE OR REPLACE VIEW, which changes the view in place without dropping its privileges",
+        "C": "Run ALTER VIEW with the new query text, without disturbing the grants on the view",
+        "D": "Run CREATE VIEW IF NOT EXISTS, which updates the definition when the view exists"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.6",
+      "blueprint_task_title": "Understand the difference between, and how to build, Gold layer objects such as materialized views, views, streaming tables, and tables for BI and analytics teams in Unity Catalog",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "CREATE OR REPLACE VIEW changes a view in place and keeps its privileges",
+      "drill_rationale": "Use CREATE OR REPLACE VIEW to change a view in place without dropping its privileges.",
+      "decision_hinge": "Use CREATE OR REPLACE VIEW to change a view in place without dropping its privileges.",
+      "plausible_options": {
+        "C": "must apply the new query without having to re-grant anything afterwards"
+      },
+      "eliminated_by": {
+        "A": "a dozen analyst groups already hold SELECT on it",
+        "D": "A gold view's defining query must change"
+      },
+      "distractor_traps": {
+        "A": "T2: scope error - dropping the view discards the grants, which is the outcome being avoided",
+        "C": "T3: confusable sibling - ALTER VIEW changes metadata such as the name, not the defining query",
+        "D": "T1: fabricated - IF NOT EXISTS skips the statement when the view is already there"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-view"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-066",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-src1-batch01.json",
+      "stem": "A production multi-task job must alert the on-call rota the moment a run fails. The team already runs its paging through PagerDuty and wants the alert to reach that tool rather than a mailbox.",
+      "option_texts": {
+        "A": "Configure a notification on the Failure event and send it to a system destination",
+        "B": "Configure a notification on the Failure event, since email is the only supported channel",
+        "C": "Configure a webhook task at the end of the job that fires only when a task has failed",
+        "D": "Configure an alert in Databricks SQL, which is where job run failures are published"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Job notifications can go to email or to a third-party system destination such as PagerDuty",
+      "drill_rationale": "You can send notifications to one or more email addresses or third-party destinations such as Slack, Microsoft Teams, PagerDuty, or any webhook-based service, and an administrator must configure system destinations.",
+      "decision_hinge": "You can send notifications to one or more email addresses or third-party destinations such as Slack, Microsoft Teams, PagerDuty, or any webhook-based service, and an administrator must configure system destinations.",
+      "plausible_options": {
+        "C": "wants the alert to reach that tool rather than a mailbox"
+      },
+      "eliminated_by": {
+        "B": "The team already runs its paging through PagerDuty",
+        "D": "must alert the on-call rota the moment a run fails"
+      },
+      "distractor_traps": {
+        "B": "T1: fabricated - third-party destinations are supported alongside email",
+        "C": "T3: confusable sibling - a trailing task can post a message, but it is not the built-in notification path",
+        "D": "T2: scope error - Databricks SQL alerts watch query results, not job run outcomes"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/notifications"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 305,
+  "total": 315,
   "last_updated_at": "2026-11-03"
 }

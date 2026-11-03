@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 171,
+  "count": 177,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1369,6 +1369,54 @@
       "title": "Manage classic compute | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "8258a2027b28da197ae35f7277f1ee91cbdaa28061bb587e1eba17f7066ce67e",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/try_cast",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/try_cast.txt",
+      "title": "try_cast function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "731c7bdbc7e183dffe5cf26ba8e0ff2c46bf12261ef2950dca889241b6b79516",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/tables/constraints",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/tables/constraints.txt",
+      "title": "Constraints on Databricks | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "48c6d815f051712ab0aefaf9b1e210daf2398c6cb098779b8633cdbad61f816d",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-view",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-view.txt",
+      "title": "CREATE VIEW | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "e9c080917f9f85f7c300926527389b8609764a01fef2800ab53d093570dda177",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/cast",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/functions/cast.txt",
+      "title": "cast function | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "65e1280ee965fd305aa1642881eb1404e2a77dc0e0e6fbf9d5b6ed95e52aa245",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/delta/vacuum",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/delta/vacuum.txt",
+      "title": "Remove unused data files with vacuum | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "b8495ecd553d44e6cc8311c4203620bb3923b79c71cd9281af6b85416d1257d5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-alter-table",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-alter-table.txt",
+      "title": "ALTER TABLE | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "96c25c01b556684cfcc7788488934a346bebf876fc8207d9c7e4bca48565bc7e",
       "source": "mcp-cache_fetch"
     }
   ]
