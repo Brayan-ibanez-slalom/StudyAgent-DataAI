@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "count": 196,
+  "count": 201,
   "updated_at": "2026-11-03",
   "entries": [
     {
@@ -1569,6 +1569,46 @@
       "title": "CREATE FUNCTION (SQL, Python, Scala, and Java) | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "b3ad0c2ebe2b77e545b7d5b957e8cb8f10d5dad26887f123d94657b554fd4206",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-having",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-having.txt",
+      "title": "HAVING clause | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "083d8e5309ded3f9f37a891f157e4ae948a27d3848d38a472f6c4c35c12d47a0",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/query/formats/binary",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/query/formats/binary.txt",
+      "title": "Read binary files | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "6ddc89b5bd7b13dfcd3435d3318deed8d7aec9d238963a411a8c4abf83dc9ed5",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production.txt",
+      "title": "Configure Auto Loader for production workloads | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "96570f2e6198e0a29250c31ac3b72de2004b9546f2c885a6f6c11c220ed060a3",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into.txt",
+      "title": "INSERT | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "cb144ac85e7146a0767130ee8985f06af833ae45debcd98df84f7d00b625a6e2",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/security-grant",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/security-grant.txt",
+      "title": "GRANT | Databricks on AWS",
+      "fetched_at": "2026-11-03",
+      "sha256": "7e57bf6041996ab532dd4f9dd2e363bd2b874360e22499f9f81c90896ad146a4",
       "source": "mcp-cache_fetch"
     }
   ]

@@ -1,0 +1,177 @@
+[
+  {
+    "id": "draft-dbde02-binaryfile-unstructured",
+    "domain": "dbde-02",
+    "blueprint_task": "2.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A bucket receives thousands of image files a day in mixed formats, and a model team needs each file available as a row carrying its bytes and its path. No parsing of the picture itself is wanted at load time.",
+    "option_texts": {
+      "A": "Read them with the binaryFile data source, which turns each file into one record",
+      "B": "Read them as text, which captures the bytes of each picture as a string column",
+      "C": "Read them with a JSON reader, which keeps the metadata and discards the bytes",
+      "D": "Convert each picture to Parquet first, because unstructured bytes cannot be loaded"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "The binaryFile source reads binary files into one record each, holding the raw content and metadata",
+    "decision_hinge": "The binaryFile data source reads binary files and converts each file into a single record containing the file's raw content and metadata, and it is commonly used to load unstructured data such as images, audio, or PDF files.",
+    "plausible_options": {
+      "B": "needs each file available as a row carrying its bytes and its path"
+    },
+    "eliminated_by": {
+      "C": "No parsing of the picture itself is wanted at load time",
+      "D": "thousands of image files a day in mixed formats"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - a text reader mangles binary content rather than preserving the raw bytes",
+      "C": "T4: breaks a stated requirement - the bytes are exactly what the model team needs",
+      "D": "T1: fabricated - unstructured bytes load directly without a conversion step"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/query/formats/binary"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  },
+  {
+    "id": "draft-dbde03-having-aggregate-only",
+    "domain": "dbde-03",
+    "blueprint_task": "3.4",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A query groups enrolments by student and must keep only the students with fewer than three of them. A first attempt also mentioned a column that is neither grouped nor wrapped in an aggregate, and the statement failed.",
+    "option_texts": {
+      "A": "HAVING may name any column, grouped or not, so the comparison itself is what failed",
+      "B": "HAVING may name only grouped expressions, aggregates or constants, so the stray column failed",
+      "C": "WHERE should carry the count test, because filtering an aggregate there runs before grouping",
+      "D": "The count test belongs in the select list, because a filter cannot read an aggregate result"
+    },
+    "drill_answer": "B",
+    "drill_answer_short": "HAVING expressions may refer only to constants, GROUP BY expressions and aggregate functions",
+    "decision_hinge": "The expressions specified in the HAVING clause can only refer to constant expressions, expressions that appear in GROUP BY, and aggregate functions; if the expression references columns that are neither in the GROUP BY clause nor wrapped in aggregate functions Databricks raises MISSING_AGGREGATION.",
+    "plausible_options": {
+      "C": "must keep only the students with fewer than three of them"
+    },
+    "eliminated_by": {
+      "A": "a column that is neither grouped nor wrapped in an aggregate",
+      "D": "A query groups enrolments by student"
+    },
+    "distractor_traps": {
+      "A": "T5: common misconception - the clause is restricted precisely so an ungrouped column cannot appear",
+      "C": "T3: confusable sibling - WHERE filters rows before grouping and cannot test a group's count",
+      "D": "T1: fabricated - a filter clause is exactly where an aggregate result is tested"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-having"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde03-insert-into-appends",
+    "domain": "dbde-03",
+    "blueprint_task": "3.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "A single new record has to be added to an existing Delta table while every row already there stays untouched. The team is choosing the statement to run from a SQL editor.",
+    "option_texts": {
+      "A": "APPEND VALUES, the statement that adds rows without disturbing the existing ones",
+      "B": "INSERT OVERWRITE with a VALUES clause, which writes the record into the table",
+      "C": "INSERT INTO with a VALUES clause, which adds new rows to the table",
+      "D": "MERGE INTO with a VALUES clause, the only statement that can add a single row"
+    },
+    "drill_answer": "C",
+    "drill_answer_short": "INSERT INTO appends rows to a table; INSERT OVERWRITE replaces what is already there",
+    "decision_hinge": "INSERT INTO appends new rows into a table, whereas INSERT OVERWRITE replaces the existing data in the table with the new rows.",
+    "plausible_options": {
+      "B": "A single new record has to be added to an existing Delta table"
+    },
+    "eliminated_by": {
+      "A": "The team is choosing the statement to run from a SQL editor",
+      "D": "every row already there stays untouched"
+    },
+    "distractor_traps": {
+      "A": "T1: fabricated - there is no APPEND VALUES statement in the SQL dialect",
+      "B": "T3: confusable sibling - OVERWRITE does write the record, but it replaces everything else",
+      "D": "T5: common misconception - MERGE handles conditional upserts and is not required for a plain add"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into"
+    ],
+    "topics": [
+      "dbde/03-data-transformation-and-modeling/medallion-transformations"
+    ]
+  },
+  {
+    "id": "draft-dbde07-grant-all-privileges",
+    "domain": "dbde-07",
+    "blueprint_task": "7.2",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L3",
+    "stem": "An owner has to give one group every right that applies to a table rather than naming each one in turn. The group should end up able to do anything the object itself supports.",
+    "option_texts": {
+      "A": "GRANT FULL CONTROL on the object, which confers every right the object supports",
+      "B": "GRANT SELECT and MODIFY on the object, since together they cover every right",
+      "C": "GRANT OWNERSHIP of the object, which is how a group receives the full set of rights",
+      "D": "GRANT ALL PRIVILEGES on the object, which grants every privilege applicable to it"
+    },
+    "drill_answer": "D",
+    "drill_answer_short": "ALL PRIVILEGES grants all privileges applicable to the securable object",
+    "decision_hinge": "GRANT grants a privilege on a securable object to a principal, and ALL PRIVILEGES grants all privileges applicable to the securable object.",
+    "plausible_options": {
+      "C": "give one group every right that applies to a table"
+    },
+    "eliminated_by": {
+      "A": "rather than naming each one in turn",
+      "B": "able to do anything the object itself supports"
+    },
+    "distractor_traps": {
+      "A": "T1: fabricated - FULL CONTROL is not a privilege name in this dialect",
+      "B": "T2: scope error - two named privileges do not add up to the applicable set",
+      "C": "T3: confusable sibling - transferring ownership changes who owns the object rather than granting rights"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/sql/language-manual/security-grant"
+    ],
+    "topics": [
+      "dbde/07-governance-and-security/unity-catalog-governance"
+    ]
+  },
+  {
+    "id": "draft-dbde02-checkpoint-tracks-progress",
+    "domain": "dbde-02",
+    "blueprint_task": "2.3",
+    "qtype": "multiple_choice",
+    "difficulty_estimate": "L4",
+    "stem": "A production ingest stream must resume exactly where it left off after a restart, without reprocessing files it has already handled. The team is deciding which option carries that progress between runs.",
+    "option_texts": {
+      "A": "The checkpoint location, which the stream writes its progress into as it runs",
+      "B": "The schema location, which records both the columns and the files already seen",
+      "C": "The target table history, which the stream reads to recover its progress",
+      "D": "A bookmark column on the source files, which the stream updates after each batch"
+    },
+    "drill_answer": "A",
+    "drill_answer_short": "checkpointLocation carries stream progress across restarts; schemaLocation stores the inferred schema",
+    "decision_hinge": "Auto Loader stores the inferred schema at the cloudFiles.schemaLocation, and the checkpointLocation holds the checkpoint for the streaming query so that it can resume.",
+    "plausible_options": {
+      "B": "deciding which option carries that progress between runs"
+    },
+    "eliminated_by": {
+      "C": "must resume exactly where it left off after a restart",
+      "D": "without reprocessing files it has already handled"
+    },
+    "distractor_traps": {
+      "B": "T3: confusable sibling - the schema location stores the inferred schema, not the ingest progress",
+      "C": "T5: common misconception - table history records writes, not which source files were consumed",
+      "D": "T1: fabricated - no bookmark is written back onto the source files"
+    },
+    "sources": [
+      "https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production"
+    ],
+    "topics": [
+      "dbde/02-data-ingestion-and-loading/ingestion-options"
+    ]
+  }
+]
