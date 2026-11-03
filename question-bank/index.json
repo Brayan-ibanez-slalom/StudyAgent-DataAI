@@ -13337,8 +13337,531 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-011",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A job runs Task C downstream of both Task A and Task B. Task C is a failure handler, so it must run when any upstream task fails, and it must be skipped on runs where every upstream task succeeds. On the most recent run Task A succeeded, Task B failed, and Task C executed.",
+      "option_texts": {
+        "A": "All succeeded, which runs Task C only when every dependency has succeeded",
+        "B": "At least one failed, which runs Task C when a dependency has failed",
+        "C": "All done, which runs Task C once every dependency has finished running",
+        "D": "Depends on cleared, so Task C runs whether or not Task B failed"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.1",
+      "blueprint_task_title": "Implement control flows (retries and conditional tasks such as branching and looping) using Lakeflow Jobs for pipeline orchestration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "At least one failed runs the task only when an upstream dependency failed",
+      "drill_rationale": "At least one failed means at least one dependency failed, so the task runs on failure runs and is skipped when all dependencies succeed.",
+      "decision_hinge": "At least one failed means at least one dependency failed, so the task runs on failure runs and is skipped when all dependencies succeed.",
+      "plausible_options": {},
+      "eliminated_by": {
+        "A": "it must run when any upstream task fails",
+        "C": {
+          "signal": "it must be skipped on runs where every upstream task succeeds",
+          "requires_fact": "All done means the task is run after all its dependencies have run, regardless of the status of the dependent runs."
+        },
+        "D": "On the most recent run Task A succeeded, Task B failed, and Task C executed"
+      },
+      "distractor_traps": {
+        "A": "T4: breaks a stated requirement — this condition skips the handler on exactly the failure runs it exists to catch",
+        "C": "T3: confusable sibling — All done also runs the task after a failure, but it runs on clean runs too",
+        "D": "T2: wrong layer — removing the dependency changes when the task starts rather than conditioning it on upstream outcomes"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/run-if"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-012",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "Task B and Task C both sit downstream of Task A in one job, and no other task depends on either of them. Task B is configured with the All succeeded condition and Task C with All done. The team needs to predict the outcome on a run where Task A fails outright.",
+      "option_texts": {
+        "A": "Neither task executes, because their shared dependency did not succeed",
+        "B": "Task B executes while Task C is skipped, following the configured conditions",
+        "C": "Task C executes while Task B is skipped, following the configured conditions",
+        "D": "Both tasks execute, because each one has a condition configured on it"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.1",
+      "blueprint_task_title": "Implement control flows (retries and conditional tasks such as branching and looping) using Lakeflow Jobs for pipeline orchestration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "All done runs after dependencies finish regardless of status; All succeeded does not",
+      "drill_rationale": "All done means the task is run after all its dependencies have run, regardless of the status of the dependent runs, while All succeeded requires that all dependencies have run and succeeded.",
+      "decision_hinge": "All done means the task is run after all its dependencies have run, regardless of the status of the dependent runs, while All succeeded requires that all dependencies have run and succeeded.",
+      "plausible_options": {
+        "A": "a run where Task A fails outright"
+      },
+      "eliminated_by": {
+        "B": {
+          "signal": "Task B is configured with the All succeeded condition and Task C with All done",
+          "requires_fact": "All succeeded requires that all dependencies have run and succeeded, so a task with that condition does not run when a dependency failed."
+        },
+        "D": "no other task depends on either of them"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — this is the correct outcome for All succeeded, applied to both tasks instead of one",
+        "B": "T3: confusable sibling — the right pair of outcomes, assigned to the wrong tasks",
+        "D": "T5: right diagnosis, wrong symptom — having a condition configured is not the same as that condition being satisfied"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/run-if"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-013",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A conditional branch in a job leaves one upstream task with the Excluded result state on most runs. A downstream task carrying the All succeeded condition keeps executing on those runs, which surprises the team, since the excluded task plainly never ran and therefore never reported success.",
+      "option_texts": {
+        "A": "Excluded upstream tasks are treated as successful when Run if conditions are evaluated",
+        "B": "Excluded upstream tasks are ignored entirely, leaving the downstream task with no dependency",
+        "C": "Excluded upstream tasks force the downstream condition to fall back to All done behaviour",
+        "D": "Excluded upstream tasks are retried silently until they report a successful result state"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.1",
+      "blueprint_task_title": "Implement control flows (retries and conditional tasks such as branching and looping) using Lakeflow Jobs for pipeline orchestration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L5",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "An Excluded upstream task counts as successful when Run if conditions are evaluated",
+      "drill_rationale": "Upstream tasks with the Excluded result state are treated as successful when evaluating Run if conditions.",
+      "decision_hinge": "Upstream tasks with the Excluded result state are treated as successful when evaluating Run if conditions.",
+      "plausible_options": {
+        "B": "the excluded task plainly never ran and therefore never reported success"
+      },
+      "eliminated_by": {
+        "C": {
+          "signal": "A downstream task carrying the All succeeded condition keeps executing on those runs",
+          "requires_fact": "The Run if dependencies field adds control flow logic to tasks based on other tasks' success, failure, or completion."
+        },
+        "D": "the excluded task plainly never ran"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling — dropping the dependency would also let the task run, but the dependency is still evaluated",
+        "C": "T3: confusable sibling — the observed behaviour matches All done, but the configured condition does not silently change",
+        "D": "T1: fabricated — there is no silent retry that converts an excluded task into a successful one"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/run-if"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-014",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A job contains fifteen notebook tasks chained one after another, each running identical validation logic against a different table name. Maintaining fifteen near-duplicate task definitions has become a burden, and the team wants the validations to stop running strictly one after another.",
+      "option_texts": {
+        "A": "Keep the fifteen tasks but attach each one to its own separate compute resource",
+        "B": "Collapse the logic into one notebook that iterates over the fifteen table names",
+        "C": "Replace the chain with a For each task that runs one nested task per table name",
+        "D": "Split the fifteen tasks across fifteen separate jobs triggered on one schedule"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.1",
+      "blueprint_task_title": "Implement control flows (retries and conditional tasks such as branching and looping) using Lakeflow Jobs for pipeline orchestration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "A For each task runs one nested task per input, so the logic is defined once",
+      "drill_rationale": "Use the For each task to run a nested task in a loop, passing a different set of parameters to each iteration of the task, and nested tasks that do not have dependencies on each other can be run concurrently.",
+      "decision_hinge": "Use the For each task to run a nested task in a loop, passing a different set of parameters to each iteration of the task, and nested tasks that do not have dependencies on each other can be run concurrently.",
+      "plausible_options": {
+        "B": "Maintaining fifteen near-duplicate task definitions has become a burden"
+      },
+      "eliminated_by": {
+        "A": {
+          "signal": "each running identical validation logic against a different table name",
+          "requires_fact": "The For each task runs a nested task in a loop, passing a different set of parameters to each iteration."
+        },
+        "D": "the team wants the validations to stop running strictly one after another"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling — a single looping notebook does remove the duplication, but the iterations then run sequentially inside one task",
+        "A": "T5: right diagnosis, wrong symptom — separate compute does not reduce the duplicated task definitions",
+        "D": "T8: scope error — fifteen jobs multiplies the maintenance burden instead of removing it"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/for-each"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-015",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A multi-task job takes over two hours, and on the latest run the twelfth of fifteen tasks failed because of a missing configuration file. That file has since been restored. The team wants the job run completed with the least possible rework, and the eleven tasks that already succeeded took most of the elapsed time.",
+      "option_texts": {
+        "A": "Repair the existing run, which re-runs only the unsuccessful tasks and their dependents",
+        "B": "Start a brand new run of the job, which re-runs every task from the first one onward",
+        "C": "Run the twelfth task's notebook by hand, then mark the original job run as completed",
+        "D": "Wait for the next scheduled run, which will pick the work up without intervention"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.1",
+      "blueprint_task_title": "Implement control flows (retries and conditional tasks such as branching and looping) using Lakeflow Jobs for pipeline orchestration",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Repair run re-executes only the unsuccessful tasks and anything that depended on them",
+      "drill_rationale": "You can repair failed or canceled multi-task jobs by running only the subset of unsuccessful tasks and any dependent tasks.",
+      "decision_hinge": "You can repair failed or canceled multi-task jobs by running only the subset of unsuccessful tasks and any dependent tasks.",
+      "plausible_options": {
+        "C": "the twelfth of fifteen tasks failed because of a missing configuration file"
+      },
+      "eliminated_by": {
+        "B": "the eleven tasks that already succeeded took most of the elapsed time",
+        "D": {
+          "signal": "The team wants the job run completed with the least possible rework",
+          "requires_fact": "The repair run feature lets you re-run only the subset of unsuccessful tasks and any dependent tasks after the cause of failure is resolved."
+        }
+      },
+      "distractor_traps": {
+        "C": "T2: wrong layer — running the notebook outside the job leaves the job run itself unrepaired and its history misleading",
+        "B": "T4: breaks a stated requirement — rebuilding the eleven successful tasks is exactly the rework being avoided",
+        "D": "T8: scope error — a later scheduled run is a new run, not a completion of the failed one"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/repair-job-failures"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-016",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A vendor drops compressed export files into a monitored storage location at genuinely unpredictable intervals, sometimes several within an hour and sometimes nothing for most of a day. The team wants each drop processed shortly after it lands, with no operator watching the location and no compute billed while nothing is arriving.",
+      "option_texts": {
+        "A": "A scheduled trigger firing every five minutes to look for anything new",
+        "B": "A continuous trigger, so a fresh run begins whenever the previous one ends",
+        "C": "A file arrival trigger on the storage location the vendor writes into",
+        "D": "A table update trigger on the Delta table the vendor storage location feeds"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "File arrival triggers a run when new files appear in the monitored location",
+      "drill_rationale": "File arrival triggers a job run when new files arrive in a monitored Unity Catalog storage location.",
+      "decision_hinge": "File arrival triggers a job run when new files arrive in a monitored Unity Catalog storage location.",
+      "plausible_options": {
+        "A": "The team wants each drop processed shortly after it lands"
+      },
+      "eliminated_by": {
+        "B": "no compute billed while nothing is arriving",
+        "D": {
+          "signal": "A vendor drops compressed export files into a monitored storage location",
+          "requires_fact": "Table update triggers a job run when source tables are updated, whereas file arrival responds to new files in a storage location."
+        }
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — frequent polling does keep latency low, but most runs find nothing and still cost compute",
+        "B": "T4: breaks a stated requirement — a continuous trigger keeps the job running through the idle stretches",
+        "D": "T8: scope error — the trigger would fire after ingestion rather than causing it"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-017",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A sensor pipeline must process readings with the lowest latency the platform can offer and is expected to stay running indefinitely rather than finishing. The team has accepted the compute cost of keeping it alive, and no external event signals when fresh readings are available.",
+      "option_texts": {
+        "A": "A scheduled trigger set to the shortest interval the job definition permits",
+        "B": "A continuous trigger, which starts another run whenever a run completes or fails",
+        "C": "A file arrival trigger pointed at the storage location that holds the readings",
+        "D": "A table update trigger bound to the source table that collects the readings"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "Continuous keeps the job always running by starting a new run as each one ends",
+      "drill_rationale": "Continuous keeps the job always running by triggering another job run whenever a job run completes or fails.",
+      "decision_hinge": "Continuous keeps the job always running by triggering another job run whenever a job run completes or fails.",
+      "plausible_options": {
+        "A": "must process readings with the lowest latency the platform can offer"
+      },
+      "eliminated_by": {
+        "C": "no external event signals when fresh readings are available",
+        "D": {
+          "signal": "expected to stay running indefinitely rather than finishing",
+          "requires_fact": "Table update triggers a job run when source tables are updated rather than keeping a job always running."
+        }
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — a tight schedule narrows the gap but still leaves one, and the job still finishes between runs",
+        "C": "T4: breaks a stated requirement — the stem rules out an external arrival signal",
+        "D": "T8: scope error — an update trigger fires per change rather than running without end"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-018",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A reporting job should refresh whenever an upstream ingestion pipeline commits new rows to a governed source table. The team does not want to guess at a clock time, does not want a job sitting permanently alive, and is watching the table rather than any storage location.",
+      "option_texts": {
+        "A": "A scheduled trigger timed to fire after the source ingestion usually commits",
+        "B": "A continuous trigger, so the reporting job is always ready for new rows",
+        "C": "A file arrival trigger on the location the ingestion pipeline reads from",
+        "D": "A table update trigger on the source table the ingestion pipeline commits to"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L3",
+      "difficulty_source": "authored",
+      "drill_answer": "D",
+      "drill_answer_short": "Table update starts the run when the source tables are updated",
+      "drill_rationale": "Table update triggers a job run when source tables are updated.",
+      "decision_hinge": "Table update triggers a job run when source tables are updated.",
+      "plausible_options": {
+        "A": "should refresh whenever an upstream ingestion pipeline commits new rows"
+      },
+      "eliminated_by": {
+        "B": "does not want a job sitting permanently alive",
+        "C": "is watching the table rather than any storage location"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling — a well-timed schedule approximates the behaviour but breaks whenever the upstream pipeline runs late",
+        "B": "T4: breaks a stated requirement — the team explicitly rules out an always-running job",
+        "C": "T3: confusable sibling — the right family of event trigger, but bound to files instead of the table"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-019",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A nightly aggregation has to run once every day at two in the morning and at no other time. Nothing about the upstream data signals readiness, the work is plain batch rather than streaming, and the team wants compute released as soon as the aggregation finishes.",
+      "option_texts": {
+        "A": "A scheduled trigger, which starts the run on a time-based schedule",
+        "B": "A continuous trigger, which keeps starting runs for the whole day",
+        "C": "A file arrival trigger watching where the upstream data is written",
+        "D": "A table update trigger bound to the upstream aggregation source table"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L2",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Scheduled triggers a run on a time-based schedule, which is what a fixed clock time needs",
+      "drill_rationale": "Scheduled triggers a job run based on a time-based schedule.",
+      "decision_hinge": "Scheduled triggers a job run based on a time-based schedule.",
+      "plausible_options": {
+        "D": "Nothing about the upstream data signals readiness"
+      },
+      "eliminated_by": {
+        "B": "the team wants compute released as soon as the aggregation finishes",
+        "C": "has to run once every day at two in the morning and at no other time"
+      },
+      "distractor_traps": {
+        "D": "T3: confusable sibling — an update trigger is event-driven, which the stem rules out by saying nothing signals readiness",
+        "B": "T4: breaks a stated requirement — a continuous trigger never releases the compute",
+        "C": "T4: breaks a stated requirement — arrival time is not two in the morning"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-020",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde04-jobs-batch01.json",
+      "stem": "A bronze task computes a batch number that a later silver task in the same job run has to read. The value is a single small string, the team does not want it written to any external store, and the silver task must see the value produced by this run rather than a previously saved one.",
+      "option_texts": {
+        "A": "Set the value with the taskValues subutility and reference it from the silver task",
+        "B": "Register the value as a cluster environment variable the silver task reads back",
+        "C": "Write the value into a temporary view that the silver task queries afterwards",
+        "D": "Hard-code the batch number in both notebooks so the two tasks always agree"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "taskValues passes arbitrary values between tasks within one job run",
+      "drill_rationale": "Task values refer to the Databricks Utilities taskValues subutility, which lets you pass arbitrary values between tasks in a Databricks job, setting a value in one task and referencing it by task name and key in subsequent tasks.",
+      "decision_hinge": "Task values refer to the Databricks Utilities taskValues subutility, which lets you pass arbitrary values between tasks in a Databricks job, setting a value in one task and referencing it by task name and key in subsequent tasks.",
+      "plausible_options": {
+        "C": "The value is a single small string, the team does not want it written to any external store"
+      },
+      "eliminated_by": {
+        "B": {
+          "signal": "the silver task must see the value produced by this run",
+          "requires_fact": "The taskValues subutility passes arbitrary values between tasks within a job run, which a statically configured environment variable cannot do."
+        },
+        "D": "A bronze task computes a batch number"
+      },
+      "distractor_traps": {
+        "C": "T3: confusable sibling — a temporary view also avoids external storage, but it dies with the session that created it",
+        "B": "T6: stale behaviour — cluster configuration is set before the run and cannot carry a value computed during it",
+        "D": "T4: breaks a stated requirement — a hard-coded number is not the value this run computed"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/task-values"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 259,
+  "total": 269,
   "last_updated_at": "2026-11-03"
 }
