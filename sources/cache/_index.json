@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "count": 222,
-  "updated_at": "2026-11-03",
+  "count": 223,
+  "updated_at": "2026-11-04",
   "entries": [
     {
       "url": "https://docs.getdbt.com/docs/build/incremental-models",
@@ -1777,6 +1777,14 @@
       "title": "Connect to cloud object storage using Unity Catalog | Databricks on AWS",
       "fetched_at": "2026-11-03",
       "sha256": "925f39e06b3b105e261d5cf95f5f402acb81f388bb154eeec2aba72d466db703",
+      "source": "mcp-cache_fetch"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/sql/language-manual/security-deny",
+      "path": "sources/cache/_raw/docs.databricks.com/aws/en/sql/language-manual/security-deny.txt",
+      "title": "DENY | Databricks on AWS",
+      "fetched_at": "2026-11-04",
+      "sha256": "36d74ecc281e639a66a63f6efaaf5e9431690984759c9db0be4ec4900588103e",
       "source": "mcp-cache_fetch"
     }
   ]

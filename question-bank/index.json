@@ -14969,7 +14969,11 @@
       "sealed_by": "authored_via_item_qa",
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
-      "needs_review": false
+      "needs_review": false,
+      "retired": true,
+      "retired_at": "2026-11-03",
+      "retired_reason": "Q-AU-DBXDE-088 tested Unity Catalog lineage, which appears nowhere in the dbde blueprint (dbde-07 covers 7.1 managed/external tables, 7.2 GRANT/REVOKE/DENY, 7.3 masking and row-level security, 7.4 ABAC). It is replaced by a DENY item, closing the one part of task 7.2 that had no coverage. The other three are rewritten so the key is no longer the single longest option, which made them answerable by picking the longest: 041 was 20 words against 17, 107 was 18 against 15, 112 was 17 against 14.",
+      "superseded_by": "Q-AU-DBXDE-146"
     },
     {
       "id": "Q-AU-DBXDE-042",
@@ -17323,7 +17327,11 @@
       "sealed_by": "authored_via_item_qa",
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
-      "needs_review": false
+      "needs_review": false,
+      "retired": true,
+      "retired_at": "2026-11-03",
+      "retired_reason": "Q-AU-DBXDE-088 tested Unity Catalog lineage, which appears nowhere in the dbde blueprint (dbde-07 covers 7.1 managed/external tables, 7.2 GRANT/REVOKE/DENY, 7.3 masking and row-level security, 7.4 ABAC). It is replaced by a DENY item, closing the one part of task 7.2 that had no coverage. The other three are rewritten so the key is no longer the single longest option, which made them answerable by picking the longest: 041 was 20 words against 17, 107 was 18 against 15, 112 was 17 against 14.",
+      "superseded_by": "Q-AU-DBXDE-145"
     },
     {
       "id": "Q-AU-DBXDE-089",
@@ -18273,7 +18281,11 @@
       "sealed_by": "authored_via_item_qa",
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
-      "needs_review": false
+      "needs_review": false,
+      "retired": true,
+      "retired_at": "2026-11-03",
+      "retired_reason": "Q-AU-DBXDE-088 tested Unity Catalog lineage, which appears nowhere in the dbde blueprint (dbde-07 covers 7.1 managed/external tables, 7.2 GRANT/REVOKE/DENY, 7.3 masking and row-level security, 7.4 ABAC). It is replaced by a DENY item, closing the one part of task 7.2 that had no coverage. The other three are rewritten so the key is no longer the single longest option, which made them answerable by picking the longest: 041 was 20 words against 17, 107 was 18 against 15, 112 was 17 against 14.",
+      "superseded_by": "Q-AU-DBXDE-147"
     },
     {
       "id": "Q-AU-DBXDE-108",
@@ -18523,7 +18535,11 @@
       "sealed_by": "authored_via_item_qa",
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
-      "needs_review": false
+      "needs_review": false,
+      "retired": true,
+      "retired_at": "2026-11-03",
+      "retired_reason": "Q-AU-DBXDE-088 tested Unity Catalog lineage, which appears nowhere in the dbde blueprint (dbde-07 covers 7.1 managed/external tables, 7.2 GRANT/REVOKE/DENY, 7.3 masking and row-level security, 7.4 ABAC). It is replaced by a DENY item, closing the one part of task 7.2 that had no coverage. The other three are rewritten so the key is no longer the single longest option, which made them answerable by picking the longest: 041 was 20 words against 17, 107 was 18 against 15, 112 was 17 against 14.",
+      "superseded_by": "Q-AU-DBXDE-148"
     },
     {
       "id": "Q-AU-DBXDE-113",
@@ -20124,8 +20140,208 @@
       "sealed_at": "2026-11-03",
       "seal_confidence": 90,
       "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-145",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-fixes-batch16.json",
+      "stem": "A team wants to block one group from reading a table that lives in a Unity Catalog schema, and someone proposes the DENY statement. The reviewer asks whether it is available for an object governed this way.",
+      "option_texts": {
+        "A": "Yes, the statement works on any securable and takes precedence over a grant",
+        "B": "No, the statement is not supported by Unity Catalog and covers hive_metastore only",
+        "C": "Yes, but only once the group's existing grants have been revoked first",
+        "D": "No, because denying is expressed by revoking the grant in every catalog"
+      },
+      "domain": "dbde-07",
+      "track": "dbde",
+      "blueprint_task": "7.2",
+      "blueprint_task_title": "Configure access controls using the UI and SQL by applying GRANT, REVOKE, and DENY privileges to principals (users, groups, and service principals) at appropriate levels of the security hierarchy",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "B",
+      "drill_answer_short": "DENY is not supported by Unity Catalog; the statement applies only to the hive_metastore catalog and its objects",
+      "drill_rationale": "The DENY statement denies a privilege on a securable object to a principal, but this function is not supported by Unity Catalog and the statement applies only to the hive_metastore catalog and its objects.",
+      "decision_hinge": "The DENY statement denies a privilege on a securable object to a principal, but this function is not supported by Unity Catalog and the statement applies only to the hive_metastore catalog and its objects.",
+      "plausible_options": {
+        "A": "someone proposes the DENY statement"
+      },
+      "eliminated_by": {
+        "C": "block one group from reading a table that lives in a Unity Catalog schema",
+        "D": "The reviewer asks whether it is available for an object governed this way"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - precedence over a grant is real behaviour, but only in the hive_metastore catalog",
+        "C": "T2: scope error - revoking first does not make the statement available on this catalog",
+        "D": "T5: common misconception - revoke undoes a deny, it is not how a deny is expressed"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/sql/language-manual/security-deny"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/07-governance-and-security/unity-catalog-governance.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-146",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-fixes-batch16.json",
+      "stem": "A pipeline declares a streaming table with one expectation named valid_customer_age. A downstream report still shows ages above 120, so invalid records are clearly reaching the target. The pipeline must keep running while invalid records stop reaching the target, and the team needs to know why the current declaration retains them. Nothing else in the pipeline filters rows.",
+      "option_texts": {
+        "A": "Rewrite the clause as EXPECT ... ON VIOLATION FAIL UPDATE so an invalid record stops the update",
+        "B": "Rewrite the query to filter the rows in SQL, because expectations cannot remove records from the target",
+        "C": "Rewrite the clause as EXPECT ... ON VIOLATION DROP ROW, because a bare EXPECT keeps invalid records",
+        "D": "Rewrite the expectation with a second constraint name, because one name per dataset only warns"
+      },
+      "domain": "dbde-03",
+      "track": "dbde",
+      "blueprint_task": "3.7",
+      "blueprint_task_title": "Apply data quality checks and validation rules to ensure reliable Silver and Gold datasets",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "C",
+      "drill_answer_short": "warn is the default action, so a bare EXPECT still writes invalid records to the target; ON VIOLATION DROP ROW drops them",
+      "drill_rationale": "warn is the default action and invalid records are written to the target; EXPECT ... ON VIOLATION DROP ROW means invalid records are dropped before data is written to the target.",
+      "decision_hinge": "warn is the default action and invalid records are written to the target; EXPECT ... ON VIOLATION DROP ROW means invalid records are dropped before data is written to the target.",
+      "plausible_options": {
+        "A": "invalid records stop reaching the target"
+      },
+      "eliminated_by": {
+        "B": "the team needs to know why the current declaration retains them",
+        "D": "A downstream report still shows ages above 120"
+      },
+      "distractor_traps": {
+        "A": "T3: confusable sibling - FAIL UPDATE stops the update instead of letting the pipeline keep running",
+        "B": "T2: scope error - expectations can drop invalid records, so a hand-written SQL filter is not the fix",
+        "D": "T1: fabricated - the expectation name is an identifier and never controls the action on invalid records"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/dlt/expectations"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/03-data-transformation-and-modeling/medallion-transformations.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-147",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-fixes-batch16.json",
+      "stem": "A job runs several notebook tasks that all need the same processing_region value, and the operator wants to set it once when starting a run rather than editing each step. The value should reach every step that takes key-value input. No step may hard-code it.",
+      "option_texts": {
+        "A": "Define it as a job parameter, a key-value pair pushed down to tasks",
+        "B": "Define it as a task parameter on each step, a key-value pair supplied per task",
+        "C": "Define it as a cluster environment variable, which every notebook on that cluster reads",
+        "D": "Define it in a shared notebook that each step imports before it does any work"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.2",
+      "blueprint_task_title": "Configure common tasks (notebook, SQL query, dashboard, and pipeline tasks) and their dependencies using Lakeflow Jobs and its DAG-based task graph",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "Job parameters are key-value pairs defined at job level and pushed down to tasks",
+      "drill_rationale": "A job parameter is a key-value pair defined at the job level and pushed down to tasks, while a task parameter is a key-value pair or JSON array defined at the task level.",
+      "decision_hinge": "A job parameter is a key-value pair defined at the job level and pushed down to tasks, while a task parameter is a key-value pair or JSON array defined at the task level.",
+      "plausible_options": {
+        "B": "the operator wants to set it once when starting a run rather than editing each step"
+      },
+      "eliminated_by": {
+        "C": "several notebook tasks that all need the same processing_region value",
+        "D": "The value should reach every step that takes key-value input"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - task parameters are real, but they are set per task, which is the editing being avoided",
+        "C": "T2: scope error - an environment variable is a compute setting and is not part of the run request",
+        "D": "T2: scope error - a shared notebook carries code, not a per-run value"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/parameters"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
+    },
+    {
+      "id": "Q-AU-DBXDE-148",
+      "source": "authored",
+      "source_url": null,
+      "raw_path": "question-bank/authored/dbde-fixes-batch16.json",
+      "stem": "A job is scheduled every fifteen minutes, but one afternoon a run takes almost an hour. The team reviews the history afterwards and has to account for what became of the triggers that fired while the long run was still going. No concurrency limit was raised.",
+      "option_texts": {
+        "A": "They were skipped, because only one run of a job may be active",
+        "B": "They were queued and replayed in order once the long run finally finished",
+        "C": "They started in parallel, because a schedule is independent of any run in flight",
+        "D": "They failed and were recorded as errors against the schedule that produced them"
+      },
+      "domain": "dbde-04",
+      "track": "dbde",
+      "blueprint_task": "4.3",
+      "blueprint_task_title": "Implement job schedules using Lakeflow Jobs with an understanding of trigger types (scheduled, file arrival, and table update)",
+      "qtype": "multiple_choice",
+      "difficulty_estimate": "L4",
+      "difficulty_source": "authored",
+      "drill_answer": "A",
+      "drill_answer_short": "By default only one run of a job is active at a time, and runs from most trigger types are skipped beyond that limit",
+      "drill_rationale": "By default only a single run of a job can be active at a time, and runs from most trigger types are skipped when they exceed the configured max concurrency for a job.",
+      "decision_hinge": "By default only a single run of a job can be active at a time, and runs from most trigger types are skipped when they exceed the configured max concurrency for a job.",
+      "plausible_options": {
+        "B": "account for what became of the triggers that fired while the long run was still going"
+      },
+      "eliminated_by": {
+        "C": "A job is scheduled every fifteen minutes",
+        "D": "The team reviews the history afterwards"
+      },
+      "distractor_traps": {
+        "B": "T3: confusable sibling - job completion triggers do retain a ready completion, but a schedule does not queue",
+        "C": "T5: common misconception - concurrency is capped at one run unless the limit is raised",
+        "D": "T1: fabricated - a skipped trigger is not recorded as a failure"
+      },
+      "options_analysis": "",
+      "sources": [
+        "https://docs.databricks.com/aws/en/jobs/triggers"
+      ],
+      "citation_status": "resolved",
+      "topics": [
+        "knowledge/dbde/04-working-with-lakeflow-jobs/jobs-and-triggers.md"
+      ],
+      "verified": true,
+      "status": "verified",
+      "sealed_by": "authored_via_item_qa",
+      "sealed_at": "2026-11-03",
+      "seal_confidence": 90,
+      "needs_review": false
     }
   ],
-  "total": 393,
-  "last_updated_at": "2026-11-03"
+  "total": 397,
+  "last_updated_at": "2026-11-04"
 }
